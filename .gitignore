@@ -10,3 +10,6 @@
 /blender/plants imp/
 /blender/gw2/
 /assets/gw2/
+
+# Cache Python des scripts Blender
+__pycache__/

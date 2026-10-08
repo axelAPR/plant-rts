@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="UnitData" format=3]
+[gd_resource type="Resource" script_class="UnitData" format=3 uid="uid://b0r0epfoyfdbf"]
 
-[ext_resource type="Script" path="res://data/units/unit_data.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://3km063570cut" path="res://data/units/unit_data.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://durxp4v61kd63" path="res://assets/plants/kernel_corn.glb" id="2_model"]
 
 [resource]
@@ -8,8 +8,6 @@ script = ExtResource("1_script")
 id = &"kernel_corn"
 display_name = "Maïs"
 visual_scene = ExtResource("2_model")
-move_speed = 3.5
-acceleration = 14.0
-turn_speed_degrees = 540.0
+local_visual_path = "res://assets/gw2/plants/kernel_corn.glb"
 radius = 0.3
 footprint_radius = 0.9

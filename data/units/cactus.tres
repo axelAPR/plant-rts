@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="UnitData" format=3]
+[gd_resource type="Resource" script_class="UnitData" format=3 uid="uid://c3440mfnppm0r"]
 
-[ext_resource type="Script" path="res://data/units/unit_data.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://3km063570cut" path="res://data/units/unit_data.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://b8pfb86sf7lei" path="res://assets/plants/cactus.glb" id="2_model"]
 
 [resource]
@@ -8,8 +8,5 @@ script = ExtResource("1_script")
 id = &"cactus"
 display_name = "Cactus"
 visual_scene = ExtResource("2_model")
-move_speed = 3.5
-acceleration = 14.0
-turn_speed_degrees = 540.0
-radius = 0.35
+local_visual_path = "res://assets/gw2/plants/cactus.glb"
 footprint_radius = 0.65

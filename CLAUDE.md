@@ -107,6 +107,12 @@ Avant de créer un modèle, vérifier ceux déjà présents et rester cohérent 
   pièces `Body`, `Arms`, `Head` (pivot au cou), textures de couleur seules réduites à
   512 px (exception à la règle « textures seulement si avantage réel » : elles
   portent le rendu du modèle d'origine).
+- Autres plantes : `blender/scripts/plants_gw2.py` (outils : `gw2_lib.py`, dont un
+  lecteur `.dae`) → `assets/gw2/plants/<id>.glb`. Hauteur de l'ancien modèle, pivot
+  au sol, ≈ 5 000 triangles (Maïs 7 600, Torchwood 6 600), bras abaissés depuis la
+  pose de référence, textures de couleur 512 px. Sources : GW2, sauf Citron (Battle
+  for Neighborville), Chomper (cartes AR mobiles), Torchwood (Giga Torchwood). Le
+  Pisto-pois garde l'animation `Walk`.
 
 ## Modèles 3D — À CONFIRMER
 - Tailles de référence (personnages, plantes, zombies, bâtiments) : à définir.
