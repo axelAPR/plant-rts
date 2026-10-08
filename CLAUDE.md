@@ -10,6 +10,11 @@ Pas d'informations temporaires ici.
 - Pilote de rendu Windows : D3D12.
 - Fichiers en UTF-8, fins de ligne LF (voir `.editorconfig`, `.gitattributes`).
 
+## Versionnement (Git)
+- Dépôt Git, branche principale `main`, distant `origin` (GitHub).
+- Vérifier `git status` avant toute modification importante.
+- Ne jamais faire de `git push` sans confirmation explicite.
+
 ## Conventions de code
 - Commentaires et documentation (`##`) en français ; identifiants en anglais.
 - Typage statique systématique (`: float`, `-> void`, `:=`).
