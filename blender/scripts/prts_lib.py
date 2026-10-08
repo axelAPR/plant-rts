@@ -847,17 +847,60 @@ def report(collection_name):
             "objects": [o.name for o in col.objects]}
 
 
-def save_and_export(collection_name, blend_path, glb_path):
+def save_and_export(collection_name, blend_path, glb_path, animations=False):
+    """`animations` : exporte les pistes NLA (une animation glTF par nom de piste,
+    toutes pièces confondues — voir add_animation)."""
     os.makedirs(os.path.dirname(blend_path), exist_ok=True)
     os.makedirs(os.path.dirname(glb_path), exist_ok=True)
     bpy.ops.wm.save_as_mainfile(filepath=blend_path)
     col = bpy.data.collections[collection_name]
     for o in bpy.data.objects:
         o.select_set(o.name in col.objects)
+    anim = {"export_animation_mode": 'NLA_TRACKS'} if animations else {}
     bpy.ops.export_scene.gltf(filepath=glb_path, export_format='GLB', use_selection=True,
                               export_yup=True, export_apply=True, export_materials='EXPORT',
-                              export_cameras=False, export_lights=False, export_animations=False)
+                              export_cameras=False, export_lights=False, export_animations=animations,
+                              **anim)
     return {"blend": os.path.getsize(blend_path), "glb": os.path.getsize(glb_path)}
+
+
+# ---------------------------------------------------------------- Animation
+
+def add_animation(name, keys, frame_start=0):
+    """Animation de pièces rigides (sans squelette), rangée dans une piste NLA `name` par
+    pièce : l'export (mode NLA_TRACKS) fusionne ces pistes en une seule animation glTF.
+    `keys` : {objet: {image relative: {"loc": (x, y, z), "rot": (degrés x, y, z),
+    "scale": (x, y, z)}}} ; une propriété absente d'une image n'y est pas clé.
+    Remplace une animation existante du même nom (script ré-exécutable)."""
+    for obj_name, frames in keys.items():
+        ob = bpy.data.objects[obj_name]
+        rest_loc, rest_rot, rest_scale = ob.location.copy(), ob.rotation_euler.copy(), ob.scale.copy()
+        ad = ob.animation_data_create()
+        for track in list(ad.nla_tracks):
+            if track.name == name:
+                ad.nla_tracks.remove(track)
+        old = bpy.data.actions.get(f"{name}_{obj_name}")
+        if old is not None:
+            bpy.data.actions.remove(old)
+        action = bpy.data.actions.new(f"{name}_{obj_name}")
+        ad.action = action
+        for frame, pose in sorted(frames.items()):
+            f = frame_start + frame
+            if "loc" in pose:
+                ob.location = rest_loc + Vector(pose["loc"])
+                ob.keyframe_insert("location", frame=f)
+            if "rot" in pose:
+                ob.rotation_euler = [r + math.radians(d) for r, d in zip(rest_rot, pose["rot"])]
+                ob.keyframe_insert("rotation_euler", frame=f)
+            if "scale" in pose:
+                ob.scale = pose["scale"]
+                ob.keyframe_insert("scale", frame=f)
+        ad.action = None
+        ob.location, ob.rotation_euler, ob.scale = rest_loc, rest_rot, rest_scale
+        track = ad.nla_tracks.new()
+        track.name = name
+        track.strips.new(name, frame_start, action)
+    return name
 
 
 def preview_render(path, target=(0, 0, 0.7), distance=3.0, yaw_deg=-35.0, pitch_deg=20.0,
