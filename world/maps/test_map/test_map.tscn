@@ -1,6 +1,23 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://k43ogoft0cs2"]
 
 [ext_resource type="PackedScene" path="res://camera/rts_camera.tscn" id="1_rtscam"]
+[ext_resource type="PackedScene" uid="uid://luke3aoenmqk" path="res://assets/plants/peashooter.glb" id="2_6h4uy"]
+[ext_resource type="PackedScene" uid="uid://b8pfb86sf7lei" path="res://assets/plants/cactus.glb" id="3_1k6tu"]
+[ext_resource type="PackedScene" uid="uid://cogvm8ubsp2xx" path="res://assets/plants/torchwood.glb" id="4_y440b"]
+[ext_resource type="PackedScene" uid="uid://dk7ihbinj8nhi" path="res://assets/zombies/scientist.glb" id="5_p82i7"]
+[ext_resource type="PackedScene" uid="uid://gvfdi2ufe62k" path="res://assets/zombies/z_mech.glb" id="6_6v2tv"]
+[ext_resource type="PackedScene" uid="uid://d1ucjqtmepvvm" path="res://assets/zombies/super_brainz.glb" id="7_ig1p8"]
+[ext_resource type="PackedScene" uid="uid://b61kbre1df7t7" path="res://assets/zombies/foot_soldier.glb" id="8_3hj5l"]
+[ext_resource type="PackedScene" uid="uid://darinkqg6n143" path="res://assets/zombies/engineer.glb" id="9_8dm8q"]
+[ext_resource type="PackedScene" uid="uid://dfqewxmgua1vs" path="res://assets/plants/chomper.glb" id="10_rhckg"]
+[ext_resource type="PackedScene" uid="uid://k6nib3sv4h36" path="res://assets/plants/citron.glb" id="11_wwvqv"]
+[ext_resource type="PackedScene" uid="uid://durxp4v61kd63" path="res://assets/plants/kernel_corn.glb" id="12_8mx5y"]
+[ext_resource type="PackedScene" uid="uid://djggd850byjn" path="res://assets/plants/rose.glb" id="13_wvpa1"]
+[ext_resource type="PackedScene" uid="uid://dmmfki2b00dv0" path="res://assets/plants/sunflower.glb" id="14_irshx"]
+[ext_resource type="PackedScene" uid="uid://jrbl7tcu28v8" path="res://assets/zombies/action_hero_80s.glb" id="15_hfall"]
+[ext_resource type="PackedScene" uid="uid://bx0iidruhgeot" path="res://assets/zombies/all_star.glb" id="16_tgbup"]
+[ext_resource type="PackedScene" uid="uid://b53gfdb7o7s1u" path="res://assets/zombies/browncoat.glb" id="17_rusy0"]
+[ext_resource type="PackedScene" uid="uid://dt2abmovtpl2o" path="res://assets/zombies/deadbeard.glb" id="18_lvgig"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sky"]
 
@@ -23,20 +40,6 @@ size = Vector2(200, 200)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ground"]
 size = Vector3(200, 1, 200)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_block"]
-albedo_color = Color(0.55, 0.5, 0.42, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_block"]
-material = SubResource("StandardMaterial3D_block")
-size = Vector3(4, 4, 4)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_north"]
-albedo_color = Color(0.8, 0.15, 0.12, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_north"]
-material = SubResource("StandardMaterial3D_north")
-size = Vector3(2, 10, 2)
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_center"]
 albedo_color = Color(0.9, 0.85, 0.3, 1)
 
@@ -46,65 +49,148 @@ top_radius = 1.5
 bottom_radius = 1.5
 height = 0.4
 
-[node name="TestMap" type="Node3D"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_north"]
+albedo_color = Color(0.8, 0.15, 0.12, 1)
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[sub_resource type="BoxMesh" id="BoxMesh_north"]
+material = SubResource("StandardMaterial3D_north")
+size = Vector3(2, 10, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_block"]
+albedo_color = Color(0.55, 0.5, 0.42, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_block"]
+material = SubResource("StandardMaterial3D_block")
+size = Vector3(4, 4, 4)
+
+[node name="TestMap" type="Node3D" unique_id=820135849]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1270001617]
 environment = SubResource("Environment_main")
 
-[node name="Sun" type="DirectionalLight3D" parent="."]
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=278824259]
 transform = Transform3D(0.866025, -0.383022, 0.321394, 0, 0.642788, 0.766044, -0.5, -0.663414, 0.55667, 0, 20, 0)
 shadow_enabled = true
 directional_shadow_max_distance = 200.0
 
-[node name="Ground" type="StaticBody3D" parent="."]
+[node name="Ground" type="StaticBody3D" parent="." unique_id=730514545]
 
-[node name="Mesh" type="MeshInstance3D" parent="Ground"]
+[node name="Mesh" type="MeshInstance3D" parent="Ground" unique_id=1967284411]
 mesh = SubResource("PlaneMesh_ground")
 
-[node name="Collision" type="CollisionShape3D" parent="Ground"]
+[node name="Collision" type="CollisionShape3D" parent="Ground" unique_id=1205862641]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 shape = SubResource("BoxShape3D_ground")
 
-[node name="Landmarks" type="Node3D" parent="."]
+[node name="Landmarks" type="Node3D" parent="." unique_id=1149949728]
 
-[node name="Center" type="MeshInstance3D" parent="Landmarks"]
+[node name="Center" type="MeshInstance3D" parent="Landmarks" unique_id=1650148272]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
 mesh = SubResource("CylinderMesh_center")
 
-[node name="NorthPillar" type="MeshInstance3D" parent="Landmarks"]
+[node name="NorthPillar" type="MeshInstance3D" parent="Landmarks" unique_id=773600858]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -60)
 mesh = SubResource("BoxMesh_north")
 
-[node name="Block1" type="MeshInstance3D" parent="Landmarks"]
+[node name="Block1" type="MeshInstance3D" parent="Landmarks" unique_id=1373004579]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 2, -10)
 mesh = SubResource("BoxMesh_block")
 
-[node name="Block2" type="MeshInstance3D" parent="Landmarks"]
+[node name="Block2" type="MeshInstance3D" parent="Landmarks" unique_id=1480786787]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 2, 12)
 mesh = SubResource("BoxMesh_block")
 
-[node name="Block3" type="MeshInstance3D" parent="Landmarks"]
+[node name="Block3" type="MeshInstance3D" parent="Landmarks" unique_id=1590560272]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 2, 30)
 mesh = SubResource("BoxMesh_block")
 
-[node name="Block4" type="MeshInstance3D" parent="Landmarks"]
+[node name="Block4" type="MeshInstance3D" parent="Landmarks" unique_id=1852312640]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 2, -35)
 mesh = SubResource("BoxMesh_block")
 
-[node name="Block5" type="MeshInstance3D" parent="Landmarks"]
+[node name="Block5" type="MeshInstance3D" parent="Landmarks" unique_id=1599967664]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 2, -55)
 mesh = SubResource("BoxMesh_block")
 
-[node name="Block6" type="MeshInstance3D" parent="Landmarks"]
+[node name="Block6" type="MeshInstance3D" parent="Landmarks" unique_id=373820373]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65, 2, 60)
 mesh = SubResource("BoxMesh_block")
 
-[node name="Block7" type="MeshInstance3D" parent="Landmarks"]
+[node name="Block7" type="MeshInstance3D" parent="Landmarks" unique_id=1958511512]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 2, 75)
 mesh = SubResource("BoxMesh_block")
 
-[node name="Block8" type="MeshInstance3D" parent="Landmarks"]
+[node name="Block8" type="MeshInstance3D" parent="Landmarks" unique_id=345781678]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -85, 2, -80)
 mesh = SubResource("BoxMesh_block")
 
-[node name="RTSCamera" parent="." instance=ExtResource("1_rtscam")]
+[node name="RTSCamera" parent="." unique_id=1835435912 instance=ExtResource("1_rtscam")]
+
+[node name="peashooter" parent="." unique_id=1556684046 instance=ExtResource("2_6h4uy")]
+transform = Transform3D(0.99985653, 0, -0.016937125, 0, 1, 0, 0.016937125, 0, 0.99985653, -2.0659418, -1.1920929e-07, 0.8517773)
+
+[node name="cactus" parent="." unique_id=1147670783 instance=ExtResource("3_1k6tu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.576751, 0, 1.4669127)
+
+[node name="torchwood" parent="." unique_id=18380818 instance=ExtResource("4_y440b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7205215, 0.030929565, 2.4511907)
+
+[node name="scientist" parent="." unique_id=1666239772 instance=ExtResource("5_p82i7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.105039, 2.3841858e-07, 0.56689405)
+
+[node name="z_mech" parent="." unique_id=1165500648 instance=ExtResource("6_6v2tv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.545849, 2.3841858e-07, -1.3339968)
+
+[node name="super_brainz" parent="." unique_id=1268995967 instance=ExtResource("7_ig1p8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9885161, 0, 3.390029)
+
+[node name="scientist2" parent="." unique_id=2048082782 instance=ExtResource("5_p82i7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.1290684, 2.3841858e-07, 2.7486613)
+
+[node name="foot_soldier" parent="." unique_id=1180450499 instance=ExtResource("8_3hj5l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.609899, 0, 3.1746762)
+
+[node name="engineer" parent="." unique_id=264820668 instance=ExtResource("9_8dm8q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.9970517, -2.3841858e-07, -1.1355004)
+
+[node name="chomper" parent="." unique_id=37132902 instance=ExtResource("10_rhckg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.127691, 0, 1.3872261)
+
+[node name="citron" parent="." unique_id=619541470 instance=ExtResource("11_wwvqv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3379703, 2.3841858e-07, 2.2658772)
+
+[node name="kernel_corn" parent="." unique_id=1574202539 instance=ExtResource("12_8mx5y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.8951974, -2.3841858e-07, -1.7924042)
+
+[node name="rose" parent="." unique_id=688618377 instance=ExtResource("13_wvpa1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7275193, 2.3841858e-07, 4.1512527)
+
+[node name="sunflower" parent="." unique_id=23313332 instance=ExtResource("14_irshx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4281373, 0, 0.40975428)
+
+[node name="action_hero_80s" parent="." unique_id=1985293646 instance=ExtResource("15_hfall")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.743536, 0, 0.909245)
+
+[node name="all_star" parent="." unique_id=645554426 instance=ExtResource("16_tgbup")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.913328, 4.7683716e-07, 1.6197143)
+
+[node name="browncoat" parent="." unique_id=596239640 instance=ExtResource("17_rusy0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.4451027, 0, 3.6311593)
+
+[node name="deadbeard" parent="." unique_id=471576349 instance=ExtResource("18_lvgig")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.8453054, 0, 4.6667576)
+
+[node name="engineer2" parent="." unique_id=1908313254 instance=ExtResource("9_8dm8q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.240307, 4.7683716e-07, 5.574739)
+
+[node name="foot_soldier2" parent="." unique_id=551149256 instance=ExtResource("8_3hj5l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3486152, 0, 6.453598)
+
+[node name="scientist3" parent="." unique_id=1557644511 instance=ExtResource("5_p82i7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.60865, 0, 3.2776952)
+
+[node name="super_brainz2" parent="." unique_id=416921191 instance=ExtResource("7_ig1p8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.54780054, 0, 5.8536787)
+
+[node name="z_mech2" parent="." unique_id=2119770237 instance=ExtResource("6_6v2tv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.8438835, 0, -2.1903791)
