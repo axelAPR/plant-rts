@@ -14,7 +14,8 @@ extends SceneTree
 ##       un ordre de groupe ;
 ##   f. une escouade face à un mur d'escouades ennemies à l'arrêt : elle doit s'arrêter
 ##      proprement (détection de blocage) ;
-##   g. une escouade envoyée sur une escouade alliée à l'arrêt (superposition).
+##   g. une escouade envoyée sur une escouade alliée à l'arrêt (superposition) ;
+##   h. arrivée sans dépasser sa place ni faire demi-tour.
 ## Critères communs : tous les ordres se terminent dans le délai, aucune superposition
 ## entre unités à l'arrêt, aucune unité qui court encore une fois tout arrêté, et
 ## formations reformées à l'arrivée (sauf escouades superposées : d et g).
@@ -82,6 +83,7 @@ func _run() -> void:
 		["e2", "charge réaliste : 9 × toutes les troupes superposées", _scenario_stacked_load],
 		["f", "mur d'escouades ennemies", _scenario_enemy_wall],
 		["g", "escouade envoyée sur une escouade à l'arrêt", _scenario_onto_idle],
+		["h", "arrivée sans demi-tour", _scenario_no_turn_back],
 	]
 	for scenario in scenarios:
 		if only.is_empty() or only.has(scenario[0]):
@@ -195,6 +197,31 @@ func _scenario_onto_idle() -> void:
 	var offset := mover.get_center() - idle.get_center()
 	offset.y = 0.0
 	print("  info  centres des deux escouades à %.2f m l'un de l'autre" % offset.length())
+
+
+## Une fois l'ancre arrivée, aucune unité ne dépasse sa place ni ne se retourne (écart
+## d'orientation limité à l'orientation propre de sa place au repos).
+func _scenario_no_turn_back() -> void:
+	for id in ["peashooter", "browncoat", "z_mech"]:
+		_reset()
+		var squad := _simulation.spawn_squad(_squad_data(id), 0, Vector3.ZERO, 0.0)
+		_move([squad], Vector3(0.0, 0.0, 20.0))
+		var max_turn := 0.0
+		var overshoot := 0.0
+		var elapsed := 0.0
+		while elapsed < 15.0:
+			_simulation.step(TICK)
+			elapsed += TICK
+			var order := squad.order as MoveOrder
+			if order != null and order.phase == MoveOrder.Phase.MOVING:
+				continue
+			for unit in squad.units:
+				max_turn = maxf(max_turn, absf(angle_difference(unit.yaw, squad.facing)))
+				overshoot = maxf(overshoot, unit.position.z - squad.slot_position(unit.slot_index).z)
+		var allowed := squad.data.formation_yaw_jitter_degrees + 5.0
+		_check(rad_to_deg(max_turn) <= allowed and overshoot < 0.1,
+				"%s : pas de demi-tour (écart d'orientation max %.0f°, dépassement max %.2f m)"
+				% [id, rad_to_deg(max_turn), overshoot])
 
 
 # --- Déroulement et mesures --------------------------------------------------

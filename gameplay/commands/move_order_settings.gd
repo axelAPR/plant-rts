@@ -15,6 +15,9 @@ extends Resource
 ## Fraction minimale de la vitesse de l'ancre quand des unités décrochent : l'ancre
 ## ne s'arrête jamais, les retardataires rattrapent.
 @export_range(0.05, 1.0) var min_anchor_speed_ratio: float = 0.35
+## Décélération (m/s²) de l'ancre à l'approche de la destination : la formation freine
+## au lieu de s'arrêter net (sinon les unités dépassent leur place et reviennent).
+@export var anchor_deceleration: float = 4.0
 
 @export_group("Délai maximal")
 ## Un ordre dure au plus : temps de trajet × timeout_factor + timeout_margin (s).

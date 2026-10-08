@@ -37,6 +37,9 @@ signal squad_spawned(squad: Squad)
 @export var avoidance_strength: float = 2.5
 ## Vitesse (m/s) en dessous de laquelle une unité garde l'orientation de sa formation.
 @export var facing_speed_threshold: float = 0.6
+## Formation à l'arrêt (ancre immobile) : en deçà de cette distance (m) de sa place,
+## une unité s'y replace sans se retourner (pas de côté ou en arrière).
+@export var face_slot_distance: float = 1.5
 
 @export_group("Repos")
 ## Délai (s) sans se rapprocher de son emplacement après lequel une unité au repos y
@@ -276,9 +279,13 @@ func _holds_ground(i: int, j: int) -> bool:
 
 func _update_facing(delta: float) -> void:
 	for unit in units:
-		var target_yaw := _squads_by_id[unit.squad_id].slot_yaw(unit.slot_index)
+		var squad := _squads_by_id[unit.squad_id]
+		var target_yaw := squad.slot_yaw(unit.slot_index)
 		var flat_velocity := Vector2(unit.velocity.x, unit.velocity.z)
-		if flat_velocity.length() > facing_speed_threshold:
+		var to_slot := squad.slot_position(unit.slot_index) - unit.position
+		to_slot.y = 0.0
+		var settling := squad.anchor_velocity == Vector3.ZERO 				and to_slot.length_squared() < face_slot_distance * face_slot_distance
+		if flat_velocity.length() > facing_speed_threshold and not settling:
 			target_yaw = atan2(flat_velocity.x, flat_velocity.y)
 		unit.yaw = rotate_toward(unit.yaw, target_yaw, deg_to_rad(unit.data.turn_speed_degrees) * delta)
 

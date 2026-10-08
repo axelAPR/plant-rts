@@ -107,12 +107,14 @@ func _update_destination(visual: SquadVisual, center: Vector3) -> void:
 	for i in squad.units.size():
 		var slot := squad.slot_position_from(move_order.target, move_order.facing, squad.units[i].slot_index)
 		visual.slot_markers[i].position = slot + Vector3.UP * 0.035
+	# Trait : du centre de l'escouade (là où elle est) au centre de sa destination.
 	var start := Vector3(center.x, 0.0, center.z)
 	var to_target := move_order.target - start
 	var length := to_target.length()
 	visual.path_line.visible = length > 0.1
 	if length > 0.1:
-		var basis := Basis(Vector3.UP, atan2(to_target.x, to_target.z)).scaled(Vector3(path_width, 1.0, length))
+		# Étirement dans le repère du trait (largeur × longueur), puis orientation.
+		var basis := Basis(Vector3.UP, atan2(to_target.x, to_target.z)) 				* Basis.from_scale(Vector3(path_width, 1.0, length))
 		visual.path_line.transform = Transform3D(basis, start + to_target * 0.5 + Vector3.UP * 0.03)
 
 

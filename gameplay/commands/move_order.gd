@@ -1,7 +1,8 @@
 class_name MoveOrder
 extends SquadOrder
-## Déplacement en formation : l'ancre avance en ligne droite vers la destination et
-## ralentit si des unités décrochent, sans jamais s'arrêter : les retardataires rattrapent.
+## Déplacement en formation : l'ancre avance en ligne droite vers la destination,
+## freine à l'approche (`settings.anchor_deceleration`) et ralentit si des unités
+## décrochent, sans jamais s'arrêter en route : les retardataires rattrapent.
 ##
 ## L'ordre se termine toujours, en deux phases :
 ## - MOVING : l'ancre avance. Si le centre de l'escouade ne se rapproche plus de la
@@ -77,6 +78,8 @@ func update(squad: Squad, simulation: UnitSimulation, delta: float) -> bool:
 	var lag_factor := clampf(1.0 - (lag - LAG_TOLERANCE) / (LAG_SLOW - LAG_TOLERANCE),
 			settings.min_anchor_speed_ratio, 1.0)
 	var speed := squad.get_move_speed() * ANCHOR_SPEED_RATIO * lag_factor
+	# Freinage : vitesse permettant de s'arrêter pile sur la destination.
+	speed = minf(speed, sqrt(2.0 * settings.anchor_deceleration * distance))
 	var step := minf(speed * delta, distance)
 	squad.anchor += to_target / distance * step
 	squad.anchor_velocity = to_target / distance * (step / delta)
