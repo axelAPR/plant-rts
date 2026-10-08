@@ -58,6 +58,12 @@ func issue_order(squad: Squad, order: SquadOrder) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	step(delta)
+
+
+## Avance la simulation d'un tick. Appelé au tick physique ; les tests peuvent
+## l'appeler directement (physique désactivée) pour simuler vite et de façon reproductible.
+func step(delta: float) -> void:
 	for unit in units:
 		unit.previous_position = unit.position
 		unit.previous_yaw = unit.yaw
