@@ -41,7 +41,13 @@ func _init(p_id: int, p_data: SquadData, p_team: int, p_anchor: Vector3, p_facin
 
 
 func slot_position(slot: int) -> Vector3:
-	return anchor + Basis(Vector3.UP, facing) * _slot_offsets[slot]
+	return slot_position_from(anchor, facing, slot)
+
+
+## Position de l'emplacement si la formation était centrée sur `center` et orientée
+## selon `p_facing` (ex. : places finales à la destination d'un ordre).
+func slot_position_from(center: Vector3, p_facing: float, slot: int) -> Vector3:
+	return center + Basis(Vector3.UP, p_facing) * _slot_offsets[slot]
 
 
 ## Orientation (rad) de l'unité au repos sur cet emplacement.

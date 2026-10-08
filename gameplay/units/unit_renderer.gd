@@ -5,7 +5,8 @@ extends Node3D
 ## - le modèle de chaque unité, avec son animation de marche quand il se déplace ;
 ## - un anneau au sol à la couleur de son escouade (épais et vif si sélectionnée) ;
 ## - le numéro de l'escouade au-dessus de son centre ;
-## - la destination en cours.
+## - pour une escouade sélectionnée en déplacement : la place finale de chaque unité
+##   (petit anneau) et un trait discret jusqu'à la destination.
 
 @export var simulation: UnitSimulation
 @export var selection: SelectionController
@@ -27,6 +28,15 @@ extends Node3D
 @export var ring_width_idle: float = 0.06
 @export var ring_width_selected: float = 0.16
 
+@export_group("Destination")
+## Opacité des anneaux de place finale.
+@export_range(0.0, 1.0) var destination_alpha: float = 0.7
+## Épaisseur (m) des anneaux de place finale.
+@export var destination_ring_width: float = 0.05
+## Largeur (m) et opacité du trait de trajet.
+@export var path_width: float = 0.06
+@export_range(0.0, 1.0) var path_alpha: float = 0.35
+
 @export_group("Animation")
 ## Animation jouée pendant le déplacement ; son image 0 doit être la pose de repos.
 @export var walk_animation: StringName = &"Walk"
@@ -42,7 +52,10 @@ class SquadVisual:
 	var unit_nodes: Array[Node3D] = []
 	var rings: Array[MeshInstance3D] = []
 	var label: Label3D
-	var destination_marker: MeshInstance3D
+	## Place finale de chaque unité à la destination de l'ordre en cours.
+	var slot_markers: Array[MeshInstance3D] = []
+	## Trait du centre de l'escouade à sa destination.
+	var path_line: MeshInstance3D
 	var idle_mesh: TorusMesh
 	var selected_mesh: TorusMesh
 	## Lecteur de l'animation de marche de chaque unité (null si le modèle n'en a pas).
@@ -77,10 +90,30 @@ func _process(_delta: float) -> void:
 		center /= maxi(squad.units.size(), 1)
 		visual.label.position = center + Vector3.UP * label_height
 
-		var move_order := squad.order as MoveOrder
-		visual.destination_marker.visible = move_order != null
-		if move_order != null:
-			visual.destination_marker.position = move_order.target + Vector3.UP * 0.03
+		_update_destination(visual, center)
+
+
+## Places finales et trajet : visibles seulement pour une escouade sélectionnée qui a
+## un ordre de déplacement en cours.
+func _update_destination(visual: SquadVisual, center: Vector3) -> void:
+	var squad := visual.squad
+	var move_order := squad.order as MoveOrder
+	var shown := move_order != null and selection.is_selected(squad)
+	visual.path_line.visible = shown
+	for i in visual.slot_markers.size():
+		visual.slot_markers[i].visible = shown and i < squad.units.size()
+	if not shown:
+		return
+	for i in squad.units.size():
+		var slot := squad.slot_position_from(move_order.target, move_order.facing, squad.units[i].slot_index)
+		visual.slot_markers[i].position = slot + Vector3.UP * 0.035
+	var start := Vector3(center.x, 0.0, center.z)
+	var to_target := move_order.target - start
+	var length := to_target.length()
+	visual.path_line.visible = length > 0.1
+	if length > 0.1:
+		var basis := Basis(Vector3.UP, atan2(to_target.x, to_target.z)).scaled(Vector3(path_width, 1.0, length))
+		visual.path_line.transform = Transform3D(basis, start + to_target * 0.5 + Vector3.UP * 0.03)
 
 
 ## Marche : l'animation suit la vitesse de l'unité. À l'arrêt, le cycle en cours se
@@ -147,12 +180,14 @@ func _on_squad_spawned(squad: Squad) -> void:
 	visual.label.modulate = color.darkened(0.25)
 	add_child(visual.label)
 
-	var marker_radius := squad.get_formation_width() * 0.5
-	visual.destination_marker = MeshInstance3D.new()
-	visual.destination_marker.mesh = _make_ring_mesh(marker_radius, 0.08, _make_material(color))
-	visual.destination_marker.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	visual.destination_marker.visible = false
-	add_child(visual.destination_marker)
+	var slot_mesh := _make_ring_mesh(radius, destination_ring_width, _make_material(color, destination_alpha))
+	for unit in squad.units:
+		var marker := _make_ground_mark(slot_mesh)
+		visual.slot_markers.append(marker)
+	var path_mesh := PlaneMesh.new()
+	path_mesh.size = Vector2.ONE
+	path_mesh.material = _make_material(color, path_alpha)
+	visual.path_line = _make_ground_mark(path_mesh)
 
 	_visuals.append(visual)
 	_apply_selection_state(visual)
@@ -182,8 +217,20 @@ func _make_ring_mesh(radius: float, width: float, material: Material) -> TorusMe
 	return mesh
 
 
-func _make_material(color: Color) -> StandardMaterial3D:
+## Marque au sol (sans ombre), masquée par défaut.
+func _make_ground_mark(mesh: Mesh) -> MeshInstance3D:
+	var mark := MeshInstance3D.new()
+	mark.mesh = mesh
+	mark.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	mark.visible = false
+	add_child(mark)
+	return mark
+
+
+func _make_material(color: Color, alpha: float = 1.0) -> StandardMaterial3D:
 	var material := StandardMaterial3D.new()
 	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	material.albedo_color = color
+	material.albedo_color = Color(color, alpha)
+	if alpha < 1.0:
+		material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	return material
