@@ -22,6 +22,11 @@ var _amounts := PackedFloat64Array([0.0, 0.0, 0.0])
 ## Revenus (par minute).
 var _income_per_minute := PackedFloat64Array([0.0, 0.0, 0.0])
 
+## Population occupée par les escouades produites (coût par escouade entière).
+var population_used: int = 0
+## Population maximale du camp.
+var population_cap: int = 0
+
 
 func _init(p_team: int, p_faction: FactionData) -> void:
 	team = p_team
@@ -65,6 +70,25 @@ func spend(cost: PackedInt32Array) -> bool:
 	for kind in mini(cost.size(), KIND_COUNT):
 		_amounts[kind] -= cost[kind]
 	return true
+
+
+func get_population_free() -> int:
+	return population_cap - population_used
+
+
+## La population libre suffit pour `amount`.
+func has_population(amount: int) -> bool:
+	return population_used + amount <= population_cap
+
+
+## Occupe `amount` de population (sans vérification : voir has_population).
+func add_population(amount: int) -> void:
+	population_used += amount
+
+
+## Libère la population d'une escouade disparue.
+func release_population(amount: int) -> void:
+	population_used = maxi(population_used - amount, 0)
 
 
 ## Avance le temps : chaque stock reçoit son revenu au prorata de `delta` (s).

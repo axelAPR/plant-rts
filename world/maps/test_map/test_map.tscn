@@ -1,24 +1,16 @@
 [gd_scene format=3 uid="uid://k43ogoft0cs2"]
 
 [ext_resource type="PackedScene" path="res://camera/rts_camera.tscn" id="1_rtscam"]
-[ext_resource type="PackedScene" uid="uid://luke3aoenmqk" path="res://assets/plants/peashooter.glb" id="2_6h4uy"]
-[ext_resource type="PackedScene" uid="uid://b8pfb86sf7lei" path="res://assets/plants/cactus.glb" id="3_1k6tu"]
-[ext_resource type="PackedScene" uid="uid://cogvm8ubsp2xx" path="res://assets/plants/torchwood.glb" id="4_y440b"]
-[ext_resource type="PackedScene" uid="uid://dk7ihbinj8nhi" path="res://assets/zombies/scientist.glb" id="5_p82i7"]
-[ext_resource type="PackedScene" uid="uid://gvfdi2ufe62k" path="res://assets/zombies/z_mech.glb" id="6_6v2tv"]
-[ext_resource type="PackedScene" uid="uid://d1ucjqtmepvvm" path="res://assets/zombies/super_brainz.glb" id="7_ig1p8"]
-[ext_resource type="PackedScene" uid="uid://b61kbre1df7t7" path="res://assets/zombies/foot_soldier.glb" id="8_3hj5l"]
-[ext_resource type="PackedScene" uid="uid://darinkqg6n143" path="res://assets/zombies/engineer.glb" id="9_8dm8q"]
-[ext_resource type="PackedScene" uid="uid://dfqewxmgua1vs" path="res://assets/plants/chomper.glb" id="10_rhckg"]
-[ext_resource type="PackedScene" uid="uid://k6nib3sv4h36" path="res://assets/plants/citron.glb" id="11_wwvqv"]
-[ext_resource type="PackedScene" uid="uid://durxp4v61kd63" path="res://assets/plants/kernel_corn.glb" id="12_8mx5y"]
-[ext_resource type="PackedScene" uid="uid://djggd850byjn" path="res://assets/plants/rose.glb" id="13_wvpa1"]
-[ext_resource type="PackedScene" uid="uid://dmmfki2b00dv0" path="res://assets/plants/sunflower.glb" id="14_irshx"]
-[ext_resource type="PackedScene" uid="uid://jrbl7tcu28v8" path="res://assets/zombies/action_hero_80s.glb" id="15_hfall"]
-[ext_resource type="PackedScene" uid="uid://bx0iidruhgeot" path="res://assets/zombies/all_star.glb" id="16_tgbup"]
-[ext_resource type="PackedScene" uid="uid://b53gfdb7o7s1u" path="res://assets/zombies/browncoat.glb" id="17_rusy0"]
-[ext_resource type="PackedScene" uid="uid://dt2abmovtpl2o" path="res://assets/zombies/deadbeard.glb" id="18_lvgig"]
 [ext_resource type="Script" uid="uid://refjtaoit7wf" path="res://data/units/squad_data.gd" id="26_87q2y"]
+[ext_resource type="Script" uid="uid://bqjqslxdee1hc" path="res://data/factions/faction_data.gd" id="29_tgbup"]
+[ext_resource type="PackedScene" uid="uid://vatouesbmse6" path="res://assets/gw2/plants/torchwood.glb" id="32_y0rkp"]
+[ext_resource type="PackedScene" uid="uid://byd1f2xpknc23" path="res://assets/gw2/plants/sunflower.glb" id="33_v5t15"]
+[ext_resource type="PackedScene" uid="uid://nsjucttvkmv2" path="res://assets/gw2/plants/rose.glb" id="34_dpyul"]
+[ext_resource type="PackedScene" uid="uid://hvo8f3ovs13r" path="res://assets/gw2/plants/peashooter.glb" id="35_v2311"]
+[ext_resource type="PackedScene" uid="uid://bgg3nsw5yy62f" path="res://assets/gw2/plants/kernel_corn.glb" id="36_87q2y"]
+[ext_resource type="PackedScene" uid="uid://b6u54wv6ecvd" path="res://assets/gw2/plants/citron.glb" id="37_vo62b"]
+[ext_resource type="PackedScene" uid="uid://cxd36mfola5qd" path="res://assets/gw2/plants/chomper.glb" id="38_0neuv"]
+[ext_resource type="PackedScene" uid="uid://6wka3aiabu5d" path="res://assets/gw2/plants/cactus.glb" id="39_uka2y"]
 [ext_resource type="Script" uid="uid://bedvehrg70h3c" path="res://ui/selection_box.gd" id="dev_box"]
 [ext_resource type="Script" uid="uid://nkogj4y0hw4" path="res://player/command_controller.gd" id="dev_commands"]
 [ext_resource type="Script" uid="uid://h3tk1t3xpw5d" path="res://ui/dev_menu.gd" id="dev_menu"]
@@ -26,6 +18,15 @@
 [ext_resource type="Script" uid="uid://2u0gpuumwu63" path="res://gameplay/units/unit_renderer.gd" id="dev_renderer"]
 [ext_resource type="Script" uid="uid://cw1r2348p77b5" path="res://player/selection_controller.gd" id="dev_selection"]
 [ext_resource type="Script" uid="uid://dkv61sddydv7j" path="res://gameplay/units/unit_simulation.gd" id="dev_sim"]
+[ext_resource type="Script" uid="uid://buhqfto5mjm1b" path="res://ui/resource_bar.gd" id="eco_bar"]
+[ext_resource type="Script" uid="uid://ddw6piy2ntfpy" path="res://gameplay/economy/economy.gd" id="eco_economy"]
+[ext_resource type="Resource" path="res://data/factions/plants.tres" id="eco_plants"]
+[ext_resource type="Resource" path="res://data/factions/zombies.tres" id="eco_zombies"]
+[ext_resource type="Script" path="res://gameplay/combat/combat_system.gd" id="cbt_combat"]
+[ext_resource type="Script" path="res://gameplay/combat/projectile_renderer.gd" id="cbt_projectiles"]
+[ext_resource type="Script" path="res://gameplay/economy/production_system.gd" id="cbt_production"]
+[ext_resource type="Script" path="res://ui/unit_info_panel.gd" id="cbt_info"]
+[ext_resource type="Resource" path="res://data/units/imp_squad.tres" id="sq_imp"]
 [ext_resource type="Resource" path="res://data/units/action_hero_80s_squad.tres" id="sq_action_hero_80s"]
 [ext_resource type="Resource" path="res://data/units/all_star_squad.tres" id="sq_all_star"]
 [ext_resource type="Resource" path="res://data/units/browncoat_squad.tres" id="sq_browncoat"]
@@ -43,11 +44,6 @@
 [ext_resource type="Resource" path="res://data/units/super_brainz_squad.tres" id="sq_super_brainz"]
 [ext_resource type="Resource" path="res://data/units/torchwood_squad.tres" id="sq_torchwood"]
 [ext_resource type="Resource" path="res://data/units/z_mech_squad.tres" id="sq_z_mech"]
-
-[ext_resource type="Script" path="res://gameplay/economy/economy.gd" id="eco_economy"]
-[ext_resource type="Script" path="res://ui/resource_bar.gd" id="eco_bar"]
-[ext_resource type="Resource" path="res://data/factions/plants.tres" id="eco_plants"]
-[ext_resource type="Resource" path="res://data/factions/zombies.tres" id="eco_zombies"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sky"]
 
@@ -157,75 +153,6 @@ mesh = SubResource("BoxMesh_block")
 
 [node name="RTSCamera" parent="." unique_id=1835435912 instance=ExtResource("1_rtscam")]
 
-[node name="peashooter" parent="." unique_id=1556684046 instance=ExtResource("2_6h4uy")]
-transform = Transform3D(0.99985653, 0, -0.016937125, 0, 1, 0, 0.016937125, 0, 0.99985653, -2.0659418, -1.1920929e-07, 0.8517773)
-
-[node name="cactus" parent="." unique_id=1147670783 instance=ExtResource("3_1k6tu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.576751, 0, 1.4669127)
-
-[node name="torchwood" parent="." unique_id=18380818 instance=ExtResource("4_y440b")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7205215, 0.030929565, 2.4511907)
-
-[node name="scientist" parent="." unique_id=1666239772 instance=ExtResource("5_p82i7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.105039, 2.3841858e-07, 0.56689405)
-
-[node name="z_mech" parent="." unique_id=1165500648 instance=ExtResource("6_6v2tv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.545849, 2.3841858e-07, -1.3339968)
-
-[node name="super_brainz" parent="." unique_id=1268995967 instance=ExtResource("7_ig1p8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9885161, 0, 3.390029)
-
-[node name="scientist2" parent="." unique_id=2048082782 instance=ExtResource("5_p82i7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.1290684, 2.3841858e-07, 2.7486613)
-
-[node name="foot_soldier" parent="." unique_id=1180450499 instance=ExtResource("8_3hj5l")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.609899, 0, 3.1746762)
-
-[node name="engineer" parent="." unique_id=264820668 instance=ExtResource("9_8dm8q")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.9970517, -2.3841858e-07, -1.1355004)
-
-[node name="chomper" parent="." unique_id=37132902 instance=ExtResource("10_rhckg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.127691, 0, 1.3872261)
-
-[node name="citron" parent="." unique_id=619541470 instance=ExtResource("11_wwvqv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3379703, 2.3841858e-07, 2.2658772)
-
-[node name="kernel_corn" parent="." unique_id=1574202539 instance=ExtResource("12_8mx5y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.8951974, -2.3841858e-07, -1.7924042)
-
-[node name="rose" parent="." unique_id=688618377 instance=ExtResource("13_wvpa1")]
-transform = Transform3D(1, 0, 0, 0, 0.999957, -0.009272863, 0, 0.009272863, 0.999957, -1.7275193, 2.5492263, 4.1512527)
-
-[node name="sunflower" parent="." unique_id=23313332 instance=ExtResource("14_irshx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4281373, 0, 0.40975428)
-
-[node name="action_hero_80s" parent="." unique_id=1985293646 instance=ExtResource("15_hfall")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.743536, 0, 0.909245)
-
-[node name="all_star" parent="." unique_id=645554426 instance=ExtResource("16_tgbup")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.913328, 4.7683716e-07, 1.6197143)
-
-[node name="browncoat" parent="." unique_id=596239640 instance=ExtResource("17_rusy0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.4451027, 0, 3.6311593)
-
-[node name="deadbeard" parent="." unique_id=471576349 instance=ExtResource("18_lvgig")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.8453054, 0, 4.6667576)
-
-[node name="engineer2" parent="." unique_id=1908313254 instance=ExtResource("9_8dm8q")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.240307, 4.7683716e-07, 5.574739)
-
-[node name="foot_soldier2" parent="." unique_id=551149256 instance=ExtResource("8_3hj5l")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3486152, 0, 6.453598)
-
-[node name="scientist3" parent="." unique_id=1557644511 instance=ExtResource("5_p82i7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.60865, 0, 3.2776952)
-
-[node name="super_brainz2" parent="." unique_id=416921191 instance=ExtResource("7_ig1p8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.54780054, 0, 5.8536787)
-
-[node name="z_mech2" parent="." unique_id=2119770237 instance=ExtResource("6_6v2tv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.8438835, 0, -2.1903791)
-
 [node name="UnitSimulation" type="Node" parent="." unique_id=1374023617]
 script = ExtResource("dev_sim")
 
@@ -251,6 +178,19 @@ script = ExtResource("dev_renderer")
 simulation = NodePath("../UnitSimulation")
 selection = NodePath("../SelectionController")
 
+[node name="CombatSystem" type="Node" parent="." node_paths=PackedStringArray("simulation")]
+script = ExtResource("cbt_combat")
+simulation = NodePath("../UnitSimulation")
+
+[node name="ProjectileRenderer" type="MultiMeshInstance3D" parent="." node_paths=PackedStringArray("combat")]
+script = ExtResource("cbt_projectiles")
+combat = NodePath("../CombatSystem")
+
+[node name="ProductionSystem" type="Node" parent="." node_paths=PackedStringArray("economy", "simulation")]
+script = ExtResource("cbt_production")
+economy = NodePath("../Economy")
+simulation = NodePath("../UnitSimulation")
+
 [node name="HUD" type="CanvasLayer" parent="." unique_id=440923051]
 
 [node name="SelectionBox" type="Control" parent="HUD" unique_id=1738493176]
@@ -275,13 +215,9 @@ script = ExtResource("dev_menu")
 simulation = NodePath("../../UnitSimulation")
 camera_rig = NodePath("../../RTSCamera")
 plant_squads = Array[ExtResource("26_87q2y")]([ExtResource("sq_peashooter"), ExtResource("sq_sunflower"), ExtResource("sq_kernel_corn"), ExtResource("sq_cactus"), ExtResource("sq_rose"), ExtResource("sq_chomper"), ExtResource("sq_citron"), ExtResource("sq_torchwood")])
-zombie_squads = Array[ExtResource("26_87q2y")]([ExtResource("sq_browncoat"), ExtResource("sq_foot_soldier"), ExtResource("sq_engineer"), ExtResource("sq_scientist"), ExtResource("sq_deadbeard"), ExtResource("sq_all_star"), ExtResource("sq_super_brainz"), ExtResource("sq_action_hero_80s"), ExtResource("sq_z_mech")])
+zombie_squads = Array[ExtResource("26_87q2y")]([ExtResource("sq_browncoat"), ExtResource("sq_foot_soldier"), ExtResource("sq_engineer"), ExtResource("sq_scientist"), ExtResource("sq_imp"), ExtResource("sq_deadbeard"), ExtResource("sq_all_star"), ExtResource("sq_super_brainz"), ExtResource("sq_action_hero_80s"), ExtResource("sq_z_mech")])
 
-[node name="Economy" type="Node" parent="."]
-script = ExtResource("eco_economy")
-factions = Array[Resource]([ExtResource("eco_plants"), ExtResource("eco_zombies")])
-
-[node name="ResourceBar" type="Control" parent="HUD" node_paths=PackedStringArray("economy")]
+[node name="ResourceBar" type="Control" parent="HUD" unique_id=1505640795 node_paths=PackedStringArray("economy")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -292,3 +228,42 @@ mouse_filter = 2
 script = ExtResource("eco_bar")
 economy = NodePath("../../Economy")
 teams = Array[int]([0, 1])
+
+[node name="UnitInfoPanel" type="Control" parent="HUD" node_paths=PackedStringArray("selection")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("cbt_info")
+selection = NodePath("../../SelectionController")
+
+[node name="Economy" type="Node" parent="." unique_id=2010935405]
+script = ExtResource("eco_economy")
+factions = Array[ExtResource("29_tgbup")]([ExtResource("eco_plants"), ExtResource("eco_zombies")])
+
+[node name="torchwood" parent="." unique_id=601906821 instance=ExtResource("32_y0rkp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.6152983, 0, 6.1418624)
+
+[node name="sunflower" parent="." unique_id=31042125 instance=ExtResource("33_v5t15")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.097167, 0, 5.690477)
+
+[node name="rose" parent="." unique_id=1402452306 instance=ExtResource("34_dpyul")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.3795, 0, 6.3344793)
+
+[node name="peashooter" parent="." unique_id=1797977651 instance=ExtResource("35_v2311")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.54915, -1.1920929e-07, 6.50976)
+
+[node name="kernel_corn" parent="." unique_id=1630178920 instance=ExtResource("36_87q2y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.158248, 0, 6.575532)
+
+[node name="citron" parent="." unique_id=1059669959 instance=ExtResource("37_vo62b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.872098, 0, 6.1563096)
+
+[node name="chomper" parent="." unique_id=1894752146 instance=ExtResource("38_0neuv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.177887, 2.3841858e-07, 6.9268074)
+
+[node name="cactus" parent="." unique_id=425517235 instance=ExtResource("39_uka2y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.266637, 0, 8.763842)

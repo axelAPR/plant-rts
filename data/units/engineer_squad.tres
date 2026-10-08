@@ -7,6 +7,10 @@
 script = ExtResource("1_script")
 display_name = "Escouade de Ingénieur"
 unit_data = ExtResource("2_unit")
-unit_count = 4
-formation_columns = 2
+unit_count = 5
+formation_columns = 3
 formation_spacing = 2.5
+population_cost = 5
+primary_resource_cost = 300
+secondary_resource_cost = 5
+tertiary_resource_cost = 0

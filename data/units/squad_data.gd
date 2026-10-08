@@ -4,7 +4,16 @@ extends Resource
 
 @export var display_name: String = ""
 @export var unit_data: UnitData
+## Effectif (squad_size) : 1 = unité individuelle (Citron, Z-Mech…).
 @export_range(1, 32) var unit_count: int = 6
+
+@export_group("Production")
+## Population occupée par l'escouade entière (pas par membre).
+@export var population_cost: int = 0
+## Coût en ressource principale (Soleil / Cerveaux), secondaire, tertiaire.
+@export var primary_resource_cost: int = 0
+@export var secondary_resource_cost: int = 0
+@export var tertiary_resource_cost: int = 0
 
 @export_group("Formation")
 ## Nombre d'unités par rangée.
@@ -17,3 +26,12 @@ extends Resource
 ## Écart d'orientation maximal (degrés) de chaque unité au repos par rapport à
 ## l'orientation de la formation.
 @export_range(0.0, 45.0) var formation_yaw_jitter_degrees: float = 14.0
+
+
+## Coût de production, dans l'ordre de TeamEconomy.Kind.
+func get_cost() -> PackedInt32Array:
+	return PackedInt32Array([primary_resource_cost, secondary_resource_cost, tertiary_resource_cost])
+
+
+func is_individual() -> bool:
+	return unit_count == 1

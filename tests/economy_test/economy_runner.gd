@@ -18,6 +18,11 @@ func _initialize() -> void:
 func _run() -> void:
 	var economy := Economy.new()
 	economy.set_physics_process(false)
+	# Stock de départ à zéro pour vérifier les revenus seuls (le stock de départ par
+	# défaut est vérifié par production_runner).
+	economy.starting_primary = 0
+	economy.starting_secondary = 0
+	economy.starting_tertiary = 0
 	economy.factions = [load("res://data/factions/plants.tres"), load("res://data/factions/zombies.tres")]
 	root.add_child(economy)
 	var bar := ResourceBar.new()

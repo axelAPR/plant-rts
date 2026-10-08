@@ -18,9 +18,13 @@ signal team_added(team_economy: TeamEconomy)
 @export var base_income_tertiary: float = 0.0
 
 @export_group("Stock de départ")
-@export var starting_primary: int = 0
-@export var starting_secondary: int = 0
+@export var starting_primary: int = 500
+@export var starting_secondary: int = 50
 @export var starting_tertiary: int = 0
+
+@export_group("Population")
+## Population maximale de chaque camp (somme des population_cost des escouades produites).
+@export var population_cap: int = 100
 
 var _teams: Array[TeamEconomy] = []
 
@@ -57,5 +61,6 @@ func _add_team(team: int, faction: FactionData) -> void:
 	team_economy.add(TeamEconomy.Kind.PRIMARY, starting_primary)
 	team_economy.add(TeamEconomy.Kind.SECONDARY, starting_secondary)
 	team_economy.add(TeamEconomy.Kind.TERTIARY, starting_tertiary)
+	team_economy.population_cap = population_cap
 	_teams.append(team_economy)
 	team_added.emit(team_economy)

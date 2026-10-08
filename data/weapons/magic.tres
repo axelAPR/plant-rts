@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ProjectileData" format=3]
+
+[ext_resource type="Script" path="res://data/weapons/projectile_data.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"magic"
+display_name = "Projectile magique"
+radius = 0.1
+color = Color(0.8, 0.35, 1.0, 1)
+visual_diameter = 0.32
+visual_length = 0.32

@@ -1,15 +1,22 @@
-[gd_resource type="Resource" script_class="UnitData" format=3]
+[gd_resource type="Resource" script_class="UnitData" format=3 uid="uid://cojv8v1rhelnq"]
 
-[ext_resource type="Script" path="res://data/units/unit_data.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://3km063570cut" path="res://data/units/unit_data.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://jrbl7tcu28v8" path="res://assets/zombies/action_hero_80s.glb" id="2_model"]
+[ext_resource type="Resource" path="res://data/factions/zombies.tres" id="3_faction"]
+[ext_resource type="Resource" path="res://data/weapons/rocket.tres" id="4_projectile"]
 
 [resource]
 script = ExtResource("1_script")
 id = &"action_hero_80s"
 display_name = "Héros d'action des années 80"
 visual_scene = ExtResource("2_model")
-move_speed = 3.5
-acceleration = 14.0
-turn_speed_degrees = 540.0
 radius = 0.4
 footprint_radius = 1.0
+faction = ExtResource("3_faction")
+member_hp = 110.0
+damage_per_shot = 45.0
+accuracy = 0.8
+attack_cooldown = 1.3
+attack_range = 35.0
+projectile = ExtResource("4_projectile")
+projectile_speed = 35.0

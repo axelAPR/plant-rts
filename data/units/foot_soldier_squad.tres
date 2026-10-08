@@ -10,3 +10,7 @@ unit_data = ExtResource("2_unit")
 unit_count = 6
 formation_columns = 3
 formation_spacing = 2.5
+population_cost = 6
+primary_resource_cost = 300
+secondary_resource_cost = 0
+tertiary_resource_cost = 0

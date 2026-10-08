@@ -5,6 +5,8 @@ extends Resource
 @export_group("Identité")
 @export var id: StringName = &""
 @export var display_name: String = ""
+## Faction (plantes, zombies…) : noms et couleurs des ressources de son coût.
+@export var faction: FactionData
 
 @export_group("Représentation")
 ## Scène visuelle (modèle importé) : pivot au sol, orientée vers +Z (Vector3.MODEL_FRONT).
@@ -27,6 +29,38 @@ extends Resource
 ## Rayon de l'emprise visuelle complète (m), armes et feuilles comprises : anneau de
 ## sélection, clic, et emprise des formations pour réserver les destinations.
 @export var footprint_radius: float = 0.55
+
+
+@export_group("Combat")
+## Points de vie d'un membre (HP individuels : chaque membre d'une escouade a les siens).
+@export var member_hp: float = 100.0
+## Dégâts infligés par UN tir réussi d'UN membre (pas un DPS).
+@export var damage_per_shot: float = 0.0
+## Probabilité (0 à 1) qu'un tir arrivé sur sa cible la touche, tirée pour chaque tir.
+@export_range(0.0, 1.0) var accuracy: float = 1.0:
+	set(value):
+		accuracy = clampf(value, 0.0, 1.0)
+## Délai (s) entre deux tirs d'un même membre.
+@export var attack_cooldown: float = 1.0
+## Portée (m), mesurée jusqu'au bord du corps de la cible. 0 = n'attaque pas.
+@export var attack_range: float = 0.0
+## Projectile tiré ; null = attaque de mêlée (sans projectile).
+@export var projectile: ProjectileData
+## Vitesse (m/s) des projectiles de cette unité.
+@export var projectile_speed: float = 30.0
+## Hauteur (m) de départ des projectiles (bouche du canon, environ).
+@export var muzzle_height: float = 0.9
+## Hauteur (m) du volume touchable (cylindre de rayon `radius`).
+@export var hit_height: float = 1.5
+
+
+## Peut attaquer : portée et dégâts définis.
+func can_attack() -> bool:
+	return attack_range > 0.0 and damage_per_shot > 0.0
+
+
+func is_melee() -> bool:
+	return projectile == null
 
 
 ## Scène à afficher : le modèle local s'il est présent, sinon le modèle publié.

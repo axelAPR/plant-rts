@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://3km063570cut" path="res://data/units/unit_data.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://b8pfb86sf7lei" path="res://assets/plants/cactus.glb" id="2_model"]
+[ext_resource type="Resource" path="res://data/factions/plants.tres" id="3_faction"]
+[ext_resource type="Resource" path="res://data/weapons/spike.tres" id="4_projectile"]
 
 [resource]
 script = ExtResource("1_script")
@@ -10,3 +12,11 @@ display_name = "Cactus"
 visual_scene = ExtResource("2_model")
 local_visual_path = "res://assets/gw2/plants/cactus.glb"
 footprint_radius = 0.65
+faction = ExtResource("3_faction")
+member_hp = 75.0
+damage_per_shot = 75.0
+accuracy = 0.9
+attack_cooldown = 2.5
+attack_range = 45.0
+projectile = ExtResource("4_projectile")
+projectile_speed = 50.0

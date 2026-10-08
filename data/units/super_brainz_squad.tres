@@ -7,6 +7,10 @@
 script = ExtResource("1_script")
 display_name = "Escouade de Super Brainz"
 unit_data = ExtResource("2_unit")
-unit_count = 2
-formation_columns = 2
+unit_count = 3
+formation_columns = 3
 formation_spacing = 2.4
+population_cost = 10
+primary_resource_cost = 750
+secondary_resource_cost = 25
+tertiary_resource_cost = 0

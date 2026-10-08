@@ -4,7 +4,7 @@ extends RefCounted
 ## l'ancre et l'orientation de la formation ; la simulation gère le reste (déplacement
 ## des unités, évitement).
 ##
-## Implémentés : MOVE, STOP. Prévus avec le combat : ATTACK, ATTACK_MOVE, HOLD_POSITION.
+## Implémentés : MOVE, STOP, ATTACK. Prévus : ATTACK_MOVE, HOLD_POSITION.
 
 enum Type { MOVE, STOP, ATTACK, ATTACK_MOVE, HOLD_POSITION }
 

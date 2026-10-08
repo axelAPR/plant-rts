@@ -1,7 +1,9 @@
-[gd_resource type="Resource" script_class="UnitData" format=3]
+[gd_resource type="Resource" script_class="UnitData" format=3 uid="uid://di0p1rabniv3v"]
 
-[ext_resource type="Script" path="res://data/units/unit_data.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://3km063570cut" path="res://data/units/unit_data.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://dmmfki2b00dv0" path="res://assets/plants/sunflower.glb" id="2_model"]
+[ext_resource type="Resource" path="res://data/factions/plants.tres" id="3_faction"]
+[ext_resource type="Resource" path="res://data/weapons/sun.tres" id="4_projectile"]
 
 [resource]
 script = ExtResource("1_script")
@@ -9,8 +11,13 @@ id = &"sunflower"
 display_name = "Tournesol"
 visual_scene = ExtResource("2_model")
 local_visual_path = "res://assets/gw2/plants/sunflower.glb"
-move_speed = 3.5
-acceleration = 14.0
-turn_speed_degrees = 540.0
 radius = 0.3
 footprint_radius = 0.6
+faction = ExtResource("3_faction")
+member_hp = 80.0
+damage_per_shot = 8.0
+accuracy = 0.7
+attack_cooldown = 1.5
+attack_range = 20.0
+projectile = ExtResource("4_projectile")
+projectile_speed = 25.0

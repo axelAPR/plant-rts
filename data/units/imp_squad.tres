@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SquadData" format=3]
+
+[ext_resource type="Script" path="res://data/units/squad_data.gd" id="1_script"]
+[ext_resource type="Resource" path="res://data/units/imp.tres" id="2_unit"]
+
+[resource]
+script = ExtResource("1_script")
+display_name = "Escouade d'Imps"
+unit_data = ExtResource("2_unit")
+unit_count = 8
+formation_columns = 4
+formation_spacing = 1.4
+population_cost = 5
+primary_resource_cost = 250
+secondary_resource_cost = 0
+tertiary_resource_cost = 0

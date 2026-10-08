@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://3km063570cut" path="res://data/units/unit_data.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://luke3aoenmqk" path="res://assets/plants/peashooter.glb" id="2_model"]
+[ext_resource type="Resource" path="res://data/factions/plants.tres" id="3_faction"]
+[ext_resource type="Resource" path="res://data/weapons/pea.tres" id="4_projectile"]
 
 [resource]
 script = ExtResource("1_script")
@@ -9,3 +11,11 @@ id = &"peashooter"
 display_name = "Pisto-pois"
 visual_scene = ExtResource("2_model")
 local_visual_path = "res://assets/gw2/plants/peashooter.glb"
+faction = ExtResource("3_faction")
+member_hp = 100.0
+damage_per_shot = 18.0
+accuracy = 0.75
+attack_cooldown = 1.2
+attack_range = 25.0
+projectile = ExtResource("4_projectile")
+projectile_speed = 30.0

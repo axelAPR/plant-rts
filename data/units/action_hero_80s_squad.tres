@@ -7,6 +7,10 @@
 script = ExtResource("1_script")
 display_name = "Escouade de Héros d'action des années 80"
 unit_data = ExtResource("2_unit")
-unit_count = 1
-formation_columns = 1
+unit_count = 4
+formation_columns = 2
 formation_spacing = 2.3
+population_cost = 6
+primary_resource_cost = 500
+secondary_resource_cost = 15
+tertiary_resource_cost = 0

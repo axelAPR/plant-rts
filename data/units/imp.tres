@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="UnitData" format=3]
+
+[ext_resource type="Script" path="res://data/units/unit_data.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://assets/zombies/imp_placeholder.tscn" id="2_model"]
+[ext_resource type="Resource" path="res://data/factions/zombies.tres" id="3_faction"]
+[ext_resource type="Resource" path="res://data/weapons/bullet.tres" id="4_projectile"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"imp"
+display_name = "Imp"
+visual_scene = ExtResource("2_model")
+radius = 0.25
+footprint_radius = 0.45
+faction = ExtResource("3_faction")
+member_hp = 50.0
+damage_per_shot = 10.0
+accuracy = 0.65
+attack_cooldown = 1.0
+attack_range = 18.0
+projectile = ExtResource("4_projectile")
+projectile_speed = 25.0

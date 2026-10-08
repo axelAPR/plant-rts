@@ -1,15 +1,22 @@
-[gd_resource type="Resource" script_class="UnitData" format=3]
+[gd_resource type="Resource" script_class="UnitData" format=3 uid="uid://vemmp6rlbbtc"]
 
-[ext_resource type="Script" path="res://data/units/unit_data.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://3km063570cut" path="res://data/units/unit_data.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://bx0iidruhgeot" path="res://assets/zombies/all_star.glb" id="2_model"]
+[ext_resource type="Resource" path="res://data/factions/zombies.tres" id="3_faction"]
+[ext_resource type="Resource" path="res://data/weapons/football.tres" id="4_projectile"]
 
 [resource]
 script = ExtResource("1_script")
 id = &"all_star"
 display_name = "All-Star"
 visual_scene = ExtResource("2_model")
-move_speed = 3.5
-acceleration = 14.0
-turn_speed_degrees = 540.0
 radius = 0.4
 footprint_radius = 1.0
+faction = ExtResource("3_faction")
+member_hp = 300.0
+damage_per_shot = 50.0
+accuracy = 0.7
+attack_cooldown = 1.6
+attack_range = 22.0
+projectile = ExtResource("4_projectile")
+projectile_speed = 25.0

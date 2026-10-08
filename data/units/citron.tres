@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://3km063570cut" path="res://data/units/unit_data.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://k6nib3sv4h36" path="res://assets/plants/citron.glb" id="2_model"]
+[ext_resource type="Resource" path="res://data/factions/plants.tres" id="3_faction"]
+[ext_resource type="Resource" path="res://data/weapons/laser.tres" id="4_projectile"]
 
 [resource]
 script = ExtResource("1_script")
@@ -11,3 +13,11 @@ visual_scene = ExtResource("2_model")
 local_visual_path = "res://assets/gw2/plants/citron.glb"
 radius = 0.5
 footprint_radius = 0.9
+faction = ExtResource("3_faction")
+member_hp = 2000.0
+damage_per_shot = 100.0
+accuracy = 0.8
+attack_cooldown = 1.8
+attack_range = 35.0
+projectile = ExtResource("4_projectile")
+projectile_speed = 35.0

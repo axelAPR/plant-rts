@@ -6,6 +6,8 @@ extends Resource
 @export_group("Identité")
 @export var id: StringName = &""
 @export var display_name: String = ""
+## Couleur des unités du camp à l'écran (anneaux au sol, numéro d'escouade).
+@export var unit_color: Color = Color.WHITE
 
 @export_group("Ressources")
 ## Noms des ressources, dans l'ordre de TeamEconomy.Kind : principale (effectifs),

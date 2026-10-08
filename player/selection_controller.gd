@@ -29,6 +29,10 @@ var _is_pressing: bool = false
 var _is_dragging: bool = false
 
 
+func _ready() -> void:
+	simulation.squad_destroyed.connect(_on_squad_destroyed)
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		var button := event as InputEventMouseButton
@@ -106,3 +110,13 @@ func _select_in_rect(rect: Rect2) -> void:
 				squads.append(squad)
 				break
 	set_selection(squads)
+
+
+## Une escouade détruite quitte la sélection.
+func _on_squad_destroyed(squad: Squad) -> void:
+	if selected_squads.has(squad):
+		var remaining: Array[Squad] = []
+		for selected in selected_squads:
+			if selected != squad:
+				remaining.append(selected)
+		set_selection(remaining)

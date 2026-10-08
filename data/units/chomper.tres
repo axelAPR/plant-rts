@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://3km063570cut" path="res://data/units/unit_data.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://dfqewxmgua1vs" path="res://assets/plants/chomper.glb" id="2_model"]
+[ext_resource type="Resource" path="res://data/factions/plants.tres" id="3_faction"]
 
 [resource]
 script = ExtResource("1_script")
@@ -11,3 +12,9 @@ visual_scene = ExtResource("2_model")
 local_visual_path = "res://assets/gw2/plants/chomper.glb"
 radius = 0.45
 footprint_radius = 0.8
+faction = ExtResource("3_faction")
+member_hp = 180.0
+damage_per_shot = 70.0
+accuracy = 0.85
+attack_cooldown = 2.0
+attack_range = 3.0

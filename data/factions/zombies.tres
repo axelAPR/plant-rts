@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("1_script")
 id = &"zombies"
+unit_color = Color(0.68, 0.32, 0.95, 1)
 display_name = "Zombies"
 resource_names = Array[String](["Cerveaux", "Engrenages", "Pesticides"])
 resource_colors = Array[Color]([Color(0.96, 0.55, 0.7, 1), Color(0.68, 0.73, 0.8, 1), Color(0.74, 0.86, 0.2, 1)])

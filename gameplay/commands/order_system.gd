@@ -55,6 +55,14 @@ func issue_move(squads: Array[Squad], target: Vector3) -> void:
 		simulation.issue_order(squad, MoveOrder.new(destination, facing, move_settings))
 
 
+## Attaque : chaque escouade s'approche de `target` et la prend pour cible. Les
+## escouades du même camp que la cible sont ignorées.
+func issue_attack(squads: Array[Squad], target: Squad) -> void:
+	for squad in squads:
+		if target != null and squad.team != target.team and squad.data.unit_data.can_attack():
+			simulation.issue_order(squad, AttackOrder.new(target.id))
+
+
 func issue_stop(squads: Array[Squad]) -> void:
 	for squad in squads:
 		simulation.issue_order(squad, StopOrder.new())

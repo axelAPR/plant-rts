@@ -20,6 +20,10 @@ extends Node
 ## sans fin ; elle repart dès que l'emplacement se libère.
 
 signal squad_spawned(squad: Squad)
+## Un membre a été retiré (mort) ; son escouade le référence encore dans le signal.
+signal unit_removed(unit: Unit, squad: Squad)
+## L'escouade n'a plus aucun membre : elle est retirée de la simulation.
+signal squad_destroyed(squad: Squad)
 
 @export_group("Déplacement")
 ## Distance (m) en deçà de laquelle une unité ralentit en approchant de son emplacement.
@@ -57,6 +61,7 @@ var squads: Array[Squad] = []
 var units: Array[Unit] = []
 
 var _squads_by_id: Dictionary[int, Squad] = {}
+var _units_by_id: Dictionary[int, Unit] = {}
 var _grid := SpatialHashGrid.new(2.0)
 var _max_unit_radius: float = 0.0
 ## Par index d'unité : 1 si son escouade a un ordre en cours (mis à jour à chaque tick).
@@ -75,6 +80,7 @@ func spawn_squad(data: SquadData, team: int, position: Vector3, facing: float) -
 		unit.slot_index = i
 		squad.units.append(unit)
 		units.append(unit)
+		_units_by_id[unit.id] = unit
 		_max_unit_radius = maxf(_max_unit_radius, data.unit_data.radius)
 	squads.append(squad)
 	_squads_by_id[squad.id] = squad
@@ -84,6 +90,31 @@ func spawn_squad(data: SquadData, team: int, position: Vector3, facing: float) -
 
 func get_squad(squad_id: int) -> Squad:
 	return _squads_by_id.get(squad_id)
+
+
+## Unité vivante d'id `unit_id`, ou null (inconnue ou retirée).
+func get_unit(unit_id: int) -> Unit:
+	return _units_by_id.get(unit_id)
+
+
+## Retire un membre (mort). Son emplacement de formation reste libre ; une escouade
+## sans membre est retirée à son tour. À appeler entre deux ticks (pas pendant step).
+func remove_unit(unit: Unit) -> void:
+	if not _units_by_id.has(unit.id):
+		return
+	unit.alive = false
+	_units_by_id.erase(unit.id)
+	units.erase(unit)
+	var squad := get_squad(unit.squad_id)
+	if squad == null:
+		return
+	squad.units.erase(unit)
+	unit_removed.emit(unit, squad)
+	if squad.units.is_empty():
+		squads.erase(squad)
+		_squads_by_id.erase(squad.id)
+		squad.order = null
+		squad_destroyed.emit(squad)
 
 
 ## Remplace l'ordre en cours d'une escouade.
@@ -285,8 +316,12 @@ func _update_facing(delta: float) -> void:
 		var to_slot := squad.slot_position(unit.slot_index) - unit.position
 		to_slot.y = 0.0
 		var settling := squad.anchor_velocity == Vector3.ZERO 				and to_slot.length_squared() < face_slot_distance * face_slot_distance
-		if flat_velocity.length() > facing_speed_threshold and not settling:
+		var walking := flat_velocity.length() > facing_speed_threshold and not settling
+		if walking:
 			target_yaw = atan2(flat_velocity.x, flat_velocity.y)
+		elif unit.aiming:
+			# À l'arrêt, le membre se tourne vers sa cible (combat).
+			target_yaw = unit.aim_yaw
 		unit.yaw = rotate_toward(unit.yaw, target_yaw, deg_to_rad(unit.data.turn_speed_degrees) * delta)
 
 

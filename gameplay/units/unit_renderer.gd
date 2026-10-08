@@ -3,7 +3,7 @@ extends Node3D
 ## Représentation visuelle des unités et des escouades. Lit l'état de la simulation
 ## (sans jamais le modifier) et l'affiche, interpolé entre deux ticks physiques :
 ## - le modèle de chaque unité, avec son animation de marche quand il se déplace ;
-## - un anneau au sol à la couleur de son escouade (épais et vif si sélectionnée) ;
+## - un anneau au sol à la couleur de sa faction (épais et vif si sélectionnée) ;
 ## - le numéro de l'escouade au-dessus de son centre ;
 ## - pour une escouade sélectionnée en déplacement : la place finale de chaque unité
 ##   (petit anneau) et un trait discret jusqu'à la destination.
@@ -12,13 +12,9 @@ extends Node3D
 @export var selection: SelectionController
 
 @export_group("Escouades")
-## Couleurs attribuées aux escouades, dans l'ordre de leur création.
-@export var squad_colors: Array[Color] = [
-	Color(0.2, 0.75, 1.0),
-	Color(1.0, 0.7, 0.1),
-	Color(0.85, 0.35, 1.0),
-	Color(1.0, 0.35, 0.35),
-]
+## Couleur d'une escouade dont l'unité n'a pas de faction (sinon : couleur de la
+## faction, FactionData.unit_color — vert pour les plantes, violet pour les zombies).
+@export var fallback_color: Color = Color(0.8, 0.8, 0.8)
 ## Hauteur (m) du numéro d'escouade au-dessus du sol.
 @export var label_height: float = 2.4
 
@@ -46,9 +42,11 @@ extends Node3D
 @export_range(0.0, 0.3) var walk_rate_variation: float = 0.08
 
 
-## Éléments visuels d'une escouade.
+## Éléments visuels d'une escouade. Les tableaux par unité suivent l'ordre de
+## squad.units (un membre mort est retiré des deux au même index).
 class SquadVisual:
 	var squad: Squad
+	var unit_ids: PackedInt32Array
 	var unit_nodes: Array[Node3D] = []
 	var rings: Array[MeshInstance3D] = []
 	var label: Label3D
@@ -65,10 +63,13 @@ class SquadVisual:
 
 
 var _visuals: Array[SquadVisual] = []
+var _visuals_by_squad: Dictionary[int, SquadVisual] = {}
 
 
 func _ready() -> void:
 	simulation.squad_spawned.connect(_on_squad_spawned)
+	simulation.unit_removed.connect(_on_unit_removed)
+	simulation.squad_destroyed.connect(_on_squad_destroyed)
 	selection.selection_changed.connect(_on_selection_changed)
 	for squad in simulation.squads:
 		_on_squad_spawned(squad)
@@ -145,7 +146,7 @@ func _find_walk_player(model: Node) -> AnimationPlayer:
 
 
 func _on_squad_spawned(squad: Squad) -> void:
-	var color := squad_colors[squad.id % squad_colors.size()]
+	var color := _squad_color(squad)
 	var radius := squad.data.unit_data.footprint_radius * ring_radius_scale
 
 	var visual := SquadVisual.new()
@@ -170,6 +171,7 @@ func _on_squad_spawned(squad: Squad) -> void:
 		ring.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		node.add_child(ring)
 		add_child(node)
+		visual.unit_ids.append(unit.id)
 		visual.unit_nodes.append(node)
 		visual.rings.append(ring)
 
@@ -193,7 +195,39 @@ func _on_squad_spawned(squad: Squad) -> void:
 	visual.path_line = _make_ground_mark(path_mesh)
 
 	_visuals.append(visual)
+	_visuals_by_squad[squad.id] = visual
 	_apply_selection_state(visual)
+
+
+## Membre mort : son modèle et son anneau disparaissent.
+func _on_unit_removed(unit: Unit, squad: Squad) -> void:
+	var visual: SquadVisual = _visuals_by_squad.get(squad.id)
+	if visual == null:
+		return
+	var index := visual.unit_ids.find(unit.id)
+	if index < 0:
+		return
+	visual.unit_nodes[index].queue_free()
+	visual.unit_ids.remove_at(index)
+	visual.unit_nodes.remove_at(index)
+	visual.rings.remove_at(index)
+	visual.walk_players.remove_at(index)
+	visual.walk_positions.remove_at(index)
+
+
+## Escouade détruite : numéro, places finales et trajet disparaissent.
+func _on_squad_destroyed(squad: Squad) -> void:
+	var visual: SquadVisual = _visuals_by_squad.get(squad.id)
+	if visual == null:
+		return
+	_visuals_by_squad.erase(squad.id)
+	_visuals.erase(visual)
+	for node in visual.unit_nodes:
+		node.queue_free()
+	for marker in visual.slot_markers:
+		marker.queue_free()
+	visual.label.queue_free()
+	visual.path_line.queue_free()
 
 
 func _on_selection_changed(_squads: Array[Squad]) -> void:
@@ -205,9 +239,15 @@ func _apply_selection_state(visual: SquadVisual) -> void:
 	var selected := selection.is_selected(visual.squad)
 	for ring in visual.rings:
 		ring.mesh = visual.selected_mesh if selected else visual.idle_mesh
-	var color := squad_colors[visual.squad.id % squad_colors.size()]
+	var color := _squad_color(visual.squad)
 	visual.label.modulate = color.lightened(0.3) if selected else color.darkened(0.25)
 	visual.label.outline_modulate = Color.WHITE if selected else Color.BLACK
+
+
+## Couleur des anneaux, du numéro et du trajet : celle de la faction de l'escouade.
+func _squad_color(squad: Squad) -> Color:
+	var faction := squad.data.unit_data.faction
+	return faction.unit_color if faction != null else fallback_color
 
 
 func _make_ring_mesh(radius: float, width: float, material: Material) -> TorusMesh:
