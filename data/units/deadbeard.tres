@@ -11,4 +11,5 @@ visual_scene = ExtResource("2_model")
 move_speed = 3.5
 acceleration = 14.0
 turn_speed_degrees = 540.0
-radius = 1.3
+radius = 0.35
+footprint_radius = 1.3

@@ -19,7 +19,7 @@ signal selection_changed(squads: Array[Squad])
 @export var drag_threshold: float = 6.0
 ## Hauteur (m) du point visé sur une unité (environ le milieu du modèle).
 @export var pick_height: float = 0.65
-## Tolérance du clic, en multiple du rayon de l'unité.
+## Tolérance du clic, en multiple du rayon d'emprise visuelle de l'unité.
 @export var pick_radius_scale: float = 1.3
 
 var selected_squads: Array[Squad] = []
@@ -78,7 +78,7 @@ func pick_unit(screen_position: Vector2, only_team: int = -1) -> Unit:
 		if camera.is_position_behind(world):
 			continue
 		var screen := camera.unproject_position(world)
-		var edge := camera.unproject_position(world + camera_right * unit.data.radius * pick_radius_scale)
+		var edge := camera.unproject_position(world + camera_right * unit.data.footprint_radius * pick_radius_scale)
 		var distance := screen.distance_to(screen_position)
 		if distance <= screen.distance_to(edge) and distance < best_distance:
 			best = unit

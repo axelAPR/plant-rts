@@ -3,9 +3,10 @@ extends SceneTree
 ## entrées souris (clic, glisser, clic droit) et vérifie sélection, déplacement,
 ## absence de superposition et cohésion des formations.
 ##
-## Lancement (fenêtré, nécessaire pour les captures) :
-##   Godot --path . --script res://tests/squad_test/squad_test_runner.gd
-## Option : -- --screenshots=<dossier absolu> pour enregistrer des captures PNG.
+## Lancement : Godot --headless --path . --script res://tests/squad_test/squad_test_runner.gd
+## Option : -- --screenshots=<dossier absolu> pour enregistrer des captures PNG (lancer
+## alors sans --headless). En fenêtré, la vraie souris peut se mêler aux clics simulés
+## et fausser des vérifications de sélection : ne pas toucher la souris pendant le test.
 ## Code de sortie : 0 si tout passe, 1 sinon.
 
 const SCENE_PATH := "res://tests/squad_test/squad_test.tscn"
@@ -23,6 +24,8 @@ var _camera: Camera3D
 var _screenshot_dir: String = ""
 var _failures: Array[String] = []
 var _checks: int = 0
+## Distance minimale (m) entre deux Pisto-pois : somme de leurs rayons de corps.
+var _contact: float
 
 
 func _initialize() -> void:
@@ -46,7 +49,8 @@ func _run() -> void:
 	var squad_b := _simulation.squads[1]
 	_check(_simulation.squads.size() == 2, "2 escouades créées")
 	_check(squad_a.units.size() == 6 and squad_b.units.size() == 6, "6 unités par escouade")
-	_check(_min_unit_distance() >= 1.1 - 0.01, "aucune superposition au départ")
+	_contact = 2.0 * squad_a.data.unit_data.radius
+	_check(_min_unit_distance() >= _contact - 0.01, "aucune superposition au départ")
 	await _screenshot("01_depart")
 
 	# 1. Clic sur une unité → toute son escouade est sélectionnée.
@@ -169,7 +173,7 @@ func _check_travel(stats: Dictionary, label: String) -> void:
 	_check(not stats.timeout, "%s terminé en %.1f s" % [label, stats.time])
 	_check(stats.max_error < MAX_TRAVEL_FORMATION_ERROR,
 			"%s : formation cohérente (écart max %.2f m)" % [label, stats.max_error])
-	_check(stats.min_distance >= 1.1 - 0.02,
+	_check(stats.min_distance >= _contact - 0.02,
 			"%s : aucune superposition (distance min %.2f m)" % [label, stats.min_distance])
 
 

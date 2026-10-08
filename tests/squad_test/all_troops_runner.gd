@@ -4,8 +4,10 @@ extends SceneTree
 ## à l'arrêt, puis déplace toutes les escouades simultanément et contrôle la marche
 ## en formation et l'arrivée.
 ##
-## Lancement : Godot --path . --script res://tests/squad_test/all_troops_runner.gd
-## Option : -- --screenshots=<dossier absolu> pour enregistrer des captures PNG.
+## Lancement : Godot --headless --path . --script res://tests/squad_test/all_troops_runner.gd
+## Option : -- --screenshots=<dossier absolu> pour enregistrer des captures PNG (lancer
+## alors sans --headless). En fenêtré, la vraie souris peut se mêler aux clics simulés
+## et fausser des vérifications de sélection : ne pas toucher la souris pendant le test.
 ## Code de sortie : 0 si tout passe, 1 sinon.
 
 const SCENE_PATH := "res://tests/squad_test/all_troops_test.tscn"

@@ -17,5 +17,9 @@ extends Resource
 @export var acceleration: float = 14.0
 ## Vitesse de rotation (degrés/s).
 @export var turn_speed_degrees: float = 540.0
-## Rayon d'encombrement au sol (m) : sert à éviter les superpositions.
-@export var radius: float = 0.55
+## Rayon du corps (m) : tronc, pieds — ni bras, ni armes, ni feuilles. Sert aux
+## collisions et à l'évitement entre unités.
+@export var radius: float = 0.35
+## Rayon de l'emprise visuelle complète (m), armes et feuilles comprises : anneau de
+## sélection, clic, et emprise des formations pour réserver les destinations.
+@export var footprint_radius: float = 0.55

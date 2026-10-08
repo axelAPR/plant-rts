@@ -12,6 +12,15 @@ var team: int
 var squad_id: int = -1
 ## Index de l'emplacement occupé dans la formation de l'escouade.
 var slot_index: int = 0
+## Au repos, l'unité a renoncé à rejoindre son emplacement (occupé par d'autres
+## unités) : elle reste où elle est au lieu de courir sur place. Levé dès que
+## l'emplacement se libère ou qu'un nouvel ordre réattribue les emplacements.
+var holding: bool = false
+## Plus petite distance (m) à l'emplacement atteinte depuis le dernier progrès.
+var slot_best_distance: float = INF
+## Temps (s) écoulé sans se rapprocher de l'emplacement, ou passé sur place une fois
+## l'emplacement abandonné.
+var slot_stuck_time: float = 0.0
 
 var position: Vector3
 var velocity: Vector3 = Vector3.ZERO
@@ -31,3 +40,10 @@ func _init(p_id: int, p_data: UnitData, p_team: int, p_position: Vector3, p_yaw:
 	previous_position = p_position
 	yaw = p_yaw
 	previous_yaw = p_yaw
+
+
+## Reprend la recherche de l'emplacement (progression remise à zéro).
+func release_hold() -> void:
+	holding = false
+	slot_best_distance = INF
+	slot_stuck_time = 0.0

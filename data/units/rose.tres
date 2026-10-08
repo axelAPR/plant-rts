@@ -12,3 +12,4 @@ move_speed = 3.5
 acceleration = 14.0
 turn_speed_degrees = 540.0
 radius = 0.6
+footprint_radius = 0.6

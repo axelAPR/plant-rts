@@ -2,7 +2,9 @@ class_name DevMenu
 extends Control
 ## Menu de développement, en haut à droite de l'écran.
 ## Le bouton fait apparaître une escouade de chaque troupe autour du point visé par
-## la caméra : plantes (camp 0) au sud, zombies (camp 1) au nord, face à face.
+## la caméra : plantes (camp 0) au sud, zombies (camp 1) au nord, face à face. Chaque
+## escouade prend l'emplacement libre le plus proche : pas d'apparition par-dessus
+## des escouades existantes.
 ## Absent des exports de production (builds non debug).
 
 @export var simulation: UnitSimulation
@@ -20,6 +22,10 @@ extends Control
 ## Distance (m) entre le point visé et la première rangée de chaque camp.
 @export var front_distance: float = 8.0
 @export_range(1, 10) var squads_per_row: int = 5
+## Écart minimal (m) entre l'emprise d'une nouvelle escouade et les escouades existantes.
+@export var spawn_margin: float = 1.0
+## Distance (m) maximale de recherche d'un emplacement libre.
+@export var spawn_search_radius: float = 80.0
 
 ## Marge (pixels) entre le menu et les bords de l'écran.
 @export var screen_margin: float = 12.0
@@ -38,15 +44,21 @@ func _ready() -> void:
 func spawn_all_troops() -> void:
 	var center := camera_rig.global_position
 	center.y = 0.0
-	_spawn_camp(plant_squads, 0, center, 1.0, PI)
-	_spawn_camp(zombie_squads, 1, center, -1.0, 0.0)
+	var space := FormationSpace.from_simulation(simulation, spawn_margin)
+	_spawn_camp(plant_squads, 0, center, 1.0, PI, space)
+	_spawn_camp(zombie_squads, 1, center, -1.0, 0.0, space)
 
 
-func _spawn_camp(squads: Array[SquadData], team: int, center: Vector3, side: float, facing: float) -> void:
+func _spawn_camp(squads: Array[SquadData], team: int, center: Vector3, side: float, facing: float,
+		space: FormationSpace) -> void:
 	var positions := SquadLayout.camp_positions(squads.size(), center, side, squads_per_row,
 			column_spacing, row_spacing, front_distance)
 	for i in squads.size():
-		simulation.spawn_squad(squads[i], team, positions[i], facing)
+		var half := Squad.footprint_half_extents(squads[i], squads[i].unit_count)
+		var position := space.find_free(positions[i], half, facing, spawn_search_radius, 1.0,
+				Vector3(0.0, 0.0, side))
+		space.add(position, half, facing)
+		simulation.spawn_squad(squads[i], team, position, facing)
 
 
 func _build_ui() -> void:

@@ -7,6 +7,6 @@ func _init() -> void:
 	type = Type.STOP
 
 
-func start(squad: Squad) -> void:
+func start(squad: Squad, _simulation: UnitSimulation) -> void:
 	squad.anchor = squad.get_center()
 	squad.reassign_slots()

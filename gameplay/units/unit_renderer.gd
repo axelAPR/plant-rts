@@ -22,7 +22,7 @@ extends Node3D
 @export var label_height: float = 2.4
 
 @export_group("Anneaux")
-## Rayon (m) de l'anneau, en multiple du rayon de l'unité.
+## Rayon (m) de l'anneau, en multiple du rayon d'emprise visuelle de l'unité.
 @export var ring_radius_scale: float = 1.2
 @export var ring_width_idle: float = 0.06
 @export var ring_width_selected: float = 0.16
@@ -111,7 +111,7 @@ func _find_walk_player(model: Node) -> AnimationPlayer:
 
 func _on_squad_spawned(squad: Squad) -> void:
 	var color := squad_colors[squad.id % squad_colors.size()]
-	var radius := squad.data.unit_data.radius * ring_radius_scale
+	var radius := squad.data.unit_data.footprint_radius * ring_radius_scale
 
 	var visual := SquadVisual.new()
 	visual.squad = squad
