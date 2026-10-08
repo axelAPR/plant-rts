@@ -1,0 +1,105 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://tests/squad_test/squad_test.gd" id="1_test"]
+[ext_resource type="Resource" path="res://data/units/peashooter_squad.tres" id="2_squad"]
+[ext_resource type="PackedScene" path="res://camera/rts_camera.tscn" id="3_camera"]
+[ext_resource type="Script" path="res://gameplay/units/unit_simulation.gd" id="4_sim"]
+[ext_resource type="Script" path="res://gameplay/commands/order_system.gd" id="5_orders"]
+[ext_resource type="Script" path="res://gameplay/units/unit_renderer.gd" id="6_renderer"]
+[ext_resource type="Script" path="res://player/selection_controller.gd" id="7_selection"]
+[ext_resource type="Script" path="res://player/command_controller.gd" id="8_commands"]
+[ext_resource type="Script" path="res://ui/selection_box.gd" id="9_box"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sky"]
+
+[sub_resource type="Sky" id="Sky_main"]
+sky_material = SubResource("ProceduralSkyMaterial_sky")
+
+[sub_resource type="Environment" id="Environment_main"]
+background_mode = 2
+sky = SubResource("Sky_main")
+ambient_light_source = 3
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ground"]
+albedo_color = Color(0.42, 0.55, 0.28, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ground"]
+material = SubResource("StandardMaterial3D_ground")
+size = Vector2(80, 80)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ground"]
+size = Vector3(80, 1, 80)
+
+[node name="SquadTest" type="Node3D"]
+script = ExtResource("1_test")
+squad_data = ExtResource("2_squad")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_main")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.383022, 0.321394, 0, 0.642788, 0.766044, -0.5, -0.663414, 0.55667, 0, 20, 0)
+shadow_enabled = true
+directional_shadow_max_distance = 100.0
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="Mesh" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("PlaneMesh_ground")
+
+[node name="Collision" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_ground")
+
+[node name="RTSCamera" parent="." instance=ExtResource("3_camera")]
+bounds = Rect2(-40, -40, 80, 80)
+zoom_min_distance = 8.0
+initial_distance = 24.0
+
+[node name="UnitSimulation" type="Node" parent="."]
+script = ExtResource("4_sim")
+
+[node name="OrderSystem" type="Node" parent="." node_paths=PackedStringArray("simulation")]
+script = ExtResource("5_orders")
+simulation = NodePath("../UnitSimulation")
+
+[node name="SelectionController" type="Node" parent="." node_paths=PackedStringArray("simulation", "camera_rig", "selection_box")]
+script = ExtResource("7_selection")
+simulation = NodePath("../UnitSimulation")
+camera_rig = NodePath("../RTSCamera")
+selection_box = NodePath("../HUD/SelectionBox")
+
+[node name="CommandController" type="Node" parent="." node_paths=PackedStringArray("selection", "order_system", "camera_rig")]
+script = ExtResource("8_commands")
+selection = NodePath("../SelectionController")
+order_system = NodePath("../OrderSystem")
+camera_rig = NodePath("../RTSCamera")
+
+[node name="UnitRenderer" type="Node3D" parent="." node_paths=PackedStringArray("simulation", "selection")]
+script = ExtResource("6_renderer")
+simulation = NodePath("../UnitSimulation")
+selection = NodePath("../SelectionController")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="SelectionBox" type="Control" parent="HUD"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("9_box")
+
+[node name="Help" type="Label" parent="HUD"]
+offset_left = 12.0
+offset_top = 10.0
+offset_right = 600.0
+offset_bottom = 90.0
+mouse_filter = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "Clic gauche : sélectionner une escouade · Glisser : sélectionner plusieurs escouades
+Clic droit : déplacer · ZQSD / flèches : caméra · A/E : rotation · Molette : zoom"

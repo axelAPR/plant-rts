@@ -1,0 +1,111 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://tests/squad_test/all_troops_test.gd" id="1_test"]
+[ext_resource type="PackedScene" path="res://camera/rts_camera.tscn" id="3_camera"]
+[ext_resource type="Script" path="res://gameplay/units/unit_simulation.gd" id="4_sim"]
+[ext_resource type="Script" path="res://gameplay/commands/order_system.gd" id="5_orders"]
+[ext_resource type="Script" path="res://gameplay/units/unit_renderer.gd" id="6_renderer"]
+[ext_resource type="Script" path="res://player/selection_controller.gd" id="7_selection"]
+[ext_resource type="Script" path="res://player/command_controller.gd" id="8_commands"]
+[ext_resource type="Script" path="res://ui/selection_box.gd" id="9_box"]
+[ext_resource type="Resource" path="res://data/units/peashooter_squad.tres" id="sq_peashooter"]
+[ext_resource type="Resource" path="res://data/units/sunflower_squad.tres" id="sq_sunflower"]
+[ext_resource type="Resource" path="res://data/units/kernel_corn_squad.tres" id="sq_kernel_corn"]
+[ext_resource type="Resource" path="res://data/units/cactus_squad.tres" id="sq_cactus"]
+[ext_resource type="Resource" path="res://data/units/rose_squad.tres" id="sq_rose"]
+[ext_resource type="Resource" path="res://data/units/chomper_squad.tres" id="sq_chomper"]
+[ext_resource type="Resource" path="res://data/units/citron_squad.tres" id="sq_citron"]
+[ext_resource type="Resource" path="res://data/units/torchwood_squad.tres" id="sq_torchwood"]
+[ext_resource type="Resource" path="res://data/units/browncoat_squad.tres" id="sq_browncoat"]
+[ext_resource type="Resource" path="res://data/units/foot_soldier_squad.tres" id="sq_foot_soldier"]
+[ext_resource type="Resource" path="res://data/units/engineer_squad.tres" id="sq_engineer"]
+[ext_resource type="Resource" path="res://data/units/scientist_squad.tres" id="sq_scientist"]
+[ext_resource type="Resource" path="res://data/units/deadbeard_squad.tres" id="sq_deadbeard"]
+[ext_resource type="Resource" path="res://data/units/all_star_squad.tres" id="sq_all_star"]
+[ext_resource type="Resource" path="res://data/units/super_brainz_squad.tres" id="sq_super_brainz"]
+[ext_resource type="Resource" path="res://data/units/action_hero_80s_squad.tres" id="sq_action_hero_80s"]
+[ext_resource type="Resource" path="res://data/units/z_mech_squad.tres" id="sq_z_mech"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sky"]
+
+[sub_resource type="Sky" id="Sky_main"]
+sky_material = SubResource("ProceduralSkyMaterial_sky")
+
+[sub_resource type="Environment" id="Environment_main"]
+background_mode = 2
+sky = SubResource("Sky_main")
+ambient_light_source = 3
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ground"]
+albedo_color = Color(0.42, 0.55, 0.28, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ground"]
+material = SubResource("StandardMaterial3D_ground")
+size = Vector2(120, 120)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ground"]
+size = Vector3(120, 1, 120)
+
+[node name="AllTroopsTest" type="Node3D"]
+script = ExtResource("1_test")
+plant_squads = Array[Resource]([ExtResource("sq_peashooter"), ExtResource("sq_sunflower"), ExtResource("sq_kernel_corn"), ExtResource("sq_cactus"), ExtResource("sq_rose"), ExtResource("sq_chomper"), ExtResource("sq_citron"), ExtResource("sq_torchwood")])
+zombie_squads = Array[Resource]([ExtResource("sq_browncoat"), ExtResource("sq_foot_soldier"), ExtResource("sq_engineer"), ExtResource("sq_scientist"), ExtResource("sq_deadbeard"), ExtResource("sq_all_star"), ExtResource("sq_super_brainz"), ExtResource("sq_action_hero_80s"), ExtResource("sq_z_mech")])
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_main")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.383022, 0.321394, 0, 0.642788, 0.766044, -0.5, -0.663414, 0.55667, 0, 20, 0)
+shadow_enabled = true
+directional_shadow_max_distance = 120.0
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="Mesh" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("PlaneMesh_ground")
+
+[node name="Collision" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_ground")
+
+[node name="RTSCamera" parent="." instance=ExtResource("3_camera")]
+bounds = Rect2(-60, -60, 120, 120)
+initial_distance = 60.0
+
+[node name="UnitSimulation" type="Node" parent="."]
+script = ExtResource("4_sim")
+
+[node name="OrderSystem" type="Node" parent="." node_paths=PackedStringArray("simulation")]
+script = ExtResource("5_orders")
+simulation = NodePath("../UnitSimulation")
+
+[node name="SelectionController" type="Node" parent="." node_paths=PackedStringArray("simulation", "camera_rig", "selection_box")]
+script = ExtResource("7_selection")
+simulation = NodePath("../UnitSimulation")
+camera_rig = NodePath("../RTSCamera")
+selection_box = NodePath("../HUD/SelectionBox")
+team = -1
+
+[node name="CommandController" type="Node" parent="." node_paths=PackedStringArray("selection", "order_system", "camera_rig")]
+script = ExtResource("8_commands")
+selection = NodePath("../SelectionController")
+order_system = NodePath("../OrderSystem")
+camera_rig = NodePath("../RTSCamera")
+
+[node name="UnitRenderer" type="Node3D" parent="." node_paths=PackedStringArray("simulation", "selection")]
+script = ExtResource("6_renderer")
+simulation = NodePath("../UnitSimulation")
+selection = NodePath("../SelectionController")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="SelectionBox" type="Control" parent="HUD"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("9_box")

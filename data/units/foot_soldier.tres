@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="UnitData" format=3]
+
+[ext_resource type="Script" path="res://data/units/unit_data.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://b61kbre1df7t7" path="res://assets/zombies/foot_soldier.glb" id="2_model"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"foot_soldier"
+display_name = "Soldat"
+visual_scene = ExtResource("2_model")
+move_speed = 3.5
+acceleration = 14.0
+turn_speed_degrees = 540.0
+radius = 1.1

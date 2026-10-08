@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="UnitData" format=3]
+
+[ext_resource type="Script" path="res://data/units/unit_data.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://jrbl7tcu28v8" path="res://assets/zombies/action_hero_80s.glb" id="2_model"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"action_hero_80s"
+display_name = "Héros d'action des années 80"
+visual_scene = ExtResource("2_model")
+move_speed = 3.5
+acceleration = 14.0
+turn_speed_degrees = 540.0
+radius = 1.0
