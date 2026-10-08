@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="EnvironmentPieceData" format=3]
+
+[ext_resource type="Script" path="res://data/environment/environment_piece_data.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://assets/environment/borders/border_hedge_corner.glb" id="2_scene"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"border_hedge_corner"
+display_name = "Angle de haie de bordure"
+category = 7
+scene = ExtResource("2_scene")
+footprint_size = Vector2(2.0, 2.0)
+height = 3.21
+blocks_movement = true
+blocks_vision = true
+cover = 0
+resource = 0

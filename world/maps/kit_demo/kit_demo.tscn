@@ -1,0 +1,606 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/environment/ground/road_end.glb" id="r0"]
+[ext_resource type="PackedScene" path="res://assets/environment/ground/road_straight.glb" id="r1"]
+[ext_resource type="PackedScene" path="res://assets/environment/ground/road_crosswalk.glb" id="r2"]
+[ext_resource type="PackedScene" path="res://assets/environment/ground/road_t.glb" id="r3"]
+[ext_resource type="PackedScene" path="res://assets/environment/buildings/house_a.glb" id="r4"]
+[ext_resource type="PackedScene" path="res://assets/environment/ground/path_straight.glb" id="r5"]
+[ext_resource type="PackedScene" path="res://assets/environment/ground/flowerbed.glb" id="r6"]
+[ext_resource type="PackedScene" path="res://assets/environment/buildings/house_b.glb" id="r7"]
+[ext_resource type="PackedScene" path="res://assets/environment/buildings/house_two_story.glb" id="r8"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_light/picket_fence_straight.glb" id="r9"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_light/picket_fence_gate.glb" id="r10"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_light/picket_fence_corner.glb" id="r11"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_light/hedge_straight.glb" id="r12"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/tree_large.glb" id="r13"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/swing_set.glb" id="r14"]
+[ext_resource type="PackedScene" path="res://assets/environment/buildings/garden_shed.glb" id="r15"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/tree_small.glb" id="r16"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/pool.glb" id="r17"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/bbq_grill.glb" id="r18"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/mailbox.glb" id="r19"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/garden_gnome.glb" id="r20"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/lawn_flamingo.glb" id="r21"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/bird_bath.glb" id="r22"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/bush_a.glb" id="r23"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/bush_b.glb" id="r24"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/flower_patch_a.glb" id="r25"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/flower_patch_c.glb" id="r26"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/fire_hydrant.glb" id="r27"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/street_lamp.glb" id="r28"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_heavy/car_sedan.glb" id="r29"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_heavy/pickup_truck.glb" id="r30"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_heavy/car_wreck.glb" id="r31"]
+[ext_resource type="PackedScene" path="res://assets/environment/borders/border_hedge_straight.glb" id="r32"]
+[ext_resource type="PackedScene" path="res://assets/environment/borders/border_fence_straight.glb" id="r33"]
+[ext_resource type="Script" path="res://world/environment/point_state_display.gd" id="r34"]
+[ext_resource type="PackedScene" path="res://assets/environment/gameplay/capture_point.glb" id="r35"]
+[ext_resource type="PackedScene" path="res://assets/environment/gameplay/resource_point_primary.glb" id="r36"]
+[ext_resource type="PackedScene" path="res://assets/environment/gameplay/resource_point_secondary.glb" id="r37"]
+[ext_resource type="PackedScene" path="res://assets/environment/gameplay/resource_point_tertiary.glb" id="r38"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_heavy/sandbag_straight.glb" id="r39"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_heavy/stone_wall_straight.glb" id="r40"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_heavy/stone_wall_end.glb" id="r41"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_heavy/stone_wall_broken.glb" id="r42"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_heavy/rock_large.glb" id="r43"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_heavy/concrete_barrier.glb" id="r44"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_light/crate_stack.glb" id="r45"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_light/barrel_group.glb" id="r46"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_light/hay_bale.glb" id="r47"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/tall_grass.glb" id="r48"]
+[ext_resource type="PackedScene" path="res://assets/environment/ground/dirt_patch.glb" id="r49"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/traffic_cone.glb" id="r50"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/pumpkin_patch.glb" id="r51"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/log.glb" id="r52"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/stump.glb" id="r53"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_light/iron_fence_corner.glb" id="r54"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_light/iron_fence_straight.glb" id="r55"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_light/iron_fence_gate.glb" id="r56"]
+[ext_resource type="PackedScene" path="res://assets/environment/buildings/crypt.glb" id="r57"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_heavy/tombstone_large.glb" id="r58"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/tombstone_small_a.glb" id="r59"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/tombstone_small_b.glb" id="r60"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/tombstone_small_c.glb" id="r61"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/open_grave.glb" id="r62"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/coffin.glb" id="r63"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/bone_pile.glb" id="r64"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/tree_dead.glb" id="r65"]
+[ext_resource type="PackedScene" path="res://assets/plants/peashooter.glb" id="r66"]
+[ext_resource type="PackedScene" path="res://assets/zombies/browncoat.glb" id="r67"]
+[ext_resource type="PackedScene" path="res://assets/zombies/z_mech.glb" id="r68"]
+[ext_resource type="PackedScene" path="res://camera/rts_camera.tscn" id="r69"]
+
+[sub_resource type="ProceduralSkyMaterial" id="sky_mat"]
+
+[sub_resource type="Sky" id="sky"]
+sky_material = SubResource("sky_mat")
+
+[sub_resource type="Environment" id="env"]
+background_mode = 2
+sky = SubResource("sky")
+ambient_light_source = 3
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="ground_mat"]
+albedo_color = Color(0.36, 0.5, 0.27, 1)
+
+[sub_resource type="PlaneMesh" id="ground_mesh"]
+material = SubResource("ground_mat")
+size = Vector2(90, 90)
+
+[node name="KitDemo" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("env")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.383022, 0.321394, 0, 0.642788, 0.766044, -0.5, -0.663414, 0.55667, 0, 20, 0)
+shadow_enabled = true
+directional_shadow_max_distance = 200.0
+
+[node name="Terrain" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 0, -0.02, 0)
+mesh = SubResource("ground_mesh")
+
+[node name="RTSCamera" parent="." instance=ExtResource("r69")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 0, 0, 0)
+bounds = Rect2(-40, -40, 80, 80)
+
+[node name="Road" type="Node3D" parent="."]
+
+[node name="road_end" parent="Road" instance=ExtResource("r0")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, -36, 0, 0)
+
+[node name="road_straight" parent="Road" instance=ExtResource("r1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -28, 0, 0)
+
+[node name="road_straight_2" parent="Road" instance=ExtResource("r1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -20, 0, 0)
+
+[node name="road_crosswalk" parent="Road" instance=ExtResource("r2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -12, 0, 0)
+
+[node name="road_straight_3" parent="Road" instance=ExtResource("r1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -4, 0, 0)
+
+[node name="road_straight_4" parent="Road" instance=ExtResource("r1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 4, 0, 0)
+
+[node name="road_t" parent="Road" instance=ExtResource("r3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 12, 0, 0)
+
+[node name="road_straight_5" parent="Road" instance=ExtResource("r1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 20, 0, 0)
+
+[node name="road_straight_6" parent="Road" instance=ExtResource("r1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 28, 0, 0)
+
+[node name="road_straight_7" parent="Road" instance=ExtResource("r1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 36, 0, 0)
+
+[node name="road_straight_8" parent="Road" instance=ExtResource("r1")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 12, 0, 8)
+
+[node name="road_straight_9" parent="Road" instance=ExtResource("r1")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 12, 0, 16)
+
+[node name="road_end_2" parent="Road" instance=ExtResource("r0")]
+transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, 12, 0, 24)
+
+[node name="Houses" type="Node3D" parent="."]
+
+[node name="house_a" parent="Houses" instance=ExtResource("r4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -24, 0, -14)
+
+[node name="path_straight" parent="Houses" instance=ExtResource("r5")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -26, 0, -8)
+
+[node name="flowerbed" parent="Houses" instance=ExtResource("r6")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -22.5, 0, -8)
+
+[node name="house_b" parent="Houses" instance=ExtResource("r7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -6, 0, -14)
+
+[node name="path_straight_2" parent="Houses" instance=ExtResource("r5")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -6, 0, -8)
+
+[node name="flowerbed_2" parent="Houses" instance=ExtResource("r6")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -2.5, 0, -8)
+
+[node name="house_two_story" parent="Houses" instance=ExtResource("r8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 8, 0, -14)
+
+[node name="path_straight_3" parent="Houses" instance=ExtResource("r5")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 5.8, 0, -8)
+
+[node name="flowerbed_3" parent="Houses" instance=ExtResource("r6")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 9.3, 0, -8)
+
+[node name="Fences" type="Node3D" parent="."]
+
+[node name="picket_fence_straight" parent="Fences" instance=ExtResource("r9")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -30, 0, -6)
+
+[node name="picket_fence_gate" parent="Fences" instance=ExtResource("r10")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -26, 0, -6)
+
+[node name="picket_fence_straight_2" parent="Fences" instance=ExtResource("r9")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -22, 0, -6)
+
+[node name="picket_fence_straight_3" parent="Fences" instance=ExtResource("r9")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -18, 0, -6)
+
+[node name="picket_fence_straight_4" parent="Fences" instance=ExtResource("r9")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -14, 0, -6)
+
+[node name="picket_fence_straight_5" parent="Fences" instance=ExtResource("r9")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -10, 0, -6)
+
+[node name="picket_fence_gate_2" parent="Fences" instance=ExtResource("r10")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -6, 0, -6)
+
+[node name="picket_fence_straight_6" parent="Fences" instance=ExtResource("r9")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -2, 0, -6)
+
+[node name="picket_fence_straight_7" parent="Fences" instance=ExtResource("r9")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 2, 0, -6)
+
+[node name="picket_fence_gate_3" parent="Fences" instance=ExtResource("r10")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 6, 0, -6)
+
+[node name="picket_fence_straight_8" parent="Fences" instance=ExtResource("r9")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 10, 0, -6)
+
+[node name="picket_fence_straight_9" parent="Fences" instance=ExtResource("r9")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 14, 0, -6)
+
+[node name="picket_fence_corner" parent="Fences" instance=ExtResource("r11")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, -33, 0, -6)
+
+[node name="picket_fence_corner_2" parent="Fences" instance=ExtResource("r11")]
+transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, 17, 0, -6)
+
+[node name="picket_fence_straight_10" parent="Fences" instance=ExtResource("r9")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -33, 0, -9)
+
+[node name="picket_fence_straight_11" parent="Fences" instance=ExtResource("r9")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 17, 0, -9)
+
+[node name="picket_fence_straight_12" parent="Fences" instance=ExtResource("r9")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -33, 0, -13)
+
+[node name="picket_fence_straight_13" parent="Fences" instance=ExtResource("r9")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 17, 0, -13)
+
+[node name="picket_fence_straight_14" parent="Fences" instance=ExtResource("r9")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -33, 0, -17)
+
+[node name="picket_fence_straight_15" parent="Fences" instance=ExtResource("r9")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 17, 0, -17)
+
+[node name="picket_fence_straight_16" parent="Fences" instance=ExtResource("r9")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -33, 0, -21)
+
+[node name="picket_fence_straight_17" parent="Fences" instance=ExtResource("r9")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 17, 0, -21)
+
+[node name="picket_fence_straight_18" parent="Fences" instance=ExtResource("r9")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -16, 0, -8)
+
+[node name="hedge_straight" parent="Fences" instance=ExtResource("r12")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 0, 0, -8)
+
+[node name="picket_fence_straight_19" parent="Fences" instance=ExtResource("r9")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -16, 0, -12)
+
+[node name="hedge_straight_2" parent="Fences" instance=ExtResource("r12")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 0, 0, -12)
+
+[node name="picket_fence_straight_20" parent="Fences" instance=ExtResource("r9")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -16, 0, -16)
+
+[node name="hedge_straight_3" parent="Fences" instance=ExtResource("r12")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 0, 0, -16)
+
+[node name="picket_fence_straight_21" parent="Fences" instance=ExtResource("r9")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -16, 0, -20)
+
+[node name="hedge_straight_4" parent="Fences" instance=ExtResource("r12")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 0, 0, -20)
+
+[node name="Gardens" type="Node3D" parent="."]
+
+[node name="tree_large" parent="Gardens" instance=ExtResource("r13")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -29, 0, -25)
+
+[node name="swing_set" parent="Gardens" instance=ExtResource("r14")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -21, 0, -24)
+
+[node name="garden_shed" parent="Gardens" instance=ExtResource("r15")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -10, 0, -24)
+
+[node name="tree_small" parent="Gardens" instance=ExtResource("r16")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -3, 0, -24)
+
+[node name="pool" parent="Gardens" instance=ExtResource("r17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 8, 0, -25)
+
+[node name="bbq_grill" parent="Gardens" instance=ExtResource("r18")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 14, 0, -22)
+
+[node name="mailbox" parent="Gardens" instance=ExtResource("r19")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -28, 0, -4.6)
+
+[node name="mailbox_2" parent="Gardens" instance=ExtResource("r19")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -12, 0, -4.6)
+
+[node name="mailbox_3" parent="Gardens" instance=ExtResource("r19")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 4, 0, -4.6)
+
+[node name="garden_gnome" parent="Gardens" instance=ExtResource("r20")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -20, 0, -8)
+
+[node name="lawn_flamingo" parent="Gardens" instance=ExtResource("r21")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -12, 0, -8.5)
+
+[node name="bird_bath" parent="Gardens" instance=ExtResource("r22")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 12, 0, -8)
+
+[node name="bush_a" parent="Gardens" instance=ExtResource("r23")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -30, 0, -8)
+
+[node name="bush_b" parent="Gardens" instance=ExtResource("r24")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 14, 0, -8)
+
+[node name="flower_patch_a" parent="Gardens" instance=ExtResource("r25")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -19, 0, -12)
+
+[node name="flower_patch_c" parent="Gardens" instance=ExtResource("r26")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 1.8, 0, -9)
+
+[node name="fire_hydrant" parent="Gardens" instance=ExtResource("r27")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -16, 0, -4.6)
+
+[node name="street_lamp" parent="Gardens" instance=ExtResource("r28")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 0, 0, -4.6)
+
+[node name="street_lamp_2" parent="Gardens" instance=ExtResource("r28")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -32, 0, -4.6)
+
+[node name="street_lamp_3" parent="Gardens" instance=ExtResource("r28")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 24, 0, -4.6)
+
+[node name="Cars" type="Node3D" parent="."]
+
+[node name="car_sedan" parent="Cars" instance=ExtResource("r29")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, -22, 0, -1.8)
+
+[node name="pickup_truck" parent="Cars" instance=ExtResource("r30")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, 2, 0, -1.8)
+
+[node name="car_wreck" parent="Cars" instance=ExtResource("r31")]
+transform = Transform3D(0.984808, 0, 0.173648, 0, 1, 0, -0.173648, 0, 0.984808, 30, 0, 1.8)
+
+[node name="Border" type="Node3D" parent="."]
+
+[node name="border_hedge_straight" parent="Border" instance=ExtResource("r32")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -36, 0, -38)
+
+[node name="border_hedge_straight_2" parent="Border" instance=ExtResource("r32")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -28, 0, -38)
+
+[node name="border_hedge_straight_3" parent="Border" instance=ExtResource("r32")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -20, 0, -38)
+
+[node name="border_hedge_straight_4" parent="Border" instance=ExtResource("r32")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -12, 0, -38)
+
+[node name="border_hedge_straight_5" parent="Border" instance=ExtResource("r32")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -4, 0, -38)
+
+[node name="border_hedge_straight_6" parent="Border" instance=ExtResource("r32")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 4, 0, -38)
+
+[node name="border_hedge_straight_7" parent="Border" instance=ExtResource("r32")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 12, 0, -38)
+
+[node name="border_hedge_straight_8" parent="Border" instance=ExtResource("r32")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 20, 0, -38)
+
+[node name="border_hedge_straight_9" parent="Border" instance=ExtResource("r32")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 28, 0, -38)
+
+[node name="border_hedge_straight_10" parent="Border" instance=ExtResource("r32")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 36, 0, -38)
+
+[node name="border_fence_straight" parent="Border" instance=ExtResource("r33")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -39, 0, 12)
+
+[node name="border_fence_straight_2" parent="Border" instance=ExtResource("r33")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -39, 0, 20)
+
+[node name="border_fence_straight_3" parent="Border" instance=ExtResource("r33")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -39, 0, 28)
+
+[node name="border_fence_straight_4" parent="Border" instance=ExtResource("r33")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -39, 0, 36)
+
+[node name="Points" type="Node3D" parent="."]
+
+[node name="capture_point_neutre" type="Node3D" parent="Points"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -12, 0, 18)
+script = ExtResource("r34")
+state = 0
+
+[node name="Model" parent="Points/capture_point_neutre" instance=ExtResource("r35")]
+
+[node name="resource_point_primary_plantes" type="Node3D" parent="Points"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -30, 0, 16)
+script = ExtResource("r34")
+state = 1
+
+[node name="Model" parent="Points/resource_point_primary_plantes" instance=ExtResource("r36")]
+
+[node name="resource_point_secondary_zombies" type="Node3D" parent="Points"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -28, 0, 32)
+script = ExtResource("r34")
+state = 2
+
+[node name="Model" parent="Points/resource_point_secondary_zombies" instance=ExtResource("r37")]
+
+[node name="resource_point_tertiary_neutre" type="Node3D" parent="Points"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 0, 0, 32)
+script = ExtResource("r34")
+state = 0
+
+[node name="Model" parent="Points/resource_point_tertiary_neutre" instance=ExtResource("r38")]
+
+[node name="Cover" type="Node3D" parent="."]
+
+[node name="sandbag_straight" parent="Cover" instance=ExtResource("r39")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -14, 0, 11)
+
+[node name="sandbag_straight_2" parent="Cover" instance=ExtResource("r39")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -10, 0, 11)
+
+[node name="stone_wall_straight" parent="Cover" instance=ExtResource("r40")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -19, 0, 18)
+
+[node name="stone_wall_end" parent="Cover" instance=ExtResource("r41")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -19, 0, 21)
+
+[node name="stone_wall_broken" parent="Cover" instance=ExtResource("r42")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, -5, 0, 18)
+
+[node name="rock_large" parent="Cover" instance=ExtResource("r43")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -36, 0, 26)
+
+[node name="concrete_barrier" parent="Cover" instance=ExtResource("r44")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 4, 0, 8)
+
+[node name="crate_stack" parent="Cover" instance=ExtResource("r45")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -2, 0, 12)
+
+[node name="barrel_group" parent="Cover" instance=ExtResource("r46")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -22, 0, 9)
+
+[node name="hay_bale" parent="Cover" instance=ExtResource("r47")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -16, 0, 34)
+
+[node name="tree_large_2" parent="Cover" instance=ExtResource("r13")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -20, 0, 28)
+
+[node name="bush_a_2" parent="Cover" instance=ExtResource("r23")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 5, 0, 20)
+
+[node name="tall_grass" parent="Cover" instance=ExtResource("r48")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -34, 0, 8)
+
+[node name="dirt_patch" parent="Cover" instance=ExtResource("r49")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -4, 0, 24)
+
+[node name="traffic_cone" parent="Cover" instance=ExtResource("r50")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 7, 0, 6)
+
+[node name="pumpkin_patch" parent="Cover" instance=ExtResource("r51")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -12, 0, 30)
+
+[node name="log" parent="Cover" instance=ExtResource("r52")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 4, 0, 26)
+
+[node name="stump" parent="Cover" instance=ExtResource("r53")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -26, 0, 24)
+
+[node name="Graveyard" type="Node3D" parent="."]
+
+[node name="iron_fence_corner" parent="Graveyard" instance=ExtResource("r54")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 18, 0, 8)
+
+[node name="iron_fence_straight" parent="Graveyard" instance=ExtResource("r55")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 21, 0, 8)
+
+[node name="iron_fence_straight_2" parent="Graveyard" instance=ExtResource("r55")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 25, 0, 8)
+
+[node name="iron_fence_gate" parent="Graveyard" instance=ExtResource("r56")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 29, 0, 8)
+
+[node name="iron_fence_straight_3" parent="Graveyard" instance=ExtResource("r55")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 33, 0, 8)
+
+[node name="iron_fence_straight_4" parent="Graveyard" instance=ExtResource("r55")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 37, 0, 8)
+
+[node name="iron_fence_straight_5" parent="Graveyard" instance=ExtResource("r55")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 18, 0, 11)
+
+[node name="iron_fence_straight_6" parent="Graveyard" instance=ExtResource("r55")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 18, 0, 15)
+
+[node name="iron_fence_straight_7" parent="Graveyard" instance=ExtResource("r55")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 18, 0, 19)
+
+[node name="iron_fence_straight_8" parent="Graveyard" instance=ExtResource("r55")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 18, 0, 23)
+
+[node name="iron_fence_straight_9" parent="Graveyard" instance=ExtResource("r55")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 18, 0, 27)
+
+[node name="iron_fence_straight_10" parent="Graveyard" instance=ExtResource("r55")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 18, 0, 31)
+
+[node name="iron_fence_straight_11" parent="Graveyard" instance=ExtResource("r55")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 18, 0, 35)
+
+[node name="crypt" parent="Graveyard" instance=ExtResource("r57")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, 30, 0, 32)
+
+[node name="tombstone_large" parent="Graveyard" instance=ExtResource("r58")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, 23, 0, 14)
+
+[node name="tombstone_small_a" parent="Graveyard" instance=ExtResource("r59")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, 26, 0, 14)
+
+[node name="tombstone_small_b" parent="Graveyard" instance=ExtResource("r60")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, 34, 0, 14)
+
+[node name="tombstone_small_c" parent="Graveyard" instance=ExtResource("r61")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, 37, 0, 14)
+
+[node name="tombstone_small_a_2" parent="Graveyard" instance=ExtResource("r59")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, 23, 0, 20)
+
+[node name="tombstone_large_2" parent="Graveyard" instance=ExtResource("r58")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, 34, 0, 20)
+
+[node name="tombstone_small_b_2" parent="Graveyard" instance=ExtResource("r60")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, 37, 0, 20)
+
+[node name="tombstone_small_c_2" parent="Graveyard" instance=ExtResource("r61")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, 23, 0, 26)
+
+[node name="tombstone_small_a_3" parent="Graveyard" instance=ExtResource("r59")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, 37, 0, 26)
+
+[node name="open_grave" parent="Graveyard" instance=ExtResource("r62")]
+transform = Transform3D(6.12323e-17, 0, 1, 0, 1, 0, -1, 0, 6.12323e-17, 26, 0, 22)
+
+[node name="coffin" parent="Graveyard" instance=ExtResource("r63")]
+transform = Transform3D(0.939693, 0, 0.34202, 0, 1, 0, -0.34202, 0, 0.939693, 29, 0, 22)
+
+[node name="bone_pile" parent="Graveyard" instance=ExtResource("r64")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 31, 0, 16)
+
+[node name="tree_dead" parent="Graveyard" instance=ExtResource("r65")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 22, 0, 34)
+
+[node name="tree_dead_2" parent="Graveyard" instance=ExtResource("r65")]
+transform = Transform3D(0.34202, 0, 0.939693, 0, 1, 0, -0.939693, 0, 0.34202, 38, 0, 36)
+
+[node name="ScaleUnits" type="Node3D" parent="."]
+
+[node name="peashooter" parent="ScaleUnits" instance=ExtResource("r66")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -14, 0, 6)
+
+[node name="peashooter_2" parent="ScaleUnits" instance=ExtResource("r66")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -12.2, 0, 6)
+
+[node name="peashooter_3" parent="ScaleUnits" instance=ExtResource("r66")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -10.4, 0, 6)
+
+[node name="peashooter_4" parent="ScaleUnits" instance=ExtResource("r66")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -14, 0, 7.8)
+
+[node name="peashooter_5" parent="ScaleUnits" instance=ExtResource("r66")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -12.2, 0, 7.8)
+
+[node name="peashooter_6" parent="ScaleUnits" instance=ExtResource("r66")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -10.4, 0, 7.8)
+
+[node name="browncoat" parent="ScaleUnits" instance=ExtResource("r67")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, 25, 0, 10.5)
+
+[node name="browncoat_2" parent="ScaleUnits" instance=ExtResource("r67")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, 26.8, 0, 10.5)
+
+[node name="browncoat_3" parent="ScaleUnits" instance=ExtResource("r67")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, 28.6, 0, 10.5)
+
+[node name="browncoat_4" parent="ScaleUnits" instance=ExtResource("r67")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, 30.4, 0, 10.5)
+
+[node name="browncoat_5" parent="ScaleUnits" instance=ExtResource("r67")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, 25, 0, 12.3)
+
+[node name="browncoat_6" parent="ScaleUnits" instance=ExtResource("r67")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, 26.8, 0, 12.3)
+
+[node name="browncoat_7" parent="ScaleUnits" instance=ExtResource("r67")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, 28.6, 0, 12.3)
+
+[node name="browncoat_8" parent="ScaleUnits" instance=ExtResource("r67")]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, 30.4, 0, 12.3)
+
+[node name="z_mech" parent="ScaleUnits" instance=ExtResource("r68")]
+transform = Transform3D(-0.939693, 0, -0.34202, 0, 1, 0, 0.34202, 0, -0.939693, 20, 0, 4.5)

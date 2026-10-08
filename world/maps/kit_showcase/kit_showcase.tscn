@@ -1,0 +1,1505 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/environment/ground/road_straight.glb" id="r0"]
+[ext_resource type="PackedScene" path="res://assets/environment/ground/road_curve.glb" id="r1"]
+[ext_resource type="PackedScene" path="res://assets/environment/ground/road_t.glb" id="r2"]
+[ext_resource type="PackedScene" path="res://assets/environment/ground/road_cross.glb" id="r3"]
+[ext_resource type="PackedScene" path="res://assets/environment/ground/road_end.glb" id="r4"]
+[ext_resource type="PackedScene" path="res://assets/environment/ground/road_crosswalk.glb" id="r5"]
+[ext_resource type="PackedScene" path="res://assets/environment/ground/driveway.glb" id="r6"]
+[ext_resource type="PackedScene" path="res://assets/environment/ground/path_straight.glb" id="r7"]
+[ext_resource type="PackedScene" path="res://assets/environment/ground/path_curve.glb" id="r8"]
+[ext_resource type="PackedScene" path="res://assets/environment/ground/dirt_patch.glb" id="r9"]
+[ext_resource type="PackedScene" path="res://assets/environment/ground/flowerbed.glb" id="r10"]
+[ext_resource type="PackedScene" path="res://assets/environment/buildings/house_a.glb" id="r11"]
+[ext_resource type="PackedScene" path="res://assets/environment/buildings/house_b.glb" id="r12"]
+[ext_resource type="PackedScene" path="res://assets/environment/buildings/house_two_story.glb" id="r13"]
+[ext_resource type="PackedScene" path="res://assets/environment/buildings/house_haunted.glb" id="r14"]
+[ext_resource type="PackedScene" path="res://assets/environment/buildings/garage.glb" id="r15"]
+[ext_resource type="PackedScene" path="res://assets/environment/buildings/garden_shed.glb" id="r16"]
+[ext_resource type="PackedScene" path="res://assets/environment/buildings/greenhouse.glb" id="r17"]
+[ext_resource type="PackedScene" path="res://assets/environment/buildings/crypt.glb" id="r18"]
+[ext_resource type="PackedScene" path="res://assets/environment/buildings/corner_shop.glb" id="r19"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_heavy/stone_wall_straight.glb" id="r20"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_heavy/stone_wall_corner.glb" id="r21"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_heavy/stone_wall_end.glb" id="r22"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_heavy/stone_wall_broken.glb" id="r23"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_heavy/sandbag_straight.glb" id="r24"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_heavy/sandbag_curve.glb" id="r25"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_heavy/car_sedan.glb" id="r26"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_heavy/car_wreck.glb" id="r27"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_heavy/pickup_truck.glb" id="r28"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_heavy/dumpster.glb" id="r29"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_heavy/rock_large.glb" id="r30"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_heavy/concrete_barrier.glb" id="r31"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_heavy/tombstone_large.glb" id="r32"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_light/picket_fence_straight.glb" id="r33"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_light/picket_fence_corner.glb" id="r34"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_light/picket_fence_gate.glb" id="r35"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_light/picket_fence_broken.glb" id="r36"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_light/hedge_straight.glb" id="r37"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_light/hedge_corner.glb" id="r38"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_light/hedge_end.glb" id="r39"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_light/iron_fence_straight.glb" id="r40"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_light/iron_fence_corner.glb" id="r41"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_light/iron_fence_gate.glb" id="r42"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_light/crate_stack.glb" id="r43"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_light/barrel_group.glb" id="r44"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_light/hay_bale.glb" id="r45"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_light/planter_box.glb" id="r46"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_light/trash_cans.glb" id="r47"]
+[ext_resource type="PackedScene" path="res://assets/environment/cover_light/wheelbarrow.glb" id="r48"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/tree_large.glb" id="r49"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/tree_small.glb" id="r50"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/tree_dead.glb" id="r51"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/bush_a.glb" id="r52"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/bush_b.glb" id="r53"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/flower_patch_a.glb" id="r54"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/flower_patch_b.glb" id="r55"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/flower_patch_c.glb" id="r56"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/tall_grass.glb" id="r57"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/pumpkin_patch.glb" id="r58"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/stump.glb" id="r59"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/log.glb" id="r60"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/mailbox.glb" id="r61"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/street_lamp.glb" id="r62"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/fire_hydrant.glb" id="r63"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/garden_gnome.glb" id="r64"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/lawn_flamingo.glb" id="r65"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/lawn_mower.glb" id="r66"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/traffic_cone.glb" id="r67"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/bucket.glb" id="r68"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/road_sign.glb" id="r69"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/garden_bench.glb" id="r70"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/picnic_table.glb" id="r71"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/bbq_grill.glb" id="r72"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/bird_bath.glb" id="r73"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/doghouse.glb" id="r74"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/swing_set.glb" id="r75"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/pool.glb" id="r76"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/garden_hose.glb" id="r77"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/tombstone_small_a.glb" id="r78"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/tombstone_small_b.glb" id="r79"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/tombstone_small_c.glb" id="r80"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/open_grave.glb" id="r81"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/coffin.glb" id="r82"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/bone_pile.glb" id="r83"]
+[ext_resource type="Script" path="res://world/environment/point_state_display.gd" id="r84"]
+[ext_resource type="PackedScene" path="res://assets/environment/gameplay/capture_point.glb" id="r85"]
+[ext_resource type="PackedScene" path="res://assets/environment/gameplay/resource_point_primary.glb" id="r86"]
+[ext_resource type="PackedScene" path="res://assets/environment/gameplay/resource_point_secondary.glb" id="r87"]
+[ext_resource type="PackedScene" path="res://assets/environment/gameplay/resource_point_tertiary.glb" id="r88"]
+[ext_resource type="PackedScene" path="res://assets/environment/borders/border_hedge_straight.glb" id="r89"]
+[ext_resource type="PackedScene" path="res://assets/environment/borders/border_hedge_corner.glb" id="r90"]
+[ext_resource type="PackedScene" path="res://assets/environment/borders/border_fence_straight.glb" id="r91"]
+[ext_resource type="PackedScene" path="res://assets/plants/peashooter.glb" id="r92"]
+[ext_resource type="PackedScene" path="res://assets/zombies/browncoat.glb" id="r93"]
+[ext_resource type="PackedScene" path="res://assets/zombies/z_mech.glb" id="r94"]
+[ext_resource type="PackedScene" path="res://camera/rts_camera.tscn" id="r95"]
+
+[sub_resource type="ProceduralSkyMaterial" id="sky_mat"]
+
+[sub_resource type="Sky" id="sky"]
+sky_material = SubResource("sky_mat")
+
+[sub_resource type="Environment" id="env"]
+background_mode = 2
+sky = SubResource("sky")
+ambient_light_source = 3
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="ground_mat"]
+albedo_color = Color(0.36, 0.5, 0.27, 1)
+
+[sub_resource type="PlaneMesh" id="ground_mesh"]
+material = SubResource("ground_mat")
+size = Vector2(220, 260)
+
+[node name="KitShowcase" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("env")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.383022, 0.321394, 0, 0.642788, 0.766044, -0.5, -0.663414, 0.55667, 0, 20, 0)
+shadow_enabled = true
+directional_shadow_max_distance = 200.0
+
+[node name="Terrain" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 60, -0.02, 90)
+mesh = SubResource("ground_mesh")
+
+[node name="RTSCamera" parent="." instance=ExtResource("r95")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 40, 0, 20)
+bounds = Rect2(-20, -10, 170, 220)
+
+[node name="Ground" type="Node3D" parent="."]
+
+[node name="Label" type="Label3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -6, 3, 2)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 160
+outline_size = 12
+text = "Routes et sols"
+
+[node name="road_straight" parent="Ground" instance=ExtResource("r0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 4, 0, 4)
+
+[node name="Label_2" type="Label3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 4, 0.3, 8.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Route droite"
+
+[node name="road_curve" parent="Ground" instance=ExtResource("r1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 14, 0, 4)
+
+[node name="Label_3" type="Label3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 14, 0.3, 8.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Route en virage"
+
+[node name="road_t" parent="Ground" instance=ExtResource("r2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 24, 0, 4)
+
+[node name="Label_4" type="Label3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 24, 0.3, 8.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Carrefour en T"
+
+[node name="road_cross" parent="Ground" instance=ExtResource("r3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 34, 0, 4)
+
+[node name="Label_5" type="Label3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 34, 0.3, 8.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Carrefour"
+
+[node name="road_end" parent="Ground" instance=ExtResource("r4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 44, 0, 4)
+
+[node name="Label_6" type="Label3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 44, 0.3, 8.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Impasse"
+
+[node name="road_crosswalk" parent="Ground" instance=ExtResource("r5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 54, 0, 4)
+
+[node name="Label_7" type="Label3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 54, 0.3, 8.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Passage piéton"
+
+[node name="driveway" parent="Ground" instance=ExtResource("r6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 62, 0, 4)
+
+[node name="Label_8" type="Label3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 62, 0.3, 8.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Allée de garage"
+
+[node name="path_straight" parent="Ground" instance=ExtResource("r7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 68, 0, 1)
+
+[node name="Label_9" type="Label3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 68, 0.3, 2.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Chemin droit"
+
+[node name="path_curve" parent="Ground" instance=ExtResource("r8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 74, 0, 2)
+
+[node name="Label_10" type="Label3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 74, 0.3, 4.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Chemin en virage"
+
+[node name="dirt_patch" parent="Ground" instance=ExtResource("r9")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 80, 0, 2)
+
+[node name="Label_11" type="Label3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 80, 0.3, 4.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Terre retournée"
+
+[node name="flowerbed" parent="Ground" instance=ExtResource("r10")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 86, 0, 1)
+
+[node name="Label_12" type="Label3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 86, 0.3, 2.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Massif surélevé"
+
+[node name="Buildings" type="Node3D" parent="."]
+
+[node name="Label_13" type="Label3D" parent="Buildings"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -6, 3, 18)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 160
+outline_size = 12
+text = "Bâtiments"
+
+[node name="house_a" parent="Buildings" instance=ExtResource("r11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 5, 0, 20)
+
+[node name="Label_14" type="Label3D" parent="Buildings"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 5, 0.3, 24.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Maison bleue"
+
+[node name="house_b" parent="Buildings" instance=ExtResource("r12")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 17, 0, 20)
+
+[node name="Label_15" type="Label3D" parent="Buildings"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 17, 0.3, 24.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Maison jaune à galerie"
+
+[node name="house_two_story" parent="Buildings" instance=ExtResource("r13")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 29, 0, 20)
+
+[node name="Label_16" type="Label3D" parent="Buildings"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 29, 0.3, 24.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Maison à étage"
+
+[node name="house_haunted" parent="Buildings" instance=ExtResource("r14")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 41, 0, 20)
+
+[node name="Label_17" type="Label3D" parent="Buildings"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 41, 0.3, 24.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Maison abandonnée"
+
+[node name="garage" parent="Buildings" instance=ExtResource("r15")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 51, 0, 20)
+
+[node name="Label_18" type="Label3D" parent="Buildings"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 51, 0.3, 24.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Garage"
+
+[node name="garden_shed" parent="Buildings" instance=ExtResource("r16")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 58, 0, 18)
+
+[node name="Label_19" type="Label3D" parent="Buildings"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 58, 0.3, 20.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Abri de jardin"
+
+[node name="greenhouse" parent="Buildings" instance=ExtResource("r17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 64, 0, 19)
+
+[node name="Label_20" type="Label3D" parent="Buildings"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 64, 0.3, 22.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Serre"
+
+[node name="crypt" parent="Buildings" instance=ExtResource("r18")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 71, 0, 19)
+
+[node name="Label_21" type="Label3D" parent="Buildings"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 71, 0.3, 22.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Crypte"
+
+[node name="corner_shop" parent="Buildings" instance=ExtResource("r19")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 81, 0, 21)
+
+[node name="Label_22" type="Label3D" parent="Buildings"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 81, 0.3, 26.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Épicerie"
+
+[node name="CoverHeavy" type="Node3D" parent="."]
+
+[node name="Label_23" type="Label3D" parent="CoverHeavy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -6, 3, 36)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 160
+outline_size = 12
+text = "Couvert lourd"
+
+[node name="stone_wall_straight" parent="CoverHeavy" instance=ExtResource("r20")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 2, 0, 35)
+
+[node name="Label_24" type="Label3D" parent="CoverHeavy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 2, 0.3, 36.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Muret de pierre"
+
+[node name="stone_wall_corner" parent="CoverHeavy" instance=ExtResource("r21")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 7, 0, 35)
+
+[node name="Label_25" type="Label3D" parent="CoverHeavy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 7, 0.3, 36.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Angle de muret"
+
+[node name="stone_wall_end" parent="CoverHeavy" instance=ExtResource("r22")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 11, 0, 35)
+
+[node name="Label_26" type="Label3D" parent="CoverHeavy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 11, 0.3, 36.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Bout de muret"
+
+[node name="stone_wall_broken" parent="CoverHeavy" instance=ExtResource("r23")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 16, 0, 35)
+
+[node name="Label_27" type="Label3D" parent="CoverHeavy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 16, 0.3, 36.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Muret effondré"
+
+[node name="sandbag_straight" parent="CoverHeavy" instance=ExtResource("r24")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 22, 0, 35)
+
+[node name="Label_28" type="Label3D" parent="CoverHeavy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 22, 0.3, 36.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Sacs de sable"
+
+[node name="sandbag_curve" parent="CoverHeavy" instance=ExtResource("r25")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 28, 0, 36)
+
+[node name="Label_29" type="Label3D" parent="CoverHeavy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 28, 0.3, 38.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Sacs de sable en arc"
+
+[node name="car_sedan" parent="CoverHeavy" instance=ExtResource("r26")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 34, 0, 35)
+
+[node name="Label_30" type="Label3D" parent="CoverHeavy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 34, 0.3, 36.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Berline"
+
+[node name="car_wreck" parent="CoverHeavy" instance=ExtResource("r27")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 40, 0, 35)
+
+[node name="Label_31" type="Label3D" parent="CoverHeavy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 40, 0.3, 36.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Épave de voiture"
+
+[node name="pickup_truck" parent="CoverHeavy" instance=ExtResource("r28")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 47, 0, 35)
+
+[node name="Label_32" type="Label3D" parent="CoverHeavy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 47, 0.3, 36.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Pick-up"
+
+[node name="dumpster" parent="CoverHeavy" instance=ExtResource("r29")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 53, 0, 35)
+
+[node name="Label_33" type="Label3D" parent="CoverHeavy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 53, 0.3, 36.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Benne à ordures"
+
+[node name="rock_large" parent="CoverHeavy" instance=ExtResource("r30")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 58, 0, 36)
+
+[node name="Label_34" type="Label3D" parent="CoverHeavy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 58, 0.3, 38.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Gros rocher"
+
+[node name="concrete_barrier" parent="CoverHeavy" instance=ExtResource("r31")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 64, 0, 35)
+
+[node name="Label_35" type="Label3D" parent="CoverHeavy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 64, 0.3, 36.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Séparateur en béton"
+
+[node name="tombstone_large" parent="CoverHeavy" instance=ExtResource("r32")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 69, 0, 35)
+
+[node name="Label_36" type="Label3D" parent="CoverHeavy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 69, 0.3, 36.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Grande pierre tombale"
+
+[node name="CoverLight" type="Node3D" parent="."]
+
+[node name="Label_37" type="Label3D" parent="CoverLight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -6, 3, 48)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 160
+outline_size = 12
+text = "Couvert léger"
+
+[node name="picket_fence_straight" parent="CoverLight" instance=ExtResource("r33")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 2, 0, 47)
+
+[node name="Label_38" type="Label3D" parent="CoverLight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 2, 0.3, 48.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Clôture à piquets"
+
+[node name="picket_fence_corner" parent="CoverLight" instance=ExtResource("r34")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 7, 0, 47)
+
+[node name="Label_39" type="Label3D" parent="CoverLight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 7, 0.3, 48.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Angle de clôture"
+
+[node name="picket_fence_gate" parent="CoverLight" instance=ExtResource("r35")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 12, 0, 47)
+
+[node name="Label_40" type="Label3D" parent="CoverLight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 12, 0.3, 48.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Portillon"
+
+[node name="picket_fence_broken" parent="CoverLight" instance=ExtResource("r36")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 18, 0, 47)
+
+[node name="Label_41" type="Label3D" parent="CoverLight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 18, 0.3, 48.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Clôture cassée"
+
+[node name="hedge_straight" parent="CoverLight" instance=ExtResource("r37")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 24, 0, 47)
+
+[node name="Label_42" type="Label3D" parent="CoverLight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 24, 0.3, 48.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Haie"
+
+[node name="hedge_corner" parent="CoverLight" instance=ExtResource("r38")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 29, 0, 47)
+
+[node name="Label_43" type="Label3D" parent="CoverLight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 29, 0.3, 48.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Angle de haie"
+
+[node name="hedge_end" parent="CoverLight" instance=ExtResource("r39")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 33, 0, 47)
+
+[node name="Label_44" type="Label3D" parent="CoverLight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 33, 0.3, 48.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Bout de haie"
+
+[node name="iron_fence_straight" parent="CoverLight" instance=ExtResource("r40")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 38, 0, 47)
+
+[node name="Label_45" type="Label3D" parent="CoverLight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 38, 0.3, 48.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Grille en fer forgé"
+
+[node name="iron_fence_corner" parent="CoverLight" instance=ExtResource("r41")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 43, 0, 47)
+
+[node name="Label_46" type="Label3D" parent="CoverLight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 43, 0.3, 48.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Angle de grille"
+
+[node name="iron_fence_gate" parent="CoverLight" instance=ExtResource("r42")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 48, 0, 47)
+
+[node name="Label_47" type="Label3D" parent="CoverLight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 48, 0.3, 48.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Portail en fer forgé"
+
+[node name="crate_stack" parent="CoverLight" instance=ExtResource("r43")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 53, 0, 47)
+
+[node name="Label_48" type="Label3D" parent="CoverLight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 53, 0.3, 48.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Caisses empilées"
+
+[node name="barrel_group" parent="CoverLight" instance=ExtResource("r44")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 57, 0, 47)
+
+[node name="Label_49" type="Label3D" parent="CoverLight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 57, 0.3, 48.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Tonneaux"
+
+[node name="hay_bale" parent="CoverLight" instance=ExtResource("r45")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 61, 0, 47)
+
+[node name="Label_50" type="Label3D" parent="CoverLight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 61, 0.3, 48.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Bottes de foin"
+
+[node name="planter_box" parent="CoverLight" instance=ExtResource("r46")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 65, 0, 47)
+
+[node name="Label_51" type="Label3D" parent="CoverLight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 65, 0.3, 48.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Jardinière"
+
+[node name="trash_cans" parent="CoverLight" instance=ExtResource("r47")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 69, 0, 47)
+
+[node name="Label_52" type="Label3D" parent="CoverLight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 69, 0.3, 48.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Poubelles"
+
+[node name="wheelbarrow" parent="CoverLight" instance=ExtResource("r48")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 73, 0, 47)
+
+[node name="Label_53" type="Label3D" parent="CoverLight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 73, 0.3, 48.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Brouette"
+
+[node name="Vegetation" type="Node3D" parent="."]
+
+[node name="Label_54" type="Label3D" parent="Vegetation"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -6, 3, 58)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 160
+outline_size = 12
+text = "Végétation"
+
+[node name="tree_large" parent="Vegetation" instance=ExtResource("r49")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 2, 0, 58)
+
+[node name="Label_55" type="Label3D" parent="Vegetation"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 2, 0.3, 60.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Grand arbre"
+
+[node name="tree_small" parent="Vegetation" instance=ExtResource("r50")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 7, 0, 57)
+
+[node name="Label_56" type="Label3D" parent="Vegetation"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 7, 0.3, 58.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Petit arbre d'automne"
+
+[node name="tree_dead" parent="Vegetation" instance=ExtResource("r51")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 12, 0, 58)
+
+[node name="Label_57" type="Label3D" parent="Vegetation"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 12, 0.3, 60.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Arbre mort"
+
+[node name="bush_a" parent="Vegetation" instance=ExtResource("r52")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 17, 0, 57)
+
+[node name="Label_58" type="Label3D" parent="Vegetation"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 17, 0.3, 58.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Buisson"
+
+[node name="bush_b" parent="Vegetation" instance=ExtResource("r53")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 21, 0, 57)
+
+[node name="Label_59" type="Label3D" parent="Vegetation"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 21, 0.3, 58.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Buisson fleuri"
+
+[node name="flower_patch_a" parent="Vegetation" instance=ExtResource("r54")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 25, 0, 57)
+
+[node name="Label_60" type="Label3D" parent="Vegetation"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 25, 0.3, 58.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Tulipes"
+
+[node name="flower_patch_b" parent="Vegetation" instance=ExtResource("r55")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 29, 0, 57)
+
+[node name="Label_61" type="Label3D" parent="Vegetation"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 29, 0.3, 58.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Marguerites"
+
+[node name="flower_patch_c" parent="Vegetation" instance=ExtResource("r56")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 33, 0, 57)
+
+[node name="Label_62" type="Label3D" parent="Vegetation"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 33, 0.3, 58.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Fleurs roses et bleues"
+
+[node name="tall_grass" parent="Vegetation" instance=ExtResource("r57")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 37, 0, 57)
+
+[node name="Label_63" type="Label3D" parent="Vegetation"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 37, 0.3, 58.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Herbes hautes"
+
+[node name="pumpkin_patch" parent="Vegetation" instance=ExtResource("r58")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 42, 0, 58)
+
+[node name="Label_64" type="Label3D" parent="Vegetation"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 42, 0.3, 60.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Carré de citrouilles"
+
+[node name="stump" parent="Vegetation" instance=ExtResource("r59")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 47, 0, 57)
+
+[node name="Label_65" type="Label3D" parent="Vegetation"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 47, 0.3, 58.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Souche"
+
+[node name="log" parent="Vegetation" instance=ExtResource("r60")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 52, 0, 57)
+
+[node name="Label_66" type="Label3D" parent="Vegetation"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 52, 0.3, 58.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Tronc couché"
+
+[node name="Props" type="Node3D" parent="."]
+
+[node name="Label_67" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -6, 3, 70)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 160
+outline_size = 12
+text = "Petit décor"
+
+[node name="mailbox" parent="Props" instance=ExtResource("r61")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 1, 0, 69)
+
+[node name="Label_68" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 1, 0.3, 70.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Boîte aux lettres"
+
+[node name="street_lamp" parent="Props" instance=ExtResource("r62")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 5, 0, 69)
+
+[node name="Label_69" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 5, 0.3, 70.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Réverbère"
+
+[node name="fire_hydrant" parent="Props" instance=ExtResource("r63")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 9, 0, 69)
+
+[node name="Label_70" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 9, 0.3, 70.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Bouche d'incendie"
+
+[node name="garden_gnome" parent="Props" instance=ExtResource("r64")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 13, 0, 69)
+
+[node name="Label_71" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 13, 0.3, 70.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Nain de jardin"
+
+[node name="lawn_flamingo" parent="Props" instance=ExtResource("r65")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 17, 0, 69)
+
+[node name="Label_72" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 17, 0.3, 70.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Flamant de jardin"
+
+[node name="lawn_mower" parent="Props" instance=ExtResource("r66")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 21, 0, 69)
+
+[node name="Label_73" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 21, 0.3, 70.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Tondeuse"
+
+[node name="traffic_cone" parent="Props" instance=ExtResource("r67")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 25, 0, 69)
+
+[node name="Label_74" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 25, 0.3, 70.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Plot de chantier"
+
+[node name="bucket" parent="Props" instance=ExtResource("r68")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 29, 0, 69)
+
+[node name="Label_75" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 29, 0.3, 70.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Seau"
+
+[node name="road_sign" parent="Props" instance=ExtResource("r69")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 33, 0, 69)
+
+[node name="Label_76" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 33, 0.3, 70.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Panneau stop"
+
+[node name="garden_bench" parent="Props" instance=ExtResource("r70")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 37, 0, 69)
+
+[node name="Label_77" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 37, 0.3, 70.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Banc de jardin"
+
+[node name="picnic_table" parent="Props" instance=ExtResource("r71")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 41, 0, 69)
+
+[node name="Label_78" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 41, 0.3, 70.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Table de pique-nique"
+
+[node name="bbq_grill" parent="Props" instance=ExtResource("r72")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 45, 0, 69)
+
+[node name="Label_79" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 45, 0.3, 70.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Barbecue"
+
+[node name="bird_bath" parent="Props" instance=ExtResource("r73")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 49, 0, 69)
+
+[node name="Label_80" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 49, 0.3, 70.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Bain d'oiseaux"
+
+[node name="doghouse" parent="Props" instance=ExtResource("r74")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 53, 0, 69)
+
+[node name="Label_81" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 53, 0.3, 70.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Niche"
+
+[node name="swing_set" parent="Props" instance=ExtResource("r75")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 58, 0, 69)
+
+[node name="Label_82" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 58, 0.3, 70.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Balançoire"
+
+[node name="pool" parent="Props" instance=ExtResource("r76")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 65, 0, 70)
+
+[node name="Label_83" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 65, 0.3, 72.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Piscine"
+
+[node name="garden_hose" parent="Props" instance=ExtResource("r77")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 71, 0, 69)
+
+[node name="Label_84" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 71, 0.3, 70.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Tuyau d'arrosage"
+
+[node name="tombstone_small_a" parent="Props" instance=ExtResource("r78")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 75, 0, 69)
+
+[node name="Label_85" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 75, 0.3, 70.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Petite stèle"
+
+[node name="tombstone_small_b" parent="Props" instance=ExtResource("r79")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 79, 0, 69)
+
+[node name="Label_86" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 79, 0.3, 70.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Croix de pierre"
+
+[node name="tombstone_small_c" parent="Props" instance=ExtResource("r80")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 83, 0, 69)
+
+[node name="Label_87" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 83, 0.3, 70.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Stèle brisée"
+
+[node name="open_grave" parent="Props" instance=ExtResource("r81")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 87, 0, 70)
+
+[node name="Label_88" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 87, 0.3, 72.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Fosse ouverte"
+
+[node name="coffin" parent="Props" instance=ExtResource("r82")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 91, 0, 69)
+
+[node name="Label_89" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 91, 0.3, 70.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Cercueil"
+
+[node name="bone_pile" parent="Props" instance=ExtResource("r83")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 95, 0, 69)
+
+[node name="Label_90" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 95, 0.3, 70.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Tas d'os"
+
+[node name="Gameplay" type="Node3D" parent="."]
+
+[node name="Label_91" type="Label3D" parent="Gameplay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -6, 3, 82)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 160
+outline_size = 12
+text = "Points de jeu"
+
+[node name="capture_point_neutre" type="Node3D" parent="Gameplay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 5, 0, 85)
+script = ExtResource("r84")
+state = 0
+
+[node name="Model" parent="Gameplay/capture_point_neutre" instance=ExtResource("r85")]
+
+[node name="Label_92" type="Label3D" parent="Gameplay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 5, 0.3, 90.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Point stratégique (neutre)"
+
+[node name="capture_point_plantes" type="Node3D" parent="Gameplay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 17, 0, 85)
+script = ExtResource("r84")
+state = 1
+
+[node name="Model" parent="Gameplay/capture_point_plantes" instance=ExtResource("r85")]
+
+[node name="Label_93" type="Label3D" parent="Gameplay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 17, 0.3, 90.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Point stratégique (plantes)"
+
+[node name="capture_point_zombies" type="Node3D" parent="Gameplay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 29, 0, 85)
+script = ExtResource("r84")
+state = 2
+
+[node name="Model" parent="Gameplay/capture_point_zombies" instance=ExtResource("r85")]
+
+[node name="Label_94" type="Label3D" parent="Gameplay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 29, 0.3, 90.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Point stratégique (zombies)"
+
+[node name="resource_point_primary_neutre" type="Node3D" parent="Gameplay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 41, 0, 85)
+script = ExtResource("r84")
+state = 0
+
+[node name="Model" parent="Gameplay/resource_point_primary_neutre" instance=ExtResource("r86")]
+
+[node name="Label_95" type="Label3D" parent="Gameplay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 41, 0.3, 90.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Point de ressource principale (neutre)"
+
+[node name="resource_point_primary_plantes" type="Node3D" parent="Gameplay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 53, 0, 85)
+script = ExtResource("r84")
+state = 1
+
+[node name="Model" parent="Gameplay/resource_point_primary_plantes" instance=ExtResource("r86")]
+
+[node name="Label_96" type="Label3D" parent="Gameplay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 53, 0.3, 90.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Point de ressource principale (plantes)"
+
+[node name="resource_point_primary_zombies" type="Node3D" parent="Gameplay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 65, 0, 85)
+script = ExtResource("r84")
+state = 2
+
+[node name="Model" parent="Gameplay/resource_point_primary_zombies" instance=ExtResource("r86")]
+
+[node name="Label_97" type="Label3D" parent="Gameplay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 65, 0.3, 90.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Point de ressource principale (zombies)"
+
+[node name="resource_point_secondary_neutre" type="Node3D" parent="Gameplay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 77, 0, 85)
+script = ExtResource("r84")
+state = 0
+
+[node name="Model" parent="Gameplay/resource_point_secondary_neutre" instance=ExtResource("r87")]
+
+[node name="Label_98" type="Label3D" parent="Gameplay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 77, 0.3, 90.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Point de ressource secondaire (neutre)"
+
+[node name="resource_point_secondary_plantes" type="Node3D" parent="Gameplay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 89, 0, 85)
+script = ExtResource("r84")
+state = 1
+
+[node name="Model" parent="Gameplay/resource_point_secondary_plantes" instance=ExtResource("r87")]
+
+[node name="Label_99" type="Label3D" parent="Gameplay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 89, 0.3, 90.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Point de ressource secondaire (plantes)"
+
+[node name="resource_point_secondary_zombies" type="Node3D" parent="Gameplay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 101, 0, 85)
+script = ExtResource("r84")
+state = 2
+
+[node name="Model" parent="Gameplay/resource_point_secondary_zombies" instance=ExtResource("r87")]
+
+[node name="Label_100" type="Label3D" parent="Gameplay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 101, 0.3, 90.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Point de ressource secondaire (zombies)"
+
+[node name="resource_point_tertiary_neutre" type="Node3D" parent="Gameplay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 113, 0, 85)
+script = ExtResource("r84")
+state = 0
+
+[node name="Model" parent="Gameplay/resource_point_tertiary_neutre" instance=ExtResource("r88")]
+
+[node name="Label_101" type="Label3D" parent="Gameplay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 113, 0.3, 90.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Point de ressource tertiaire (neutre)"
+
+[node name="resource_point_tertiary_plantes" type="Node3D" parent="Gameplay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 5, 0, 100)
+script = ExtResource("r84")
+state = 1
+
+[node name="Model" parent="Gameplay/resource_point_tertiary_plantes" instance=ExtResource("r88")]
+
+[node name="Label_102" type="Label3D" parent="Gameplay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 5, 0.3, 105.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Point de ressource tertiaire (plantes)"
+
+[node name="resource_point_tertiary_zombies" type="Node3D" parent="Gameplay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 17, 0, 100)
+script = ExtResource("r84")
+state = 2
+
+[node name="Model" parent="Gameplay/resource_point_tertiary_zombies" instance=ExtResource("r88")]
+
+[node name="Label_103" type="Label3D" parent="Gameplay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 17, 0.3, 105.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Point de ressource tertiaire (zombies)"
+
+[node name="Borders" type="Node3D" parent="."]
+
+[node name="Label_104" type="Label3D" parent="Borders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -6, 3, 115)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 160
+outline_size = 12
+text = "Bordures"
+
+[node name="border_hedge_straight" parent="Borders" instance=ExtResource("r89")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 4, 0, 114)
+
+[node name="Label_105" type="Label3D" parent="Borders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 4, 0.3, 115.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Haie de bordure"
+
+[node name="border_hedge_corner" parent="Borders" instance=ExtResource("r90")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 11, 0, 114)
+
+[node name="Label_106" type="Label3D" parent="Borders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 11, 0.3, 115.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Angle de haie de bordure"
+
+[node name="border_fence_straight" parent="Borders" instance=ExtResource("r91")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 18, 0, 114)
+
+[node name="Label_107" type="Label3D" parent="Borders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 18, 0.3, 115.6)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.01
+font_size = 40
+outline_size = 12
+text = "Palissade de bordure"
+
+[node name="ScaleUnits" type="Node3D" parent="."]
+
+[node name="peashooter" parent="ScaleUnits" instance=ExtResource("r92")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -10, 0, 6)
+
+[node name="peashooter_2" parent="ScaleUnits" instance=ExtResource("r92")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -8.2, 0, 6)
+
+[node name="peashooter_3" parent="ScaleUnits" instance=ExtResource("r92")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -6.4, 0, 6)
+
+[node name="peashooter_4" parent="ScaleUnits" instance=ExtResource("r92")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -10, 0, 7.8)
+
+[node name="peashooter_5" parent="ScaleUnits" instance=ExtResource("r92")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -8.2, 0, 7.8)
+
+[node name="peashooter_6" parent="ScaleUnits" instance=ExtResource("r92")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -6.4, 0, 7.8)
+
+[node name="browncoat" parent="ScaleUnits" instance=ExtResource("r93")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -10, 0, 14)
+
+[node name="browncoat_2" parent="ScaleUnits" instance=ExtResource("r93")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -8, 0, 14)
+
+[node name="browncoat_3" parent="ScaleUnits" instance=ExtResource("r93")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -6, 0, 14)
+
+[node name="browncoat_4" parent="ScaleUnits" instance=ExtResource("r93")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -4, 0, 14)
+
+[node name="browncoat_5" parent="ScaleUnits" instance=ExtResource("r93")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -10, 0, 16)
+
+[node name="browncoat_6" parent="ScaleUnits" instance=ExtResource("r93")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -8, 0, 16)
+
+[node name="browncoat_7" parent="ScaleUnits" instance=ExtResource("r93")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -6, 0, 16)
+
+[node name="browncoat_8" parent="ScaleUnits" instance=ExtResource("r93")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -4, 0, 16)
+
+[node name="z_mech" parent="ScaleUnits" instance=ExtResource("r94")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, -6, 0, 24)

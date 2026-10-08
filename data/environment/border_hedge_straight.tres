@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="EnvironmentPieceData" format=3]
+
+[ext_resource type="Script" path="res://data/environment/environment_piece_data.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://assets/environment/borders/border_hedge_straight.glb" id="2_scene"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"border_hedge_straight"
+display_name = "Haie de bordure"
+category = 7
+scene = ExtResource("2_scene")
+footprint_size = Vector2(8.0, 2.0)
+height = 3.26
+blocks_movement = true
+blocks_vision = true
+cover = 0
+resource = 0

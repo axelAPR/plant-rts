@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="EnvironmentPieceData" format=3]
+
+[ext_resource type="Script" path="res://data/environment/environment_piece_data.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://assets/environment/buildings/house_haunted.glb" id="2_scene"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"house_haunted"
+display_name = "Maison abandonnée"
+category = 1
+scene = ExtResource("2_scene")
+footprint_size = Vector2(10.0, 8.0)
+height = 5.76
+blocks_movement = true
+blocks_vision = true
+cover = 2
+resource = 0

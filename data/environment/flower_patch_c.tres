@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="EnvironmentPieceData" format=3]
+
+[ext_resource type="Script" path="res://data/environment/environment_piece_data.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/flower_patch_c.glb" id="2_scene"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"flower_patch_c"
+display_name = "Fleurs roses et bleues"
+category = 4
+scene = ExtResource("2_scene")
+footprint_size = Vector2(2.0, 2.0)
+height = 0.39
+blocks_movement = false
+blocks_vision = false
+cover = 0
+resource = 0

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="EnvironmentPieceData" format=3]
+
+[ext_resource type="Script" path="res://data/environment/environment_piece_data.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://assets/environment/props/swing_set.glb" id="2_scene"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"swing_set"
+display_name = "Balançoire"
+category = 5
+scene = ExtResource("2_scene")
+footprint_size = Vector2(4.0, 2.0)
+height = 2.26
+blocks_movement = true
+blocks_vision = false
+cover = 0
+resource = 0

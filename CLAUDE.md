@@ -26,12 +26,13 @@ Pas d'informations temporaires ici.
 ## Architecture (dossiers)
 - `camera/` — caméra RTS.
 - `core/` — systèmes transverses.
-- `data/` — définitions de données : `buildings`, `factions`, `units`, `weapons`.
+- `data/` — définitions de données : `buildings`, `environment` (catalogue du kit de
+  décor), `factions`, `units`, `weapons`.
 - `gameplay/` — un sous-dossier par système : `ai`, `capture`, `combat`,
   `commands`, `construction`, `cover`, `economy`, `squads`, `units`.
 - `player/` — logique propre au joueur.
 - `ui/` — interface.
-- `world/` — `maps`, `navigation`, `fog_of_war`.
+- `world/` — `maps`, `navigation`, `fog_of_war`, `environment` (affichage du décor).
 - `assets/` — `audio`, `materials`, `shaders`, `textures` ; modèles 3D dans
   `plants`, `zombies`, `buildings`, `environment` (voir « Modèles 3D ») ;
   `models` pour les modèles sans catégorie.
@@ -114,8 +115,72 @@ Avant de créer un modèle, vérifier ceux déjà présents et rester cohérent 
   for Neighborville), Chomper (cartes AR mobiles), Torchwood (Giga Torchwood). Le
   Pisto-pois garde l'animation `Walk`.
 
-## Modèles 3D — À CONFIRMER
-- Tailles de référence (personnages, plantes, zombies, bâtiments) : à définir.
+## Tailles de référence (unités et décor)
+Mesurées sur les modèles publiés (`assets/plants`, `assets/zombies`) ; le décor est
+dimensionné à partir d'elles. 1 unité = 1 m.
+
+| Élément | Taille | Remarque |
+|---|---|---|
+| Pisto-pois | 1,26 m de haut | plante d'infanterie |
+| Zombie classique | 2,04 m de haut | zombie d'infanterie |
+| Z-Mech | 3,57 m de haut | plus grande unité |
+| Porte | 1,1 × 2,3 m | un zombie y passe |
+| Maison de plain-pied | soubassement 0,35 m + murs 2,8 m ; faîtage ≈ 5,2 m ; cheminée ≤ 6 m | maisons basses |
+| Maison à étage | faîtage ≤ 8 m | |
+| Clôture à piquets | 1,0 m (poteau 1,15 m) | couvert léger |
+| Haie | 1,2 m (bordure de carte : 3 m) | |
+| Muret de pierre | 1,1 m | couvert lourd |
+| Grand arbre | ≈ 6 m ; tronc dégagé jusqu'à 2,6 m ; couronne ≤ 4 m de diamètre | |
+| Route | tuile 8 × 8 m : chaussée 6 m + deux trottoirs de 1 m (0,15 m) | |
+| Voiture (berline) | 4,0 × 1,9 × 1,45 m | emprise 4 × 2 m |
+| Point de jeu | disque de 5 m de rayon ; mât 4,6 m | |
+
+- Grille du décor : emprises au sol multiples de 2 m ; segments modulaires de 4 m le
+  long de X, centrés sur leur pivot ; tuiles de route de 8 × 8 m.
+
+## Kit de décor (implémenté : 91 modèles)
+- Procédural, publiable : scripts `blender/scripts/environment/<famille>.py`
+  (`ground`, `buildings`, `cover_heavy`, `cover_light`, `vegetation`, `props`,
+  `gameplay`, `borders`), bibliothèque `blender/scripts/env_lib.py` (s'appuie sur
+  `prts_lib.py`). `.blend` dans `blender/environment/<catégorie>/`, `.glb` dans
+  `assets/environment/<catégorie>/<id>.glb`. Lancement :
+  `blender -b --python blender/scripts/environment/<famille>.py -- [ids…] [--render]` ;
+  planche de contrôle d'une famille : `environment/sheet.py`.
+- Lisibilité d'abord : décor un peu moins saturé que les unités (textures désaturées
+  de 12 %), verts du décor plus bleus et plus sombres que ceux des plantes jouables,
+  maisons basses, arbres au tronc dégagé.
+- Matériaux texturés, communs à tout le kit (`env_lib.TEXTURES`, noms `Env_*`),
+  4 au plus par modèle ; textures 512 px intégrées aux `.glb`. Sources dans
+  `blender/environment/textures/` : pack peint à la main fourni par l'utilisateur
+  (`pack_*.png`, copié de `blender/Texture imp/`) et textures générées dans le même
+  style (`environment/textures_gen.py` : bruit périodique posterisé en 5 nuances ;
+  variantes de couleur des bardages, tuiles, crépis, carrosseries). Atlas : `Env_Trim`
+  (bois peint blanc, rouge, bois naturel, vitre) et `Env_Paint` (8 peintures vives) ;
+  une face prend une région avec le nom « Env_Trim:glass ». UV automatiques en mètres
+  (densité constante). Couleurs d'équipe et de ressources des points de jeu : unies.
+- Budgets : petit décor ≤ 300 triangles, pièce moyenne ≤ 1 500, bâtiment ≤ 3 000.
+  Dessous et faces cachées supprimés. Contrôles à chaque export (`env_lib.check`) :
+  budget, matériaux, transformations, sol, emprise.
+- Raccords : segments de 4 m (bordures : 8 m) de -L/2 à +L/2 le long de X ; angles et
+  extrémités sur 2 × 2 m, bras de 1 m vers -X et +Z (Godot) depuis le centre — le
+  segment voisin est centré à 3 m (bordures : 5 m) ; piquets et barreaux sur une
+  grille globale (pas régulier d'une pièce à l'autre). Routes : entrées au milieu des
+  bords de tuile, ligne médiane en tirets au pas de 4 m.
+- Points de jeu (`capture_point`, `resource_point_primary/secondary/tertiary`) : disque
+  de 5 m ; objets `State_Neutral`, `State_Plants`, `State_Zombies`, `Pole`, `Flag`
+  (pivots à la base). Silhouette par ressource (structure ≈ 3 / 2 / 1 m) et anneau
+  à la couleur de la ressource du camp (data/factions) ; état neutre sous bâche.
+  `PointStateDisplay` (`world/environment/`) n'affiche qu'un état (affichage seul).
+- Catalogue `data/environment/` : `EnvironmentPieceData` par modèle (id, nom affiché,
+  catégorie, scène, emprise rectangle ou rayon, hauteur mesurée, bloque le
+  déplacement / la vue, couvert aucun / léger / lourd, ressource) et
+  `environment_catalog.tres`, générés par `environment/catalog.py` (Python seul).
+  Données seulement : navigation, couvert et capture ne les lisent pas encore.
+- Scènes `world/maps/kit_showcase` (toutes les pièces par catégorie, points dans leurs
+  trois états, unités pour l'échelle) et `world/maps/kit_demo` (diorama de 80 × 80 m),
+  générées par `environment/scenes_gen.py` (dans un `.tscn`, Transform3D s'écrit ligne
+  par ligne). Captures : `tests/environment_test/capture_runner.gd` (fenêtré) →
+  `tests/environment_test/captures/`.
 
 ## Escouades (implémenté : prototype)
 - Sélection et ordres par escouade, jamais par unité isolée.
@@ -135,24 +200,27 @@ Avant de créer un modèle, vérifier ceux déjà présents et rester cohérent 
   | Troupe | id | Effectif | Colonnes | Espacement | radius | footprint | Passage |
   |---|---|---|---|---|---|---|---|
   | Pisto-pois | peashooter | 6 | 3 | 1,8 | 0,35 | 0,55 | 1,10 |
-  | Tournesol | sunflower | 4 | 2 | 1,8 | 0,30 | 0,60 | 1,20 |
+  | Tournesol | sunflower | 5 | 3 | 1,8 | 0,30 | 0,60 | 1,20 |
   | Maïs | kernel_corn | 4 | 2 | 2,1 | 0,30 | 0,90 | 1,50 |
-  | Cactus | cactus | 3 | 3 | 2,2 | 0,35 | 0,65 | 1,50 |
-  | Rose | rose | 3 | 3 | 2,0 | 0,60 | 0,60 | 0,80 |
-  | Chomper | chomper | 3 | 3 | 2,4 | 0,45 | 0,80 | 1,50 |
-  | Citron | citron | 2 | 2 | 2,6 | 0,50 | 0,90 | 1,60 |
-  | Torchwood | torchwood | 1 | 1 | 1,9 | 0,55 | 0,80 | — |
+  | Cactus | cactus | 4 | 2 | 2,2 | 0,35 | 0,65 | 1,50 |
+  | Rose | rose | 4 | 2 | 2,0 | 0,60 | 0,60 | 0,80 |
+  | Chomper | chomper | 4 | 2 | 2,4 | 0,45 | 0,80 | 1,50 |
+  | Citron | citron | 1 | 1 | 2,6 | 0,50 | 0,90 | — |
+  | Torchwood | torchwood | 3 | 3 | 1,9 | 0,55 | 0,80 | 0,80 |
   | Zombie classique | browncoat | 8 | 4 | 2,0 | 0,35 | 0,85 | 1,30 |
   | Soldat | foot_soldier | 6 | 3 | 2,5 | 0,40 | 1,10 | 1,70 |
-  | Ingénieur | engineer | 4 | 2 | 2,5 | 0,35 | 1,10 | 1,80 |
+  | Ingénieur | engineer | 5 | 3 | 2,5 | 0,35 | 1,10 | 1,80 |
   | Scientifique | scientist | 4 | 2 | 2,1 | 0,35 | 0,90 | 1,40 |
-  | Deadbeard | deadbeard | 3 | 3 | 2,9 | 0,35 | 1,30 | 2,20 |
-  | All-Star | all_star | 3 | 3 | 2,4 | 0,40 | 1,00 | 1,60 |
-  | Super Brainz | super_brainz | 2 | 2 | 2,4 | 0,45 | 0,70 | 1,50 |
-  | Héros d'action des années 80 | action_hero_80s | 1 | 1 | 2,3 | 0,40 | 1,00 | — |
+  | Imp | imp | 8 | 4 | 1,4 | 0,25 | 0,45 | 0,90 |
+  | Deadbeard | deadbeard | 4 | 2 | 2,9 | 0,35 | 1,30 | 2,20 |
+  | All-Star | all_star | 4 | 2 | 2,4 | 0,40 | 1,00 | 1,60 |
+  | Super Brainz | super_brainz | 3 | 3 | 2,4 | 0,45 | 0,70 | 1,50 |
+  | Héros d'action des années 80 | action_hero_80s | 4 | 2 | 2,3 | 0,40 | 1,00 | 1,50 |
   | Z-Mech | z_mech | 1 | 1 | 3,5 | 0,80 | 1,60 | — |
 
-  Déplacement identique pour tous (3,5 m/s, accél. 14, rotation 540°/s) : à équilibrer.
+  Déplacement identique pour tous (`move_speed` 3,5 m/s, accél. 14, rotation 540°/s) :
+  à équilibrer. Imp : modèle provisoire en formes simples
+  (`assets/zombies/imp_placeholder.tscn`), à remplacer par un vrai modèle.
 - Couches séparées : données (`data/units`, ressources `UnitData` / `SquadData`) ;
   simulation sans nœuds au tick physique (`UnitSimulation`, `Squad`, `Unit`) ;
   ordres (`gameplay/commands` : une sous-classe de `SquadOrder` par type) ;
@@ -187,7 +255,13 @@ Avant de créer un modèle, vérifier ceux déjà présents et rester cohérent 
   l'escouade s'arrête en formation à l'emplacement le plus proche hors des emprises
   ennemies ; arrivée = écart < 0,3 m et unités posées (< 0,5 m/s) ; la reformation
   s'arrête aussi si elle ne progresse plus ; délai maximal = trajet × 2 + 10 s.
-- Générique (camp = entier) : le même code servira aux zombies.
+- Générique (camp = entier) : le même code sert aux plantes et aux zombies.
+- Couleur des anneaux, du numéro et du trajet = couleur de la faction
+  (`FactionData.unit_color`) : vert pour les plantes, violet pour les zombies.
+- Menu DEV (`ui/dev_menu.gd`, sous la barre de ressources) : « Toutes les troupes »,
+  un bouton par troupe rangé par camp (plantes au sud du point visé, zombies au nord,
+  sur un emplacement libre), « Tout supprimer ». Apparitions gratuites, hors
+  production et population.
 - Tests : `tests/squad_test/` — `squad_test` (sélection, 2 escouades de Pisto-pois)
   et `all_troops_test` (une escouade par troupe, plantes camp 0 / zombies camp 1,
   tous camps sélectionnables : `SelectionController.team = -1`),
@@ -209,12 +283,93 @@ Avant de créer un modèle, vérifier ceux déjà présents et rester cohérent 
 - Simulation : `TeamEconomy` (stocks et revenus d'un camp, sans nœud) ; `Economy`
   (nœud, une `TeamEconomy` par camp indexée par numéro de camp, avancée au tick
   physique → mise en pause avec le jeu). Revenus et stocks de départ en `@export`
-  (départ à 0). Revenus supplémentaires (points de capture…) :
+  (départ : 500 / 50 / 0 pour chaque camp). Revenus supplémentaires (points de capture…) :
   `add_income_per_minute()` ; dépenses : `can_afford()` / `spend()` (coût = un
   montant par ressource).
 - Affichage : `ResourceBar` (`ui/`), en haut au centre : pastille et nom à la couleur
   de la ressource, stock possédé, revenu par minute. Carte de test : les deux camps.
+- Rôle des ressources : principale = production des unités ; secondaire = unités
+  spécialisées et lourdes ; tertiaire = ressource rare, contenu avancé.
 - Test : `tests/economy_test/economy_runner.gd`.
+
+## Production et population (implémenté : base, sans interface)
+- Coût et population par **escouade entière** (`SquadData` : `primary_resource_cost`,
+  `secondary_resource_cost`, `tertiary_resource_cost`, `population_cost`) : un
+  Pisto-pois occupe 6, pas 6 × 6.
+- `ProductionSystem.produce()` (`gameplay/economy/`) : vérifie, dans l'ordre,
+  ressource principale, secondaire, tertiaire, puis population ; tout ou rien (si une
+  condition manque : rien retiré, rien ajouté, aucune escouade). Sinon : paie, occupe
+  la population, crée l'escouade.
+- Population (`TeamEconomy.population_used` / `population_cap`) : maximum 100 par
+  camp par défaut (`Economy.population_cap`, valeur provisoire, non fixée par le
+  design) ; libérée quand l'escouade est détruite (dernier membre mort), pas à chaque
+  membre.
+- Test : `tests/production_test/production_runner.gd`.
+
+## Combat (implémenté : première version)
+- Statistiques d'un membre dans `UnitData` : `member_hp`, `damage_per_shot` (dégâts
+  d'UN tir réussi, pas un DPS), `accuracy` (0 à 1, bornée), `attack_cooldown`,
+  `attack_range` (mesurée jusqu'au bord du corps de la cible), `projectile`
+  (`ProjectileData`, null = mêlée), `projectile_speed`, `faction`. Unité individuelle
+  = escouade d'un seul membre.
+- HP **individuels** : chaque membre a ses HP, sa cible, sa cadence et ses jets ;
+  jamais de réserve commune. À 0 HP, le membre est retiré de la simulation
+  (`UnitSimulation.remove_unit`) : il ne tire plus et ne compte plus ; escouade sans
+  membre détruite (`squad_destroyed`).
+- `CombatSystem` (`gameplay/combat/`, tick physique, après la simulation) : cible
+  valide (vivante, ennemie, à portée) → cadence écoulée → tir. Les dégâts ne sont
+  jamais appliqués au tir :
+  - à distance : un `Projectile` réel vole en ligne droite, à vitesse constante, vers
+    le point où sera la cible (anticipation, pas de guidage) ; son trajet est testé
+    à chaque tick contre le corps des ennemis (cylindre `radius` × `hit_height`).
+    À l'impact : cible encore valide → jet de précision → dégâts si réussi →
+    projectile détruit. Ne touche jamais son camp (alliés, tireur) ; un ennemi sur la
+    trajectoire peut intercepter le tir. Cible morte avant l'impact → projectile
+    détruit, sans dégâts. Rien touché → disparaît à 1,5 × la portée ;
+  - mêlée (Chomper, Super Brainz) : pas de projectile ; jet de précision au coup.
+- Un jet de précision par tir, jamais `dégâts × effectif × précision`.
+- Dégâts via `DamageContext` → `CombatSystem.resolve_damage()` : point d'entrée des
+  règles à venir (armure, couvert, distance, buffs…), non implémentées.
+- Ciblage : chaque membre tire sur l'ennemi le plus proche à portée, même en marche
+  (sans malus) ; `AttackOrder` (clic droit sur un ennemi) : approche à 80 % de la
+  portée (au contact en mêlée), tir prioritaire sur l'escouade visée, fin quand elle
+  est détruite. Délai de réaction aléatoire (≤ 0,3 s) avant le premier tir.
+- Types de projectiles : `data/weapons/` (`ProjectileData` : trajectoire, rayon de
+  collision, couleur, taille). Affichage : `ProjectileRenderer` (MultiMesh).
+- Roster (première base d'équilibrage théorique, ne pas modifier sans décision) :
+
+  | Troupe | HP / membre | Dégâts | Précision | Cadence (s) | Portée (m) | Projectile (m/s) | Coût | Population |
+  |---|---|---|---|---|---|---|---|---|
+  | Pisto-pois | 100 | 18 | 0,75 | 1,2 | 25 | 30 | 300 / 0 / 0 | 6 |
+  | Tournesol | 80 | 8 | 0,70 | 1,5 | 20 | 25 | 350 / 0 / 0 | 5 |
+  | Cactus | 75 | 75 | 0,90 | 2,5 | 45 | 50 | 400 / 5 / 0 | 4 |
+  | Chomper | 180 | 70 | 0,85 | 2,0 | 3 | mêlée | 450 / 10 / 0 | 8 |
+  | Maïs | 150 | 55 | 0,75 | 1,5 | 28 | 30 | 500 / 15 / 0 | 8 |
+  | Rose | 100 | 20 | 0,80 | 1,4 | 30 | 35 | 450 / 10 / 0 | 5 |
+  | Citron | 2000 | 100 | 0,80 | 1,8 | 35 | 35 | 800 / 25 / 0 | 12 |
+  | Torchwood | 500 | 65 | 0,70 | 1,3 | 20 | 25 | 900 / 30 / 5 | 12 |
+  | Soldat | 100 | 18 | 0,75 | 1,2 | 28 | 30 | 300 / 0 / 0 | 6 |
+  | Scientifique | 90 | 10 | 0,70 | 1,5 | 20 | 25 | 350 / 0 / 0 | 5 |
+  | Ingénieur | 90 | 12 | 0,70 | 1,5 | 22 | 25 | 300 / 5 / 0 | 5 |
+  | Imp | 50 | 10 | 0,65 | 1,0 | 18 | 25 | 250 / 0 / 0 | 5 |
+  | All-Star | 300 | 50 | 0,70 | 1,6 | 22 | 25 | 550 / 15 / 0 | 10 |
+  | Deadbeard | 80 | 75 | 0,90 | 2,8 | 50 | 55 | 400 / 5 / 0 | 4 |
+  | Héros d'action des années 80 | 110 | 45 | 0,80 | 1,3 | 35 | 35 | 500 / 15 / 0 | 6 |
+  | Super Brainz | 500 | 90 | 0,85 | 1,8 | 3 | mêlée | 750 / 25 / 0 | 10 |
+  | Z-Mech | 2400 | 120 | 0,75 | 2,0 | 30 | 30 | 900 / 30 / 5 | 14 |
+
+  Zombie classique : hors roster (100 HP, pas d'attaque, coût 0) en attendant ses
+  valeurs. Effectifs : voir le tableau des troupes (section Escouades).
+- Panneau de débogage (`ui/unit_info_panel.gd`, bas à gauche) : escouade
+  sélectionnée — nom, faction, membres vivants et HP de chacun, dégâts, précision,
+  cadence, portée, projectile, coût, population.
+- Carte de test : `CombatSystem`, `ProjectileRenderer`, `ProductionSystem`,
+  `UnitInfoPanel` ; la scène `all_troops_test` n'a pas de combat (tests de
+  déplacement).
+- Test : `tests/combat_test/combat_runner.gd` (HP individuels, salves, cadence,
+  précision, dégâts, projectiles, tir allié, cible morte, portée, unités
+  individuelles, mêlée, ordre d'attaque, bataille) ; capture avec
+  `-- --screenshots=<dossier>`, fenêtré.
 
 ## Gameplay — À CONFIRMER
 <!-- Déduit de l'arborescence, pas encore validé explicitement -->

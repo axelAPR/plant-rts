@@ -13,3 +13,7 @@
 
 # Cache Python des scripts Blender
 __pycache__/
+
+# Pack de textures source fourni par l'utilisateur (les textures utilisées sont
+# copiées dans blender/environment/textures/)
+/blender/Texture imp/

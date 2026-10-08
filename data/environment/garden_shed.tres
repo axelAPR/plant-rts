@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="EnvironmentPieceData" format=3]
+
+[ext_resource type="Script" path="res://data/environment/environment_piece_data.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://assets/environment/buildings/garden_shed.glb" id="2_scene"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"garden_shed"
+display_name = "Abri de jardin"
+category = 1
+scene = ExtResource("2_scene")
+footprint_size = Vector2(4.0, 4.0)
+height = 3.26
+blocks_movement = true
+blocks_vision = true
+cover = 2
+resource = 0
