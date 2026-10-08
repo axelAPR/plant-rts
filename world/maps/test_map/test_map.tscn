@@ -18,30 +18,36 @@
 [ext_resource type="PackedScene" uid="uid://bx0iidruhgeot" path="res://assets/zombies/all_star.glb" id="16_tgbup"]
 [ext_resource type="PackedScene" uid="uid://b53gfdb7o7s1u" path="res://assets/zombies/browncoat.glb" id="17_rusy0"]
 [ext_resource type="PackedScene" uid="uid://dt2abmovtpl2o" path="res://assets/zombies/deadbeard.glb" id="18_lvgig"]
-[ext_resource type="Script" path="res://gameplay/units/unit_simulation.gd" id="dev_sim"]
-[ext_resource type="Script" path="res://gameplay/commands/order_system.gd" id="dev_orders"]
-[ext_resource type="Script" path="res://gameplay/units/unit_renderer.gd" id="dev_renderer"]
-[ext_resource type="Script" path="res://player/selection_controller.gd" id="dev_selection"]
-[ext_resource type="Script" path="res://player/command_controller.gd" id="dev_commands"]
-[ext_resource type="Script" path="res://ui/selection_box.gd" id="dev_box"]
-[ext_resource type="Script" path="res://ui/dev_menu.gd" id="dev_menu"]
-[ext_resource type="Resource" path="res://data/units/peashooter_squad.tres" id="sq_peashooter"]
-[ext_resource type="Resource" path="res://data/units/sunflower_squad.tres" id="sq_sunflower"]
-[ext_resource type="Resource" path="res://data/units/kernel_corn_squad.tres" id="sq_kernel_corn"]
+[ext_resource type="Script" uid="uid://refjtaoit7wf" path="res://data/units/squad_data.gd" id="26_87q2y"]
+[ext_resource type="Script" uid="uid://bedvehrg70h3c" path="res://ui/selection_box.gd" id="dev_box"]
+[ext_resource type="Script" uid="uid://nkogj4y0hw4" path="res://player/command_controller.gd" id="dev_commands"]
+[ext_resource type="Script" uid="uid://h3tk1t3xpw5d" path="res://ui/dev_menu.gd" id="dev_menu"]
+[ext_resource type="Script" uid="uid://b4cghdvp7qa0x" path="res://gameplay/commands/order_system.gd" id="dev_orders"]
+[ext_resource type="Script" uid="uid://2u0gpuumwu63" path="res://gameplay/units/unit_renderer.gd" id="dev_renderer"]
+[ext_resource type="Script" uid="uid://cw1r2348p77b5" path="res://player/selection_controller.gd" id="dev_selection"]
+[ext_resource type="Script" uid="uid://dkv61sddydv7j" path="res://gameplay/units/unit_simulation.gd" id="dev_sim"]
+[ext_resource type="Resource" path="res://data/units/action_hero_80s_squad.tres" id="sq_action_hero_80s"]
+[ext_resource type="Resource" path="res://data/units/all_star_squad.tres" id="sq_all_star"]
+[ext_resource type="Resource" path="res://data/units/browncoat_squad.tres" id="sq_browncoat"]
 [ext_resource type="Resource" path="res://data/units/cactus_squad.tres" id="sq_cactus"]
-[ext_resource type="Resource" path="res://data/units/rose_squad.tres" id="sq_rose"]
 [ext_resource type="Resource" path="res://data/units/chomper_squad.tres" id="sq_chomper"]
 [ext_resource type="Resource" path="res://data/units/citron_squad.tres" id="sq_citron"]
-[ext_resource type="Resource" path="res://data/units/torchwood_squad.tres" id="sq_torchwood"]
-[ext_resource type="Resource" path="res://data/units/browncoat_squad.tres" id="sq_browncoat"]
-[ext_resource type="Resource" path="res://data/units/foot_soldier_squad.tres" id="sq_foot_soldier"]
-[ext_resource type="Resource" path="res://data/units/engineer_squad.tres" id="sq_engineer"]
-[ext_resource type="Resource" path="res://data/units/scientist_squad.tres" id="sq_scientist"]
 [ext_resource type="Resource" path="res://data/units/deadbeard_squad.tres" id="sq_deadbeard"]
-[ext_resource type="Resource" path="res://data/units/all_star_squad.tres" id="sq_all_star"]
+[ext_resource type="Resource" path="res://data/units/engineer_squad.tres" id="sq_engineer"]
+[ext_resource type="Resource" path="res://data/units/foot_soldier_squad.tres" id="sq_foot_soldier"]
+[ext_resource type="Resource" path="res://data/units/kernel_corn_squad.tres" id="sq_kernel_corn"]
+[ext_resource type="Resource" path="res://data/units/peashooter_squad.tres" id="sq_peashooter"]
+[ext_resource type="Resource" path="res://data/units/rose_squad.tres" id="sq_rose"]
+[ext_resource type="Resource" path="res://data/units/scientist_squad.tres" id="sq_scientist"]
+[ext_resource type="Resource" path="res://data/units/sunflower_squad.tres" id="sq_sunflower"]
 [ext_resource type="Resource" path="res://data/units/super_brainz_squad.tres" id="sq_super_brainz"]
-[ext_resource type="Resource" path="res://data/units/action_hero_80s_squad.tres" id="sq_action_hero_80s"]
+[ext_resource type="Resource" path="res://data/units/torchwood_squad.tres" id="sq_torchwood"]
 [ext_resource type="Resource" path="res://data/units/z_mech_squad.tres" id="sq_z_mech"]
+
+[ext_resource type="Script" path="res://gameplay/economy/economy.gd" id="eco_economy"]
+[ext_resource type="Script" path="res://ui/resource_bar.gd" id="eco_bar"]
+[ext_resource type="Resource" path="res://data/factions/plants.tres" id="eco_plants"]
+[ext_resource type="Resource" path="res://data/factions/zombies.tres" id="eco_zombies"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sky"]
 
@@ -100,6 +106,7 @@ directional_shadow_max_distance = 200.0
 [node name="Ground" type="StaticBody3D" parent="." unique_id=730514545]
 
 [node name="Mesh" type="MeshInstance3D" parent="Ground" unique_id=1967284411]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0437508, -0.07600403, -0.3905344)
 mesh = SubResource("PlaneMesh_ground")
 
 [node name="Collision" type="CollisionShape3D" parent="Ground" unique_id=1205862641]
@@ -187,7 +194,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3379703, 2.3841858e-07, 2.
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.8951974, -2.3841858e-07, -1.7924042)
 
 [node name="rose" parent="." unique_id=688618377 instance=ExtResource("13_wvpa1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7275193, 2.3841858e-07, 4.1512527)
+transform = Transform3D(1, 0, 0, 0, 0.999957, -0.009272863, 0, 0.009272863, 0.999957, -1.7275193, 2.5492263, 4.1512527)
 
 [node name="sunflower" parent="." unique_id=23313332 instance=ExtResource("14_irshx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4281373, 0, 0.40975428)
@@ -219,34 +226,34 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.54780054, 0, 5.8536787)
 [node name="z_mech2" parent="." unique_id=2119770237 instance=ExtResource("6_6v2tv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.8438835, 0, -2.1903791)
 
-[node name="UnitSimulation" type="Node" parent="."]
+[node name="UnitSimulation" type="Node" parent="." unique_id=1374023617]
 script = ExtResource("dev_sim")
 
-[node name="OrderSystem" type="Node" parent="." node_paths=PackedStringArray("simulation")]
+[node name="OrderSystem" type="Node" parent="." unique_id=1521964050 node_paths=PackedStringArray("simulation")]
 script = ExtResource("dev_orders")
 simulation = NodePath("../UnitSimulation")
 
-[node name="SelectionController" type="Node" parent="." node_paths=PackedStringArray("simulation", "camera_rig", "selection_box")]
+[node name="SelectionController" type="Node" parent="." unique_id=507389954 node_paths=PackedStringArray("simulation", "camera_rig", "selection_box")]
 script = ExtResource("dev_selection")
 simulation = NodePath("../UnitSimulation")
 camera_rig = NodePath("../RTSCamera")
 selection_box = NodePath("../HUD/SelectionBox")
 team = -1
 
-[node name="CommandController" type="Node" parent="." node_paths=PackedStringArray("selection", "order_system", "camera_rig")]
+[node name="CommandController" type="Node" parent="." unique_id=1648079548 node_paths=PackedStringArray("selection", "order_system", "camera_rig")]
 script = ExtResource("dev_commands")
 selection = NodePath("../SelectionController")
 order_system = NodePath("../OrderSystem")
 camera_rig = NodePath("../RTSCamera")
 
-[node name="UnitRenderer" type="Node3D" parent="." node_paths=PackedStringArray("simulation", "selection")]
+[node name="UnitRenderer" type="Node3D" parent="." unique_id=1275033666 node_paths=PackedStringArray("simulation", "selection")]
 script = ExtResource("dev_renderer")
 simulation = NodePath("../UnitSimulation")
 selection = NodePath("../SelectionController")
 
-[node name="HUD" type="CanvasLayer" parent="."]
+[node name="HUD" type="CanvasLayer" parent="." unique_id=440923051]
 
-[node name="SelectionBox" type="Control" parent="HUD"]
+[node name="SelectionBox" type="Control" parent="HUD" unique_id=1738493176]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -256,7 +263,7 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("dev_box")
 
-[node name="DevMenu" type="Control" parent="HUD" node_paths=PackedStringArray("simulation", "camera_rig")]
+[node name="DevMenu" type="Control" parent="HUD" unique_id=1162787175 node_paths=PackedStringArray("simulation", "camera_rig")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -267,5 +274,21 @@ mouse_filter = 2
 script = ExtResource("dev_menu")
 simulation = NodePath("../../UnitSimulation")
 camera_rig = NodePath("../../RTSCamera")
-plant_squads = Array[Resource]([ExtResource("sq_peashooter"), ExtResource("sq_sunflower"), ExtResource("sq_kernel_corn"), ExtResource("sq_cactus"), ExtResource("sq_rose"), ExtResource("sq_chomper"), ExtResource("sq_citron"), ExtResource("sq_torchwood")])
-zombie_squads = Array[Resource]([ExtResource("sq_browncoat"), ExtResource("sq_foot_soldier"), ExtResource("sq_engineer"), ExtResource("sq_scientist"), ExtResource("sq_deadbeard"), ExtResource("sq_all_star"), ExtResource("sq_super_brainz"), ExtResource("sq_action_hero_80s"), ExtResource("sq_z_mech")])
+plant_squads = Array[ExtResource("26_87q2y")]([ExtResource("sq_peashooter"), ExtResource("sq_sunflower"), ExtResource("sq_kernel_corn"), ExtResource("sq_cactus"), ExtResource("sq_rose"), ExtResource("sq_chomper"), ExtResource("sq_citron"), ExtResource("sq_torchwood")])
+zombie_squads = Array[ExtResource("26_87q2y")]([ExtResource("sq_browncoat"), ExtResource("sq_foot_soldier"), ExtResource("sq_engineer"), ExtResource("sq_scientist"), ExtResource("sq_deadbeard"), ExtResource("sq_all_star"), ExtResource("sq_super_brainz"), ExtResource("sq_action_hero_80s"), ExtResource("sq_z_mech")])
+
+[node name="Economy" type="Node" parent="."]
+script = ExtResource("eco_economy")
+factions = Array[Resource]([ExtResource("eco_plants"), ExtResource("eco_zombies")])
+
+[node name="ResourceBar" type="Control" parent="HUD" node_paths=PackedStringArray("economy")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("eco_bar")
+economy = NodePath("../../Economy")
+teams = Array[int]([0, 1])

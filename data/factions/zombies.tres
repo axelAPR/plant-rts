@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="FactionData" format=3]
+
+[ext_resource type="Script" path="res://data/factions/faction_data.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"zombies"
+display_name = "Zombies"
+resource_names = Array[String](["Cerveaux", "Engrenages", "Pesticides"])
+resource_colors = Array[Color]([Color(0.96, 0.55, 0.7, 1), Color(0.68, 0.73, 0.8, 1), Color(0.74, 0.86, 0.2, 1)])

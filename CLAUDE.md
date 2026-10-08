@@ -176,6 +176,26 @@ Avant de créer un modèle, vérifier ceux déjà présents et rester cohérent 
   mur ennemi, superposition). Lancer les runners en `--headless` (en fenêtré, la vraie souris peut
   fausser les clics simulés) ; captures avec `-- --screenshots=<dossier>`, fenêtré.
 
+## Économie (implémenté : base)
+- Trois ressources, même fonctionnement pour les deux camps ; seuls les noms et
+  couleurs changent (`data/factions/` : `FactionData`, `plants.tres`, `zombies.tres`) :
+
+  | Ressource | Plantes | Zombies | Revenu de base |
+  |---|---|---|---|
+  | Principale (effectifs, « manpower ») | Soleil (jaune) | Cerveaux (rose) | +200 / min |
+  | Secondaire | Engrais (vert) | Engrenages (gris acier) | +5 / min |
+  | Tertiaire | Terre (brun) | Pesticides (vert acide) | +0 / min |
+
+- Simulation : `TeamEconomy` (stocks et revenus d'un camp, sans nœud) ; `Economy`
+  (nœud, une `TeamEconomy` par camp indexée par numéro de camp, avancée au tick
+  physique → mise en pause avec le jeu). Revenus et stocks de départ en `@export`
+  (départ à 0). Revenus supplémentaires (points de capture…) :
+  `add_income_per_minute()` ; dépenses : `can_afford()` / `spend()` (coût = un
+  montant par ressource).
+- Affichage : `ResourceBar` (`ui/`), en haut au centre : pastille et nom à la couleur
+  de la ressource, stock possédé, revenu par minute. Carte de test : les deux camps.
+- Test : `tests/economy_test/economy_runner.gd`.
+
 ## Gameplay — À CONFIRMER
 <!-- Déduit de l'arborescence, pas encore validé explicitement -->
 - RTS en 3D, orienté escouades (`squads`), avec couvert (`cover`), capture de
