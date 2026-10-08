@@ -157,8 +157,9 @@ func _on_squad_spawned(squad: Squad) -> void:
 		var node := Node3D.new()
 		node.name = "Unit%d" % unit.id
 		var walk_player: AnimationPlayer = null
-		if unit.data.visual_scene != null:
-			var model := unit.data.visual_scene.instantiate()
+		var visual_scene := unit.data.get_visual_scene()
+		if visual_scene != null:
+			var model := visual_scene.instantiate()
 			node.add_child(model)
 			walk_player = _find_walk_player(model)
 		visual.walk_players.append(walk_player)

@@ -8,6 +8,7 @@ script = ExtResource("1_script")
 id = &"sunflower"
 display_name = "Tournesol"
 visual_scene = ExtResource("2_model")
+local_visual_path = "res://assets/gw2/plants/sunflower.glb"
 move_speed = 3.5
 acceleration = 14.0
 turn_speed_degrees = 540.0

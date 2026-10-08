@@ -94,6 +94,20 @@ Avant de créer un modèle, vérifier ceux déjà présents et rester cohérent 
   matériaux, animations.
 - Ne jamais écraser un modèle existant sans vérifier son utilisation dans le projet.
 
+### Modèles issus de Garden Warfare 2
+- Source : `blender/plants imp/` (maillages et textures extraits du jeu, fournis par
+  l'utilisateur). Contenu sous droits d'EA/PopCap : usage personnel uniquement.
+- Le dépôt GitHub est **public** : rien de ce qui en est extrait ou dérivé n'est
+  commité. Sources et résultats sont dans des dossiers ignorés par Git
+  (`blender/plants imp/`, `blender/gw2/`, `assets/gw2/`).
+- Le jeu les utilise en local via `UnitData.local_visual_path` : modèle prioritaire
+  s'il existe sur la machine, sinon `visual_scene` (modèle publié, procédural).
+- Tournesol : `blender/scripts/sunflower_gw2.py` → `assets/gw2/plants/sunflower.glb`,
+  mis à l'échelle (1,45 m), pivot au sol, polygones réduits (≈ 5 400 triangles),
+  pièces `Body`, `Arms`, `Head` (pivot au cou), textures de couleur seules réduites à
+  512 px (exception à la règle « textures seulement si avantage réel » : elles
+  portent le rendu du modèle d'origine).
+
 ## Modèles 3D — À CONFIRMER
 - Tailles de référence (personnages, plantes, zombies, bâtiments) : à définir.
 
