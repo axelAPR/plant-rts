@@ -18,6 +18,30 @@
 [ext_resource type="PackedScene" uid="uid://bx0iidruhgeot" path="res://assets/zombies/all_star.glb" id="16_tgbup"]
 [ext_resource type="PackedScene" uid="uid://b53gfdb7o7s1u" path="res://assets/zombies/browncoat.glb" id="17_rusy0"]
 [ext_resource type="PackedScene" uid="uid://dt2abmovtpl2o" path="res://assets/zombies/deadbeard.glb" id="18_lvgig"]
+[ext_resource type="Script" path="res://gameplay/units/unit_simulation.gd" id="dev_sim"]
+[ext_resource type="Script" path="res://gameplay/commands/order_system.gd" id="dev_orders"]
+[ext_resource type="Script" path="res://gameplay/units/unit_renderer.gd" id="dev_renderer"]
+[ext_resource type="Script" path="res://player/selection_controller.gd" id="dev_selection"]
+[ext_resource type="Script" path="res://player/command_controller.gd" id="dev_commands"]
+[ext_resource type="Script" path="res://ui/selection_box.gd" id="dev_box"]
+[ext_resource type="Script" path="res://ui/dev_menu.gd" id="dev_menu"]
+[ext_resource type="Resource" path="res://data/units/peashooter_squad.tres" id="sq_peashooter"]
+[ext_resource type="Resource" path="res://data/units/sunflower_squad.tres" id="sq_sunflower"]
+[ext_resource type="Resource" path="res://data/units/kernel_corn_squad.tres" id="sq_kernel_corn"]
+[ext_resource type="Resource" path="res://data/units/cactus_squad.tres" id="sq_cactus"]
+[ext_resource type="Resource" path="res://data/units/rose_squad.tres" id="sq_rose"]
+[ext_resource type="Resource" path="res://data/units/chomper_squad.tres" id="sq_chomper"]
+[ext_resource type="Resource" path="res://data/units/citron_squad.tres" id="sq_citron"]
+[ext_resource type="Resource" path="res://data/units/torchwood_squad.tres" id="sq_torchwood"]
+[ext_resource type="Resource" path="res://data/units/browncoat_squad.tres" id="sq_browncoat"]
+[ext_resource type="Resource" path="res://data/units/foot_soldier_squad.tres" id="sq_foot_soldier"]
+[ext_resource type="Resource" path="res://data/units/engineer_squad.tres" id="sq_engineer"]
+[ext_resource type="Resource" path="res://data/units/scientist_squad.tres" id="sq_scientist"]
+[ext_resource type="Resource" path="res://data/units/deadbeard_squad.tres" id="sq_deadbeard"]
+[ext_resource type="Resource" path="res://data/units/all_star_squad.tres" id="sq_all_star"]
+[ext_resource type="Resource" path="res://data/units/super_brainz_squad.tres" id="sq_super_brainz"]
+[ext_resource type="Resource" path="res://data/units/action_hero_80s_squad.tres" id="sq_action_hero_80s"]
+[ext_resource type="Resource" path="res://data/units/z_mech_squad.tres" id="sq_z_mech"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sky"]
 
@@ -194,3 +218,54 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.54780054, 0, 5.8536787)
 
 [node name="z_mech2" parent="." unique_id=2119770237 instance=ExtResource("6_6v2tv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.8438835, 0, -2.1903791)
+
+[node name="UnitSimulation" type="Node" parent="."]
+script = ExtResource("dev_sim")
+
+[node name="OrderSystem" type="Node" parent="." node_paths=PackedStringArray("simulation")]
+script = ExtResource("dev_orders")
+simulation = NodePath("../UnitSimulation")
+
+[node name="SelectionController" type="Node" parent="." node_paths=PackedStringArray("simulation", "camera_rig", "selection_box")]
+script = ExtResource("dev_selection")
+simulation = NodePath("../UnitSimulation")
+camera_rig = NodePath("../RTSCamera")
+selection_box = NodePath("../HUD/SelectionBox")
+team = -1
+
+[node name="CommandController" type="Node" parent="." node_paths=PackedStringArray("selection", "order_system", "camera_rig")]
+script = ExtResource("dev_commands")
+selection = NodePath("../SelectionController")
+order_system = NodePath("../OrderSystem")
+camera_rig = NodePath("../RTSCamera")
+
+[node name="UnitRenderer" type="Node3D" parent="." node_paths=PackedStringArray("simulation", "selection")]
+script = ExtResource("dev_renderer")
+simulation = NodePath("../UnitSimulation")
+selection = NodePath("../SelectionController")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="SelectionBox" type="Control" parent="HUD"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("dev_box")
+
+[node name="DevMenu" type="Control" parent="HUD" node_paths=PackedStringArray("simulation", "camera_rig")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("dev_menu")
+simulation = NodePath("../../UnitSimulation")
+camera_rig = NodePath("../../RTSCamera")
+plant_squads = Array[Resource]([ExtResource("sq_peashooter"), ExtResource("sq_sunflower"), ExtResource("sq_kernel_corn"), ExtResource("sq_cactus"), ExtResource("sq_rose"), ExtResource("sq_chomper"), ExtResource("sq_citron"), ExtResource("sq_torchwood")])
+zombie_squads = Array[Resource]([ExtResource("sq_browncoat"), ExtResource("sq_foot_soldier"), ExtResource("sq_engineer"), ExtResource("sq_scientist"), ExtResource("sq_deadbeard"), ExtResource("sq_all_star"), ExtResource("sq_super_brainz"), ExtResource("sq_action_hero_80s"), ExtResource("sq_z_mech")])

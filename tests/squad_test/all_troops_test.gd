@@ -23,11 +23,7 @@ func _ready() -> void:
 
 ## Fait apparaître les escouades d'un camp en rangées centrées ; `side` = +1 au sud, -1 au nord.
 func _spawn_camp(squads: Array[SquadData], team: int, side: float, facing: float) -> void:
+	var positions := SquadLayout.camp_positions(squads.size(), Vector3.ZERO, side, squads_per_row,
+			column_spacing, row_spacing, front_distance)
 	for i in squads.size():
-		@warning_ignore("integer_division")
-		var row := i / squads_per_row
-		var in_row := mini(squads_per_row, squads.size() - row * squads_per_row)
-		var column := i % squads_per_row
-		var x := (column - (in_row - 1) * 0.5) * column_spacing
-		var z := side * (front_distance + row * row_spacing)
-		_simulation.spawn_squad(squads[i], team, Vector3(x, 0.0, z), facing)
+		_simulation.spawn_squad(squads[i], team, positions[i], facing)
