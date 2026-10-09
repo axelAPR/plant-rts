@@ -118,6 +118,11 @@ Avant de créer un modèle, vérifier ceux déjà présents et rester cohérent 
   pose de référence, textures de couleur 512 px. Sources : GW2, sauf Citron (Battle
   for Neighborville), Chomper (cartes AR mobiles), Torchwood (Giga Torchwood). Le
   Pisto-pois garde l'animation `Walk`.
+- Zombies : `blender/scripts/zombies_gw2.py` (sources riggées `blender/zombies imp/`)
+  → `assets/gw2/zombies/<id>.glb` : pose du squelette (bras abaissés, arme dans la
+  main), échelle commune (Soldat à 2,0 m ; Z-Mech à 3,57 m), ≈ 4 500 à 9 000
+  triangles, pièces Body, Head, Weapon, textures de couleur 512 px. Zombie classique
+  et Héros des années 80 : pas de source, modèles procéduraux.
 
 ## Tailles de référence (unités et décor)
 Mesurées sur les modèles publiés (`assets/plants`, `assets/zombies`) ; le décor est
@@ -198,6 +203,11 @@ dimensionné à partir d'elles. 1 unité = 1 m.
   4 couches RVBA : herbe sèche, chemin, herbe morte, sol corrompu), textures du pack
   dans `assets/textures/ground/` (VRAM, mipmaps), désaturées dans le shader.
 - Ciel : `assets/shaders/stylized_sky.gdshader`, cartoon et statique.
+- Routes de la Banlieue : courbes Curve3D (RoadPath), carrefours aux angles arrondis
+  et raquettes (RoadJunction), assemblés par RoadNetwork (`world/environment/`) ; même
+  profil et matériaux que les tuiles du kit. Rayon de courbure ≥ 30 m, tronçon droit
+  de 10 m à l'approche des carrefours (bras de 9 m), angles de carrefour ≈ 90°.
+  Affichage seul (pas de collision). Test : `tests/roads_test/road_runner.gd`.
 
 ## Escouades (implémenté : prototype)
 - Sélection et ordres par escouade, jamais par unité isolée.
