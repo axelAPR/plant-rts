@@ -89,10 +89,18 @@
 [ext_resource type="Script" path="res://gameplay/economy/economy.gd" id="sys_economy"]
 [ext_resource type="Script" path="res://ui/selection_box.gd" id="sys_box"]
 [ext_resource type="Script" path="res://ui/dev_menu.gd" id="sys_dev_menu"]
-[ext_resource type="Script" path="res://ui/resource_bar.gd" id="sys_resource_bar"]
-[ext_resource type="Script" path="res://ui/unit_info_panel.gd" id="sys_info"]
+[ext_resource type="Script" path="res://ui/hud/rts_hud.gd" id="sys_hud"]
+[ext_resource type="Script" path="res://player/player_state.gd" id="sys_player"]
+[ext_resource type="Script" path="res://gameplay/construction/building_system.gd" id="sys_buildings"]
+[ext_resource type="Script" path="res://gameplay/construction/building_renderer.gd" id="sys_building_renderer"]
+[ext_resource type="Script" path="res://gameplay/construction/building_spawn.gd" id="sys_building_spawn"]
+[ext_resource type="Script" path="res://data/factions/faction_roster.gd" id="sys_roster_script"]
 [ext_resource type="Resource" path="res://data/factions/plants.tres" id="sys_plants"]
 [ext_resource type="Resource" path="res://data/factions/zombies.tres" id="sys_zombies"]
+[ext_resource type="Resource" path="res://data/factions/plants_roster.tres" id="sys_plants_roster"]
+[ext_resource type="Resource" path="res://data/factions/zombies_roster.tres" id="sys_zombies_roster"]
+[ext_resource type="Resource" path="res://data/buildings/tree_of_life.tres" id="sys_hq_plants"]
+[ext_resource type="Resource" path="res://data/buildings/zombie_tomb.tres" id="sys_hq_zombies"]
 [ext_resource type="Resource" path="res://data/units/peashooter_squad.tres" id="sq_peashooter"]
 [ext_resource type="Resource" path="res://data/units/sunflower_squad.tres" id="sq_sunflower"]
 [ext_resource type="Resource" path="res://data/units/kernel_corn_squad.tres" id="sq_kernel_corn"]
@@ -2846,13 +2854,10 @@ transform = Transform3D(0.970716, 0, -0.240228, 0, 1, 0, 0.240228, 0, 0.970716, 
 [node name="tree_large_72" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(0.130526, 0, -0.991445, 0, 1, 0, 0.991445, 0, 0.130526, -140.6, 0, 138.66)
 
-[node name="tree_small_61" parent="WildPlants" instance=ExtResource("r32")]
-transform = Transform3D(-0.679441, 0, 0.73373, 0, 1, 0, -0.73373, 0, -0.679441, 3.8, 0, 137.88)
-
 [node name="tree_large_73" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(-0.843391, 0, 0.5373, 0, 1, 0, -0.5373, 0, -0.843391, -143.06, 0, 79.27)
 
-[node name="tree_small_62" parent="WildPlants" instance=ExtResource("r32")]
+[node name="tree_small_61" parent="WildPlants" instance=ExtResource("r32")]
 transform = Transform3D(0.116671, 0, -0.993171, 0, 1, 0, 0.993171, 0, 0.116671, -108.03, 0, 71.68)
 
 [node name="tree_large_74" parent="WildPlants" instance=ExtResource("r31")]
@@ -2861,7 +2866,7 @@ transform = Transform3D(-0.770513, 0, -0.637424, 0, 1, 0, 0.637424, 0, -0.770513
 [node name="bush_a_21" parent="WildPlants" instance=ExtResource("r39")]
 transform = Transform3D(0.325568, 0, -0.945519, 0, 1, 0, 0.945519, 0, 0.325568, 49.39, 0, 127.55)
 
-[node name="tree_small_63" parent="WildPlants" instance=ExtResource("r32")]
+[node name="tree_small_62" parent="WildPlants" instance=ExtResource("r32")]
 transform = Transform3D(-0.743145, 0, -0.669131, 0, 1, 0, 0.669131, 0, -0.743145, -147.65, 0, 98.69)
 
 [node name="tree_large_75" parent="WildPlants" instance=ExtResource("r31")]
@@ -2882,9 +2887,6 @@ transform = Transform3D(-0.241922, 0, 0.970296, 0, 1, 0, -0.970296, 0, -0.241922
 [node name="flower_patch_a_12" parent="WildPlants" instance=ExtResource("r35")]
 transform = Transform3D(-0.825113, 0, -0.564967, 0, 1, 0, 0.564967, 0, -0.825113, -50.29, 0, 48.08)
 
-[node name="tree_large_78" parent="WildPlants" instance=ExtResource("r31")]
-transform = Transform3D(-0.0104718, 0, -0.999945, 0, 1, 0, 0.999945, 0, -0.0104718, -9.76, 0, 140.7)
-
 [node name="flower_patch_b_11" parent="WildPlants" instance=ExtResource("r37")]
 transform = Transform3D(0.401948, 0, 0.915663, 0, 1, 0, -0.915663, 0, 0.401948, -142.69, 0, 100.07)
 
@@ -2894,22 +2896,22 @@ transform = Transform3D(0.240228, 0, 0.970716, 0, 1, 0, -0.970716, 0, 0.240228, 
 [node name="tall_grass_21" parent="WildPlants" instance=ExtResource("r64")]
 transform = Transform3D(-0.496974, 0, 0.867765, 0, 1, 0, -0.867765, 0, -0.496974, 47.77, 0, 54.41)
 
-[node name="tree_large_79" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_78" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(0.650774, 0, -0.759271, 0, 1, 0, 0.759271, 0, 0.650774, 61.2, 0, 147.19)
 
-[node name="tree_large_80" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_79" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(0.784776, 0, 0.619779, 0, 1, 0, -0.619779, 0, 0.784776, -122.6, 0, 124.72)
 
 [node name="bush_b_19" parent="WildPlants" instance=ExtResource("r38")]
 transform = Transform3D(0.630676, 0, 0.776046, 0, 1, 0, -0.776046, 0, 0.630676, -154.16, 0, 115.96)
 
-[node name="tree_small_64" parent="WildPlants" instance=ExtResource("r32")]
+[node name="tree_small_63" parent="WildPlants" instance=ExtResource("r32")]
 transform = Transform3D(-0.886204, 0, -0.463296, 0, 1, 0, 0.463296, 0, -0.886204, -153.11, 0, 57.22)
 
-[node name="tree_large_81" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_80" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(-0.725374, 0, 0.688355, 0, 1, 0, -0.688355, 0, -0.725374, -36.89, 0, 113.31)
 
-[node name="tree_small_65" parent="WildPlants" instance=ExtResource("r32")]
+[node name="tree_small_64" parent="WildPlants" instance=ExtResource("r32")]
 transform = Transform3D(0.666532, 0, -0.745476, 0, 1, 0, 0.745476, 0, 0.666532, -62.33, 0, 148.72)
 
 [node name="tall_grass_22" parent="WildPlants" instance=ExtResource("r64")]
@@ -2921,34 +2923,34 @@ transform = Transform3D(-0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, -0.866025, 94.91, 0
 [node name="bush_a_22" parent="WildPlants" instance=ExtResource("r39")]
 transform = Transform3D(0.278991, 0, 0.960294, 0, 1, 0, -0.960294, 0, 0.278991, -57.36, 0, 155.02)
 
-[node name="tree_large_82" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_81" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(-0.891798, 0, -0.452435, 0, 1, 0, 0.452435, 0, -0.891798, -8.31, 0, 74.19)
 
 [node name="tall_grass_23" parent="WildPlants" instance=ExtResource("r64")]
 transform = Transform3D(-0.816138, 0, -0.577858, 0, 1, 0, 0.577858, 0, -0.816138, 63.08, 0, 93.15)
 
-[node name="tree_large_83" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_82" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(0.0732382, 0, 0.997314, 0, 1, 0, -0.997314, 0, 0.0732382, -51.44, 0, 86.95)
 
-[node name="tree_small_66" parent="WildPlants" instance=ExtResource("r32")]
+[node name="tree_small_65" parent="WildPlants" instance=ExtResource("r32")]
 transform = Transform3D(0.877146, 0, 0.480223, 0, 1, 0, -0.480223, 0, 0.877146, -120.15, 0, 143.85)
 
 [node name="bush_b_20" parent="WildPlants" instance=ExtResource("r38")]
 transform = Transform3D(0.739631, 0, -0.673013, 0, 1, 0, 0.673013, 0, 0.739631, -132.83, 0, 135)
 
-[node name="tree_large_84" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_83" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(-0.969445, 0, -0.245307, 0, 1, 0, 0.245307, 0, -0.969445, 138.79, 0, 54.33)
 
 [node name="tall_grass_24" parent="WildPlants" instance=ExtResource("r64")]
 transform = Transform3D(-0.986856, 0, 0.161604, 0, 1, 0, -0.161604, 0, -0.986856, 93.72, 0, 71.42)
 
-[node name="tree_large_85" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_84" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(0.847122, 0, -0.531399, 0, 1, 0, 0.531399, 0, 0.847122, 131.89, 0, 45.48)
 
 [node name="flower_patch_b_12" parent="WildPlants" instance=ExtResource("r37")]
 transform = Transform3D(0.998027, 0, -0.0627905, 0, 1, 0, 0.0627905, 0, 0.998027, -83.47, 0, 142.92)
 
-[node name="tree_small_67" parent="WildPlants" instance=ExtResource("r32")]
+[node name="tree_small_66" parent="WildPlants" instance=ExtResource("r32")]
 transform = Transform3D(-0.0401318, 0, -0.999194, 0, 1, 0, 0.999194, 0, -0.0401318, -89.15, 0, 125.04)
 
 [node name="bush_a_23" parent="WildPlants" instance=ExtResource("r39")]
@@ -2957,19 +2959,19 @@ transform = Transform3D(-0.992332, 0, -0.123601, 0, 1, 0, 0.123601, 0, -0.992332
 [node name="bush_a_24" parent="WildPlants" instance=ExtResource("r39")]
 transform = Transform3D(0.605988, 0, 0.795473, 0, 1, 0, -0.795473, 0, 0.605988, 154.4, 0, 89.54)
 
-[node name="tree_small_68" parent="WildPlants" instance=ExtResource("r32")]
+[node name="tree_small_67" parent="WildPlants" instance=ExtResource("r32")]
 transform = Transform3D(-0.361625, 0, 0.932324, 0, 1, 0, -0.932324, 0, -0.361625, 46.83, 0, 131.36)
 
 [node name="bush_b_21" parent="WildPlants" instance=ExtResource("r38")]
 transform = Transform3D(-0.364877, 0, -0.931056, 0, 1, 0, 0.931056, 0, -0.364877, -78.11, 0, 108.75)
 
-[node name="tree_large_86" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_85" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(0.953191, 0, -0.30237, 0, 1, 0, 0.30237, 0, 0.953191, -68.08, 0, 110.16)
 
-[node name="tree_small_69" parent="WildPlants" instance=ExtResource("r32")]
+[node name="tree_small_68" parent="WildPlants" instance=ExtResource("r32")]
 transform = Transform3D(-0.746638, 0, 0.66523, 0, 1, 0, -0.66523, 0, -0.746638, 148.15, 0, 122.37)
 
-[node name="tree_large_87" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_86" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(0.882127, 0, 0.471012, 0, 1, 0, -0.471012, 0, 0.882127, 13.35, 0, 96.46)
 
 [node name="flower_patch_b_13" parent="WildPlants" instance=ExtResource("r37")]
@@ -2990,37 +2992,37 @@ transform = Transform3D(0.446198, 0, 0.894934, 0, 1, 0, -0.894934, 0, 0.446198, 
 [node name="tall_grass_26" parent="WildPlants" instance=ExtResource("r64")]
 transform = Transform3D(0.999976, 0, -0.00698126, 0, 1, 0, 0.00698126, 0, 0.999976, 93.77, 0, 58.22)
 
-[node name="tree_large_88" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_87" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(-0.957822, 0, -0.287361, 0, 1, 0, 0.287361, 0, -0.957822, 0.54, 0, 148.63)
 
-[node name="tree_large_89" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_88" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(0.998027, 0, 0.0627905, 0, 1, 0, -0.0627905, 0, 0.998027, -93.5, 0, 135.46)
 
-[node name="tree_small_70" parent="WildPlants" instance=ExtResource("r32")]
+[node name="tree_small_69" parent="WildPlants" instance=ExtResource("r32")]
 transform = Transform3D(-0.104528, 0, 0.994522, 0, 1, 0, -0.994522, 0, -0.104528, -38.04, 0, 145.72)
 
 [node name="flower_patch_a_16" parent="WildPlants" instance=ExtResource("r35")]
 transform = Transform3D(-0.278991, 0, -0.960294, 0, 1, 0, 0.960294, 0, -0.278991, -58.54, 0, 22.91)
 
-[node name="tree_large_90" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_89" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(-0.480223, 0, 0.877146, 0, 1, 0, -0.877146, 0, -0.480223, -48.4, 0, 115.3)
 
 [node name="flower_patch_b_14" parent="WildPlants" instance=ExtResource("r37")]
 transform = Transform3D(0.52101, 0, -0.853551, 0, 1, 0, 0.853551, 0, 0.52101, 48.61, 0, 45.22)
 
-[node name="tree_large_91" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_90" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(0.327218, 0, 0.944949, 0, 1, 0, -0.944949, 0, 0.327218, 100.71, 0, 60.81)
 
 [node name="flower_patch_b_15" parent="WildPlants" instance=ExtResource("r37")]
 transform = Transform3D(-0.2706, 0, -0.962692, 0, 1, 0, 0.962692, 0, -0.2706, -50.58, 0, 141.7)
 
-[node name="tree_large_92" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_91" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(-0.389124, 0, -0.921185, 0, 1, 0, 0.921185, 0, -0.389124, -151.6, 0, 86.98)
 
-[node name="tree_small_71" parent="WildPlants" instance=ExtResource("r32")]
+[node name="tree_small_70" parent="WildPlants" instance=ExtResource("r32")]
 transform = Transform3D(0.438371, 0, -0.898794, 0, 1, 0, 0.898794, 0, 0.438371, 115.65, 0, 152.64)
 
-[node name="tree_large_93" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_92" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(-0.969445, 0, 0.245307, 0, 1, 0, -0.245307, 0, -0.969445, -23.86, 0, 110.4)
 
 [node name="flower_patch_b_16" parent="WildPlants" instance=ExtResource("r37")]
@@ -3032,7 +3034,7 @@ transform = Transform3D(0.29404, 0, -0.955793, 0, 1, 0, 0.955793, 0, 0.29404, 14
 [node name="bush_a_27" parent="WildPlants" instance=ExtResource("r39")]
 transform = Transform3D(-0.586372, 0, -0.810042, 0, 1, 0, 0.810042, 0, -0.586372, -138.04, 0, 88.25)
 
-[node name="tree_large_94" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_93" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(-0.764921, 0, 0.644124, 0, 1, 0, -0.644124, 0, -0.764921, 146.33, 0, 51.25)
 
 [node name="flower_patch_b_17" parent="WildPlants" instance=ExtResource("r37")]
@@ -3044,40 +3046,40 @@ transform = Transform3D(-0.861629, 0, 0.507538, 0, 1, 0, -0.507538, 0, -0.861629
 [node name="flower_patch_a_18" parent="WildPlants" instance=ExtResource("r35")]
 transform = Transform3D(-0.867765, 0, -0.496974, 0, 1, 0, 0.496974, 0, -0.867765, 113.17, 0, 48.68)
 
-[node name="tree_large_95" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_94" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(0.92321, 0, -0.384295, 0, 1, 0, 0.384295, 0, 0.92321, -55.59, 0, 150.39)
 
-[node name="tree_large_96" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_95" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(-0.630676, 0, 0.776046, 0, 1, 0, -0.776046, 0, -0.630676, 90.35, 0, 78.9)
 
-[node name="tree_large_97" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_96" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(-0.0104718, 0, 0.999945, 0, 1, 0, -0.999945, 0, -0.0104718, -145.81, 0, 104.44)
 
-[node name="tree_large_98" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_97" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(0.712026, 0, -0.702153, 0, 1, 0, 0.702153, 0, 0.712026, 73.82, 0, 151.75)
 
 [node name="bush_b_22" parent="WildPlants" instance=ExtResource("r38")]
 transform = Transform3D(-0.189095, 0, 0.981959, 0, 1, 0, -0.981959, 0, -0.189095, 112.64, 0, 40.72)
 
-[node name="tree_large_99" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_98" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(-0.80696, 0, -0.590606, 0, 1, 0, 0.590606, 0, -0.80696, -75.52, 0, 41.26)
 
 [node name="flower_patch_a_19" parent="WildPlants" instance=ExtResource("r35")]
 transform = Transform3D(0.901077, 0, -0.433659, 0, 1, 0, 0.433659, 0, 0.901077, -79.95, 0, 138.78)
 
-[node name="tree_large_100" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_99" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(0.390731, 0, 0.920505, 0, 1, 0, -0.920505, 0, 0.390731, 13.17, 0, 106.69)
 
 [node name="bush_b_23" parent="WildPlants" instance=ExtResource("r38")]
 transform = Transform3D(-0.951594, 0, 0.307357, 0, 1, 0, -0.307357, 0, -0.951594, -32.98, 0, 118.23)
 
-[node name="tree_small_72" parent="WildPlants" instance=ExtResource("r32")]
+[node name="tree_small_71" parent="WildPlants" instance=ExtResource("r32")]
 transform = Transform3D(0.171929, 0, -0.985109, 0, 1, 0, 0.985109, 0, 0.171929, -32.8, 0, 145.16)
 
 [node name="flower_patch_b_18" parent="WildPlants" instance=ExtResource("r37")]
 transform = Transform3D(-0.748956, 0, -0.66262, 0, 1, 0, 0.66262, 0, -0.748956, -151.08, 0, 131.71)
 
-[node name="tree_small_73" parent="WildPlants" instance=ExtResource("r32")]
+[node name="tree_small_72" parent="WildPlants" instance=ExtResource("r32")]
 transform = Transform3D(0.158158, 0, 0.987414, 0, 1, 0, -0.987414, 0, 0.158158, -122.47, 0, 86.58)
 
 [node name="flower_patch_a_20" parent="WildPlants" instance=ExtResource("r35")]
@@ -3092,10 +3094,10 @@ transform = Transform3D(-0.983571, 0, 0.180519, 0, 1, 0, -0.180519, 0, -0.983571
 [node name="flower_patch_b_19" parent="WildPlants" instance=ExtResource("r37")]
 transform = Transform3D(-0.392337, 0, 0.919821, 0, 1, 0, -0.919821, 0, -0.392337, 87.7, 0, 56.84)
 
-[node name="tree_small_74" parent="WildPlants" instance=ExtResource("r32")]
+[node name="tree_small_73" parent="WildPlants" instance=ExtResource("r32")]
 transform = Transform3D(-0.109734, 0, 0.993961, 0, 1, 0, -0.993961, 0, -0.109734, 50.63, 0, 50.08)
 
-[node name="tree_small_75" parent="WildPlants" instance=ExtResource("r32")]
+[node name="tree_small_74" parent="WildPlants" instance=ExtResource("r32")]
 transform = Transform3D(-0.87462, 0, 0.48481, 0, 1, 0, -0.48481, 0, -0.87462, -55.01, 0, 121.53)
 
 [node name="flower_patch_b_20" parent="WildPlants" instance=ExtResource("r37")]
@@ -3107,16 +3109,16 @@ transform = Transform3D(0.133986, 0, 0.990983, 0, 1, 0, -0.990983, 0, 0.133986, 
 [node name="flower_patch_b_21" parent="WildPlants" instance=ExtResource("r37")]
 transform = Transform3D(-0.350207, 0, -0.936672, 0, 1, 0, 0.936672, 0, -0.350207, 28.93, 0, 35.47)
 
-[node name="tree_large_101" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_100" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(-0.905569, 0, 0.424199, 0, 1, 0, -0.424199, 0, -0.905569, 128.75, 0, 39.98)
 
-[node name="tree_large_102" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_101" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(-0.436802, 0, 0.899558, 0, 1, 0, -0.899558, 0, -0.436802, 21.4, 0, 142.33)
 
-[node name="tree_small_76" parent="WildPlants" instance=ExtResource("r32")]
+[node name="tree_small_75" parent="WildPlants" instance=ExtResource("r32")]
 transform = Transform3D(0.997801, 0, 0.0662739, 0, 1, 0, -0.0662739, 0, 0.997801, 139.01, 0, 28.22)
 
-[node name="tree_large_103" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_102" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(0.948324, 0, 0.317305, 0, 1, 0, -0.317305, 0, 0.948324, 105.64, 0, 82.08)
 
 [node name="flower_patch_b_22" parent="WildPlants" instance=ExtResource("r37")]
@@ -3125,22 +3127,22 @@ transform = Transform3D(-0.38107, 0, 0.924546, 0, 1, 0, -0.924546, 0, -0.38107, 
 [node name="bush_b_24" parent="WildPlants" instance=ExtResource("r38")]
 transform = Transform3D(-0.747798, 0, 0.663926, 0, 1, 0, -0.663926, 0, -0.747798, -76.85, 0, 76.64)
 
-[node name="tree_small_77" parent="WildPlants" instance=ExtResource("r32")]
+[node name="tree_small_76" parent="WildPlants" instance=ExtResource("r32")]
 transform = Transform3D(0.132256, 0, 0.991216, 0, 1, 0, -0.991216, 0, 0.132256, -6.31, 0, 82.61)
 
-[node name="tree_large_104" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_103" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(0.15471, 0, 0.98796, 0, 1, 0, -0.98796, 0, 0.15471, 147.33, 0, 42.86)
 
 [node name="bush_a_31" parent="WildPlants" instance=ExtResource("r39")]
 transform = Transform3D(-0.694658, 0, 0.71934, 0, 1, 0, -0.71934, 0, -0.694658, 21.77, 0, 153.74)
 
-[node name="tree_large_105" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_104" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(0.947768, 0, 0.318959, 0, 1, 0, -0.318959, 0, 0.947768, 50.03, 0, 34.26)
 
-[node name="tree_small_78" parent="WildPlants" instance=ExtResource("r32")]
+[node name="tree_small_77" parent="WildPlants" instance=ExtResource("r32")]
 transform = Transform3D(0.0436194, 0, 0.999048, 0, 1, 0, -0.999048, 0, 0.0436194, -115.31, 0, 136.45)
 
-[node name="tree_small_79" parent="WildPlants" instance=ExtResource("r32")]
+[node name="tree_small_78" parent="WildPlants" instance=ExtResource("r32")]
 transform = Transform3D(-0.784776, 0, -0.619779, 0, 1, 0, 0.619779, 0, -0.784776, -142.28, 0, 85.41)
 
 [node name="flower_patch_b_23" parent="WildPlants" instance=ExtResource("r37")]
@@ -3152,13 +3154,10 @@ transform = Transform3D(-0.978867, 0, -0.204496, 0, 1, 0, 0.204496, 0, -0.978867
 [node name="flower_patch_b_24" parent="WildPlants" instance=ExtResource("r37")]
 transform = Transform3D(-0.97437, 0, -0.224951, 0, 1, 0, 0.224951, 0, -0.97437, 141.52, 0, 103.49)
 
-[node name="tree_large_106" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_105" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(-0.0261769, 0, -0.999657, 0, 1, 0, 0.999657, 0, -0.0261769, -139.74, 0, 111.18)
 
-[node name="bush_a_33" parent="WildPlants" instance=ExtResource("r39")]
-transform = Transform3D(0.904827, 0, 0.425779, 0, 1, 0, -0.425779, 0, 0.904827, -1.83, 0, 110.4)
-
-[node name="tree_large_107" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_106" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(0.144356, 0, 0.989526, 0, 1, 0, -0.989526, 0, 0.144356, 125.39, 0, 90.69)
 
 [node name="bush_b_25" parent="WildPlants" instance=ExtResource("r38")]
@@ -3173,16 +3172,16 @@ transform = Transform3D(-0.892586, 0, 0.450878, 0, 1, 0, -0.450878, 0, -0.892586
 [node name="tall_grass_28" parent="WildPlants" instance=ExtResource("r64")]
 transform = Transform3D(-0.663926, 0, 0.747798, 0, 1, 0, -0.747798, 0, -0.663926, -27.14, 0, 136.13)
 
-[node name="tree_small_80" parent="WildPlants" instance=ExtResource("r32")]
+[node name="tree_small_79" parent="WildPlants" instance=ExtResource("r32")]
 transform = Transform3D(0.23005, 0, -0.973179, 0, 1, 0, 0.973179, 0, 0.23005, -37.09, 0, 142.09)
 
-[node name="tree_small_81" parent="WildPlants" instance=ExtResource("r32")]
+[node name="tree_small_80" parent="WildPlants" instance=ExtResource("r32")]
 transform = Transform3D(-0.851727, 0, -0.523986, 0, 1, 0, 0.523986, 0, -0.851727, 72.54, 0, 145.74)
 
-[node name="tree_large_108" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_107" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(-0.999976, 0, 0.00698126, 0, 1, 0, -0.00698126, 0, -0.999976, 143.23, 0, 31.27)
 
-[node name="tree_small_82" parent="WildPlants" instance=ExtResource("r32")]
+[node name="tree_small_81" parent="WildPlants" instance=ExtResource("r32")]
 transform = Transform3D(0.177085, 0, -0.984196, 0, 1, 0, 0.984196, 0, 0.177085, -124.76, 0, 82.4)
 
 [node name="flower_patch_a_21" parent="WildPlants" instance=ExtResource("r35")]
@@ -3191,7 +3190,7 @@ transform = Transform3D(-0.909961, 0, -0.414693, 0, 1, 0, 0.414693, 0, -0.909961
 [node name="flower_patch_b_25" parent="WildPlants" instance=ExtResource("r37")]
 transform = Transform3D(-0.695913, 0, 0.718126, 0, 1, 0, -0.718126, 0, -0.695913, -97.46, 0, 126.82)
 
-[node name="tree_large_109" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_108" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(-0.0418757, 0, -0.999123, 0, 1, 0, 0.999123, 0, -0.0418757, -67.87, 0, 133.91)
 
 [node name="bush_b_27" parent="WildPlants" instance=ExtResource("r38")]
@@ -3200,22 +3199,22 @@ transform = Transform3D(-0.679441, 0, -0.73373, 0, 1, 0, 0.73373, 0, -0.679441, 
 [node name="flower_patch_b_26" parent="WildPlants" instance=ExtResource("r37")]
 transform = Transform3D(-0.667833, 0, 0.744312, 0, 1, 0, -0.744312, 0, -0.667833, 111.83, 0, 121.93)
 
-[node name="tree_large_110" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_109" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(-0.139173, 0, 0.990268, 0, 1, 0, -0.990268, 0, -0.139173, -97.51, 0, 95.12)
 
-[node name="bush_a_34" parent="WildPlants" instance=ExtResource("r39")]
+[node name="bush_a_33" parent="WildPlants" instance=ExtResource("r39")]
 transform = Transform3D(0.102793, 0, 0.994703, 0, 1, 0, -0.994703, 0, 0.102793, -39.23, 0, 125.39)
 
-[node name="tree_small_83" parent="WildPlants" instance=ExtResource("r32")]
+[node name="tree_small_82" parent="WildPlants" instance=ExtResource("r32")]
 transform = Transform3D(0.999123, 0, 0.0418757, 0, 1, 0, -0.0418757, 0, 0.999123, 106.12, 0, 74.13)
 
-[node name="bush_a_35" parent="WildPlants" instance=ExtResource("r39")]
+[node name="bush_a_34" parent="WildPlants" instance=ExtResource("r39")]
 transform = Transform3D(-0.997185, 0, 0.0749787, 0, 1, 0, -0.0749787, 0, -0.997185, -74.33, 0, 120.11)
 
 [node name="tall_grass_29" parent="WildPlants" instance=ExtResource("r64")]
 transform = Transform3D(0.704634, 0, -0.709571, 0, 1, 0, 0.709571, 0, 0.704634, 14.28, 0, 118.9)
 
-[node name="tree_large_111" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_110" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(-0.443071, 0, -0.896486, 0, 1, 0, 0.896486, 0, -0.443071, 141.16, 0, 118.85)
 
 [node name="bush_b_28" parent="WildPlants" instance=ExtResource("r38")]
@@ -3224,13 +3223,13 @@ transform = Transform3D(0.64812, 0, 0.761538, 0, 1, 0, -0.761538, 0, 0.64812, -1
 [node name="bush_b_29" parent="WildPlants" instance=ExtResource("r38")]
 transform = Transform3D(-0.570714, 0, -0.821149, 0, 1, 0, 0.821149, 0, -0.570714, -32.25, 0, 125.58)
 
-[node name="tree_small_84" parent="WildPlants" instance=ExtResource("r32")]
+[node name="tree_small_83" parent="WildPlants" instance=ExtResource("r32")]
 transform = Transform3D(-0.582123, 0, 0.813101, 0, 1, 0, -0.813101, 0, -0.582123, 148.28, 0, 73.91)
 
 [node name="flower_patch_b_27" parent="WildPlants" instance=ExtResource("r37")]
 transform = Transform3D(-0.833886, 0, -0.551937, 0, 1, 0, 0.551937, 0, -0.833886, 26.71, 0, 152.56)
 
-[node name="tree_small_85" parent="WildPlants" instance=ExtResource("r32")]
+[node name="tree_small_84" parent="WildPlants" instance=ExtResource("r32")]
 transform = Transform3D(-0.928486, 0, 0.371368, 0, 1, 0, -0.371368, 0, -0.928486, 5.16, 0, 118.95)
 
 [node name="flower_patch_b_28" parent="WildPlants" instance=ExtResource("r37")]
@@ -3239,16 +3238,16 @@ transform = Transform3D(-0.214735, 0, 0.976672, 0, 1, 0, -0.976672, 0, -0.214735
 [node name="tall_grass_30" parent="WildPlants" instance=ExtResource("r64")]
 transform = Transform3D(-0.567844, 0, -0.823136, 0, 1, 0, 0.823136, 0, -0.567844, -42.57, 0, 113.05)
 
-[node name="tree_large_112" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_111" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(-0.669131, 0, -0.743145, 0, 1, 0, 0.743145, 0, -0.669131, 87.78, 0, 139.41)
 
-[node name="bush_a_36" parent="WildPlants" instance=ExtResource("r39")]
+[node name="bush_a_35" parent="WildPlants" instance=ExtResource("r39")]
 transform = Transform3D(0.755853, 0, 0.654741, 0, 1, 0, -0.654741, 0, 0.755853, -83.07, 0, 152.11)
 
 [node name="flower_patch_b_29" parent="WildPlants" instance=ExtResource("r37")]
 transform = Transform3D(0.149535, 0, 0.988756, 0, 1, 0, -0.988756, 0, 0.149535, -12.38, 0, 87.99)
 
-[node name="tree_large_113" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_112" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(0.461749, 0, -0.887011, 0, 1, 0, 0.887011, 0, 0.461749, -70.8, 0, 89.48)
 
 [node name="flower_patch_b_30" parent="WildPlants" instance=ExtResource("r37")]
@@ -3257,13 +3256,13 @@ transform = Transform3D(-0.926529, 0, -0.376224, 0, 1, 0, 0.376224, 0, -0.926529
 [node name="bush_b_30" parent="WildPlants" instance=ExtResource("r38")]
 transform = Transform3D(-0.911403, 0, -0.411514, 0, 1, 0, 0.411514, 0, -0.911403, -154.15, 0, 64.5)
 
-[node name="bush_a_37" parent="WildPlants" instance=ExtResource("r39")]
+[node name="bush_a_36" parent="WildPlants" instance=ExtResource("r39")]
 transform = Transform3D(-0.882948, 0, -0.469472, 0, 1, 0, 0.469472, 0, -0.882948, -138.4, 0, 101.32)
 
-[node name="tree_large_114" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_113" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(-0.433659, 0, -0.901077, 0, 1, 0, 0.901077, 0, -0.433659, -138.85, 0, 128.72)
 
-[node name="bush_a_38" parent="WildPlants" instance=ExtResource("r39")]
+[node name="bush_a_37" parent="WildPlants" instance=ExtResource("r39")]
 transform = Transform3D(0.513541, 0, -0.858065, 0, 1, 0, 0.858065, 0, 0.513541, -152.24, 0, 118.91)
 
 [node name="bush_b_31" parent="WildPlants" instance=ExtResource("r38")]
@@ -3272,43 +3271,40 @@ transform = Transform3D(-0.392337, 0, 0.919821, 0, 1, 0, -0.919821, 0, -0.392337
 [node name="flower_patch_b_31" parent="WildPlants" instance=ExtResource("r37")]
 transform = Transform3D(-0.579281, 0, 0.815128, 0, 1, 0, -0.815128, 0, -0.579281, 52.66, 0, 154.08)
 
-[node name="tree_small_86" parent="WildPlants" instance=ExtResource("r32")]
+[node name="tree_small_85" parent="WildPlants" instance=ExtResource("r32")]
 transform = Transform3D(-0.999998, 0, 0.00174533, 0, 1, 0, -0.00174533, 0, -0.999998, -100.87, 0, 83.39)
 
-[node name="tree_large_115" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_114" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(0.284015, 0, 0.95882, 0, 1, 0, -0.95882, 0, 0.284015, 43.99, 0, 112.58)
 
-[node name="tree_large_116" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_115" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(0.219846, 0, 0.975535, 0, 1, 0, -0.975535, 0, 0.219846, 11.48, 0, 47.41)
 
-[node name="bush_a_39" parent="WildPlants" instance=ExtResource("r39")]
+[node name="bush_a_38" parent="WildPlants" instance=ExtResource("r39")]
 transform = Transform3D(0.395546, 0, 0.918446, 0, 1, 0, -0.918446, 0, 0.395546, -52.43, 0, 127.48)
 
-[node name="tree_small_87" parent="WildPlants" instance=ExtResource("r32")]
-transform = Transform3D(0.95424, 0, -0.299041, 0, 1, 0, 0.299041, 0, 0.95424, -0.61, 0, 136.91)
-
-[node name="tree_small_88" parent="WildPlants" instance=ExtResource("r32")]
+[node name="tree_small_86" parent="WildPlants" instance=ExtResource("r32")]
 transform = Transform3D(0.867765, 0, -0.496974, 0, 1, 0, 0.496974, 0, 0.867765, -16.56, 0, 21.4)
 
 [node name="flower_patch_a_22" parent="WildPlants" instance=ExtResource("r35")]
 transform = Transform3D(-0.946649, 0, -0.322266, 0, 1, 0, 0.322266, 0, -0.946649, 132.32, 0, 99.17)
 
-[node name="tree_large_117" parent="WildPlants" instance=ExtResource("r31")]
+[node name="tree_large_116" parent="WildPlants" instance=ExtResource("r31")]
 transform = Transform3D(0.999945, 0, 0.0104718, 0, 1, 0, -0.0104718, 0, 0.999945, -108.75, 0, 148.07)
 
-[node name="bush_a_40" parent="WildPlants" instance=ExtResource("r39")]
+[node name="bush_a_39" parent="WildPlants" instance=ExtResource("r39")]
 transform = Transform3D(-0.99961, 0, -0.0279216, 0, 1, 0, 0.0279216, 0, -0.99961, 88.39, 0, 60.25)
 
-[node name="bush_a_41" parent="WildPlants" instance=ExtResource("r39")]
+[node name="bush_a_40" parent="WildPlants" instance=ExtResource("r39")]
 transform = Transform3D(0.985408, 0, -0.170209, 0, 1, 0, 0.170209, 0, 0.985408, 153.46, 0, 21.74)
 
 [node name="flower_patch_a_23" parent="WildPlants" instance=ExtResource("r35")]
 transform = Transform3D(-0.379456, 0, 0.92521, 0, 1, 0, -0.92521, 0, -0.379456, -132.38, 0, 154.1)
 
-[node name="bush_a_42" parent="WildPlants" instance=ExtResource("r39")]
+[node name="bush_a_41" parent="WildPlants" instance=ExtResource("r39")]
 transform = Transform3D(-0.60042, 0, -0.799685, 0, 1, 0, 0.799685, 0, -0.60042, 123.48, 0, 95.4)
 
-[node name="tree_small_89" parent="WildPlants" instance=ExtResource("r32")]
+[node name="tree_small_87" parent="WildPlants" instance=ExtResource("r32")]
 transform = Transform3D(0.619779, 0, -0.784776, 0, 1, 0, 0.784776, 0, 0.619779, 117.21, 0, 42.17)
 
 [node name="bush_b_32" parent="WildPlants" instance=ExtResource("r38")]
@@ -3320,90 +3316,87 @@ transform = Transform3D(0.892586, 0, -0.450878, 0, 1, 0, 0.450878, 0, 0.892586, 
 [node name="flower_patch_b_32" parent="WildPlants" instance=ExtResource("r37")]
 transform = Transform3D(-0.146083, 0, -0.989272, 0, 1, 0, 0.989272, 0, -0.146083, 30.14, 0, 43.24)
 
-[node name="bush_a_43" parent="WildPlants" instance=ExtResource("r39")]
-transform = Transform3D(0.566406, 0, 0.824126, 0, 1, 0, -0.824126, 0, 0.566406, 3.88, 0, 142.06)
-
 [node name="tall_grass_31" parent="WildPlants" instance=ExtResource("r64")]
 transform = Transform3D(0.489382, 0, -0.872069, 0, 1, 0, 0.872069, 0, 0.489382, -146.3, 0, 141.09)
 
-[node name="bush_a_44" parent="WildPlants" instance=ExtResource("r39")]
+[node name="bush_a_42" parent="WildPlants" instance=ExtResource("r39")]
 transform = Transform3D(-0.999391, 0, 0.0348995, 0, 1, 0, -0.0348995, 0, -0.999391, 60.47, 0, 96.6)
 
-[node name="tree_small_90" parent="WildPlants" instance=ExtResource("r32")]
+[node name="tree_small_88" parent="WildPlants" instance=ExtResource("r32")]
 transform = Transform3D(0.67559, 0, 0.737277, 0, 1, 0, -0.737277, 0, 0.67559, -24.92, 0, 98.45)
+
+[node name="tree_small_89" parent="WildPlants" instance=ExtResource("r32")]
+transform = Transform3D(0.967268, 0, -0.253758, 0, 1, 0, 0.253758, 0, 0.967268, 71.14, 0, 105.55)
+
+[node name="flower_patch_a_25" parent="WildPlants" instance=ExtResource("r35")]
+transform = Transform3D(0.864275, 0, 0.50302, 0, 1, 0, -0.50302, 0, 0.864275, 64.87, 0, 37.32)
+
+[node name="tree_large_117" parent="WildPlants" instance=ExtResource("r31")]
+transform = Transform3D(-0.881303, 0, 0.472551, 0, 1, 0, -0.472551, 0, -0.881303, -8.81, 0, 143.52)
+
+[node name="bush_b_33" parent="WildPlants" instance=ExtResource("r38")]
+transform = Transform3D(0.993373, 0, -0.114937, 0, 1, 0, 0.114937, 0, 0.993373, 14.16, 0, 153.59)
+
+[node name="tree_large_118" parent="WildPlants" instance=ExtResource("r31")]
+transform = Transform3D(0.999945, 0, -0.0104718, 0, 1, 0, 0.0104718, 0, 0.999945, -24.23, 0, 84.27)
 
 [node name="WildZombies" type="Node3D" parent="."]
 
-[node name="tall_grass_32" parent="WildZombies" instance=ExtResource("r64")]
-transform = Transform3D(0.864275, 0, 0.50302, 0, 1, 0, -0.50302, 0, 0.864275, 64.87, 0, -138.17)
-
-[node name="bone_pile_4" parent="WildZombies" instance=ExtResource("r23")]
-transform = Transform3D(-0.768284, 0, -0.64011, 0, 1, 0, 0.64011, 0, -0.768284, 109.51, 0, -37.53)
-
 [node name="tree_dead_42" parent="WildZombies" instance=ExtResource("r24")]
-transform = Transform3D(-0.907777, 0, 0.419452, 0, 1, 0, -0.419452, 0, -0.907777, -137.67, 0, -133.13)
-
-[node name="tall_grass_33" parent="WildZombies" instance=ExtResource("r64")]
-transform = Transform3D(-0.962218, 0, -0.27228, 0, 1, 0, 0.27228, 0, -0.962218, 40.5, 0, -27.74)
-
-[node name="tree_dead_43" parent="WildZombies" instance=ExtResource("r24")]
-transform = Transform3D(-0.99889, 0, -0.0471065, 0, 1, 0, 0.0471065, 0, -0.99889, 27.88, 0, -26.6)
+transform = Transform3D(-0.685818, 0, -0.727773, 0, 1, 0, 0.727773, 0, -0.685818, -68.98, 0, -136.1)
 
 [node name="stump_16" parent="WildZombies" instance=ExtResource("r45")]
 transform = Transform3D(0.799685, 0, -0.60042, 0, 1, 0, 0.60042, 0, 0.799685, 62.41, 0, -42.3)
 
-[node name="tall_grass_34" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_32" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(0.922538, 0, -0.385906, 0, 1, 0, 0.385906, 0, 0.922538, 40.32, 0, -38.15)
 
-[node name="tree_dead_44" parent="WildZombies" instance=ExtResource("r24")]
+[node name="tree_dead_43" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(0.998441, 0, 0.0558215, 0, 1, 0, -0.0558215, 0, 0.998441, -89.17, 0, -128.18)
 
-[node name="tree_large_118" parent="WildZombies" instance=ExtResource("r31")]
-transform = Transform3D(-0.450878, 0, -0.892586, 0, 1, 0, 0.892586, 0, -0.450878, 38.79, 0, -139.28)
-
-[node name="bone_pile_5" parent="WildZombies" instance=ExtResource("r23")]
+[node name="bone_pile_4" parent="WildZombies" instance=ExtResource("r23")]
 transform = Transform3D(-0.993171, 0, -0.116671, 0, 1, 0, 0.116671, 0, -0.993171, 15.76, 0, -135.12)
 
-[node name="bone_pile_6" parent="WildZombies" instance=ExtResource("r23")]
+[node name="bone_pile_5" parent="WildZombies" instance=ExtResource("r23")]
 transform = Transform3D(0.959805, 0, 0.280667, 0, 1, 0, -0.280667, 0, 0.959805, 134.35, 0, -120.98)
 
-[node name="tree_dead_45" parent="WildZombies" instance=ExtResource("r24")]
+[node name="tree_dead_44" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(0.185667, 0, -0.982613, 0, 1, 0, 0.982613, 0, 0.185667, 145.52, 0, -143.85)
 
-[node name="stump_17" parent="WildZombies" instance=ExtResource("r45")]
-transform = Transform3D(0.994881, 0, -0.101056, 0, 1, 0, 0.101056, 0, 0.994881, 37.65, 0, -112.65)
-
-[node name="bone_pile_7" parent="WildZombies" instance=ExtResource("r23")]
+[node name="bone_pile_6" parent="WildZombies" instance=ExtResource("r23")]
 transform = Transform3D(0.953717, 0, 0.300706, 0, 1, 0, -0.300706, 0, 0.953717, 144.61, 0, -27.89)
 
 [node name="tree_large_119" parent="WildZombies" instance=ExtResource("r31")]
 transform = Transform3D(0.358368, 0, -0.93358, 0, 1, 0, 0.93358, 0, 0.358368, -77.51, 0, -135.58)
 
-[node name="tree_dead_46" parent="WildZombies" instance=ExtResource("r24")]
+[node name="tree_dead_45" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(0.532876, 0, -0.846193, 0, 1, 0, 0.846193, 0, 0.532876, -20.11, 0, -146.48)
 
-[node name="tree_dead_47" parent="WildZombies" instance=ExtResource("r24")]
+[node name="tree_dead_46" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(-0.204496, 0, -0.978867, 0, 1, 0, 0.978867, 0, -0.204496, 68.51, 0, -149.12)
 
-[node name="tall_grass_35" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_33" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(-0.924546, 0, -0.38107, 0, 1, 0, 0.38107, 0, -0.924546, -15.87, 0, -151.17)
 
-[node name="tree_dead_48" parent="WildZombies" instance=ExtResource("r24")]
+[node name="tree_dead_47" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(-0.80696, 0, -0.590606, 0, 1, 0, 0.590606, 0, -0.80696, -67.2, 0, -96.12)
 
-[node name="stump_18" parent="WildZombies" instance=ExtResource("r45")]
+[node name="stump_17" parent="WildZombies" instance=ExtResource("r45")]
 transform = Transform3D(0.0436194, 0, -0.999048, 0, 1, 0, 0.999048, 0, 0.0436194, -65.36, 0, -145.74)
 
 [node name="tree_large_120" parent="WildZombies" instance=ExtResource("r31")]
 transform = Transform3D(-0.851727, 0, -0.523986, 0, 1, 0, 0.523986, 0, -0.851727, 61.92, 0, -89.8)
 
-[node name="tall_grass_36" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_34" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(-0.287361, 0, 0.957822, 0, 1, 0, -0.957822, 0, -0.287361, 80.86, 0, -119.96)
 
-[node name="tree_dead_49" parent="WildZombies" instance=ExtResource("r24")]
+[node name="tree_dead_48" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(-0.045363, 0, -0.998971, 0, 1, 0, 0.998971, 0, -0.045363, 123.16, 0, -153.8)
 
-[node name="bone_pile_8" parent="WildZombies" instance=ExtResource("r23")]
+[node name="tree_dead_49" parent="WildZombies" instance=ExtResource("r24")]
+transform = Transform3D(0.580703, 0, 0.814116, 0, 1, 0, -0.814116, 0, 0.580703, 39.6, 0, -27.07)
+
+[node name="bone_pile_7" parent="WildZombies" instance=ExtResource("r23")]
 transform = Transform3D(-0.567844, 0, 0.823136, 0, 1, 0, -0.823136, 0, -0.567844, -148.04, 0, -94.95)
 
 [node name="tree_dead_50" parent="WildZombies" instance=ExtResource("r24")]
@@ -3415,7 +3408,7 @@ transform = Transform3D(-0.771625, 0, 0.636078, 0, 1, 0, -0.636078, 0, -0.771625
 [node name="tree_large_121" parent="WildZombies" instance=ExtResource("r31")]
 transform = Transform3D(-0.965016, 0, 0.262189, 0, 1, 0, -0.262189, 0, -0.965016, 138.14, 0, -114.6)
 
-[node name="stump_19" parent="WildZombies" instance=ExtResource("r45")]
+[node name="stump_18" parent="WildZombies" instance=ExtResource("r45")]
 transform = Transform3D(0.79229, 0, 0.610145, 0, 1, 0, -0.610145, 0, 0.79229, 91.37, 0, -26.09)
 
 [node name="tree_large_122" parent="WildZombies" instance=ExtResource("r31")]
@@ -3424,38 +3417,35 @@ transform = Transform3D(0.941471, 0, 0.337095, 0, 1, 0, -0.337095, 0, 0.941471, 
 [node name="tree_dead_52" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(0.756995, 0, 0.653421, 0, 1, 0, -0.653421, 0, 0.756995, -93.35, 0, -143.43)
 
-[node name="tall_grass_37" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_35" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(0.999962, 0, -0.00872654, 0, 1, 0, 0.00872654, 0, 0.999962, 150.69, 0, -142.22)
 
-[node name="stump_20" parent="WildZombies" instance=ExtResource("r45")]
+[node name="stump_19" parent="WildZombies" instance=ExtResource("r45")]
 transform = Transform3D(0.472551, 0, -0.881303, 0, 1, 0, 0.881303, 0, 0.472551, 89.53, 0, -153.06)
 
-[node name="stump_21" parent="WildZombies" instance=ExtResource("r45")]
+[node name="stump_20" parent="WildZombies" instance=ExtResource("r45")]
 transform = Transform3D(0.985109, 0, 0.171929, 0, 1, 0, -0.171929, 0, 0.985109, 102.22, 0, -68.23)
 
-[node name="stump_22" parent="WildZombies" instance=ExtResource("r45")]
+[node name="stump_21" parent="WildZombies" instance=ExtResource("r45")]
 transform = Transform3D(0.671721, 0, -0.740805, 0, 1, 0, 0.740805, 0, 0.671721, 7.9, 0, -25.27)
 
 [node name="tree_dead_53" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(0.300706, 0, 0.953717, 0, 1, 0, -0.953717, 0, 0.300706, -95.66, 0, -129.91)
 
-[node name="tall_grass_38" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_36" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(0.726575, 0, 0.687088, 0, 1, 0, -0.687088, 0, 0.726575, -12.67, 0, -154.87)
 
 [node name="tree_large_123" parent="WildZombies" instance=ExtResource("r31")]
 transform = Transform3D(-0.534352, 0, -0.845262, 0, 1, 0, 0.845262, 0, -0.534352, 152.02, 0, -116.82)
 
-[node name="stump_23" parent="WildZombies" instance=ExtResource("r45")]
+[node name="stump_22" parent="WildZombies" instance=ExtResource("r45")]
 transform = Transform3D(-0.885394, 0, -0.464842, 0, 1, 0, 0.464842, 0, -0.885394, 62.93, 0, -107.12)
 
 [node name="tree_dead_54" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(0.25038, 0, -0.968148, 0, 1, 0, 0.968148, 0, 0.25038, -29.39, 0, -143.17)
 
-[node name="tall_grass_39" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_37" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(-0.768284, 0, 0.64011, 0, 1, 0, -0.64011, 0, -0.768284, -4.7, 0, -88.79)
-
-[node name="tall_grass_40" parent="WildZombies" instance=ExtResource("r64")]
-transform = Transform3D(0.0348995, 0, -0.999391, 0, 1, 0, 0.999391, 0, 0.0348995, 33.56, 0, -131.7)
 
 [node name="tree_dead_55" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(-0.987688, 0, -0.156434, 0, 1, 0, 0.156434, 0, -0.987688, 9.97, 0, -137.8)
@@ -3463,19 +3453,19 @@ transform = Transform3D(-0.987688, 0, -0.156434, 0, 1, 0, 0.156434, 0, -0.987688
 [node name="tree_dead_56" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(-0.983255, 0, -0.182236, 0, 1, 0, 0.182236, 0, -0.983255, -53.04, 0, -36.96)
 
-[node name="stump_24" parent="WildZombies" instance=ExtResource("r45")]
+[node name="stump_23" parent="WildZombies" instance=ExtResource("r45")]
 transform = Transform3D(-0.878817, 0, 0.477159, 0, 1, 0, -0.477159, 0, -0.878817, -127.95, 0, -135.66)
 
-[node name="tall_grass_41" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_38" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(-0.397148, 0, 0.917755, 0, 1, 0, -0.917755, 0, -0.397148, -48.46, 0, -148.63)
 
-[node name="tall_grass_42" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_39" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(-0.998971, 0, 0.045363, 0, 1, 0, -0.045363, 0, -0.998971, 66.28, 0, -48.99)
 
-[node name="tall_grass_43" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_40" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(-0.784776, 0, 0.619779, 0, 1, 0, -0.619779, 0, -0.784776, -80.29, 0, -140.92)
 
-[node name="stump_25" parent="WildZombies" instance=ExtResource("r45")]
+[node name="stump_24" parent="WildZombies" instance=ExtResource("r45")]
 transform = Transform3D(-0.372988, 0, -0.927836, 0, 1, 0, 0.927836, 0, -0.372988, 113.9, 0, -99.16)
 
 [node name="tree_dead_57" parent="WildZombies" instance=ExtResource("r24")]
@@ -3484,19 +3474,19 @@ transform = Transform3D(-0.192522, 0, 0.981293, 0, 1, 0, -0.981293, 0, -0.192522
 [node name="tombstone_small_a_6" parent="WildZombies" instance=ExtResource("r18")]
 transform = Transform3D(0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, 0.5, -99.87, 0, -118.58)
 
-[node name="stump_26" parent="WildZombies" instance=ExtResource("r45")]
+[node name="stump_25" parent="WildZombies" instance=ExtResource("r45")]
 transform = Transform3D(-0.998537, 0, 0.0540788, 0, 1, 0, -0.0540788, 0, -0.998537, -39.19, 0, -30.02)
 
-[node name="stump_27" parent="WildZombies" instance=ExtResource("r45")]
+[node name="stump_26" parent="WildZombies" instance=ExtResource("r45")]
 transform = Transform3D(0.995562, 0, -0.0941083, 0, 1, 0, 0.0941083, 0, 0.995562, -12.42, 0, -104.32)
 
 [node name="tree_dead_58" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(0.861629, 0, 0.507538, 0, 1, 0, -0.507538, 0, 0.861629, -21.94, 0, -113.24)
 
-[node name="bone_pile_9" parent="WildZombies" instance=ExtResource("r23")]
+[node name="bone_pile_8" parent="WildZombies" instance=ExtResource("r23")]
 transform = Transform3D(-0.151261, 0, 0.988494, 0, 1, 0, -0.988494, 0, -0.151261, 7.42, 0, -154.27)
 
-[node name="bone_pile_10" parent="WildZombies" instance=ExtResource("r23")]
+[node name="bone_pile_9" parent="WildZombies" instance=ExtResource("r23")]
 transform = Transform3D(0.670427, 0, -0.741976, 0, 1, 0, 0.741976, 0, 0.670427, -65.98, 0, -25.65)
 
 [node name="tree_dead_59" parent="WildZombies" instance=ExtResource("r24")]
@@ -3505,13 +3495,16 @@ transform = Transform3D(0.737277, 0, 0.67559, 0, 1, 0, -0.67559, 0, 0.737277, 89
 [node name="tombstone_small_a_7" parent="WildZombies" instance=ExtResource("r18")]
 transform = Transform3D(0.917755, 0, 0.397148, 0, 1, 0, -0.397148, 0, 0.917755, 6.75, 0, -149.37)
 
+[node name="tombstone_small_a_8" parent="WildZombies" instance=ExtResource("r18")]
+transform = Transform3D(-0.737277, 0, 0.67559, 0, 1, 0, -0.67559, 0, -0.737277, 107.15, 0, -38.69)
+
 [node name="tree_dead_60" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(0.969445, 0, -0.245307, 0, 1, 0, 0.245307, 0, 0.969445, -33.15, 0, -128.47)
 
-[node name="tall_grass_44" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_41" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(-0.137445, 0, 0.990509, 0, 1, 0, -0.990509, 0, -0.137445, -1.26, 0, -123.89)
 
-[node name="tombstone_small_a_8" parent="WildZombies" instance=ExtResource("r18")]
+[node name="tombstone_small_a_9" parent="WildZombies" instance=ExtResource("r18")]
 transform = Transform3D(0.986856, 0, -0.161604, 0, 1, 0, 0.161604, 0, 0.986856, -121.08, 0, -147.65)
 
 [node name="tree_large_124" parent="WildZombies" instance=ExtResource("r31")]
@@ -3523,34 +3516,34 @@ transform = Transform3D(-0.0923706, 0, -0.995725, 0, 1, 0, 0.995725, 0, -0.09237
 [node name="tree_dead_61" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(-0.656059, 0, 0.75471, 0, 1, 0, -0.75471, 0, -0.656059, 97.69, 0, -95.59)
 
-[node name="tall_grass_45" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_42" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(0.0331552, 0, -0.99945, 0, 1, 0, 0.99945, 0, 0.0331552, 53.4, 0, -104.21)
 
 [node name="tree_dead_62" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(-0.575005, 0, 0.81815, 0, 1, 0, -0.81815, 0, -0.575005, 138.84, 0, -149.74)
 
-[node name="tall_grass_46" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_43" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(0.783693, 0, -0.621148, 0, 1, 0, 0.621148, 0, 0.783693, -122.35, 0, -120.23)
 
-[node name="stump_28" parent="WildZombies" instance=ExtResource("r45")]
+[node name="stump_27" parent="WildZombies" instance=ExtResource("r45")]
 transform = Transform3D(-0.70834, 0, 0.705872, 0, 1, 0, -0.705872, 0, -0.70834, 81.93, 0, -136.69)
 
 [node name="tree_dead_63" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(0.384295, 0, 0.92321, 0, 1, 0, -0.92321, 0, 0.384295, 14.33, 0, -143.56)
 
-[node name="stump_29" parent="WildZombies" instance=ExtResource("r45")]
+[node name="stump_28" parent="WildZombies" instance=ExtResource("r45")]
 transform = Transform3D(0.986856, 0, 0.161604, 0, 1, 0, -0.161604, 0, 0.986856, -126.49, 0, -151.82)
 
-[node name="stump_30" parent="WildZombies" instance=ExtResource("r45")]
+[node name="stump_29" parent="WildZombies" instance=ExtResource("r45")]
 transform = Transform3D(0.999391, 0, 0.0348995, 0, 1, 0, -0.0348995, 0, 0.999391, 17.52, 0, -124.74)
 
-[node name="tombstone_small_a_9" parent="WildZombies" instance=ExtResource("r18")]
+[node name="tombstone_small_a_10" parent="WildZombies" instance=ExtResource("r18")]
 transform = Transform3D(-0.909236, 0, -0.416281, 0, 1, 0, 0.416281, 0, -0.909236, -22.14, 0, -129.39)
 
-[node name="bone_pile_11" parent="WildZombies" instance=ExtResource("r23")]
+[node name="bone_pile_10" parent="WildZombies" instance=ExtResource("r23")]
 transform = Transform3D(0.951057, 0, 0.309017, 0, 1, 0, -0.309017, 0, 0.951057, -80.98, 0, -30.76)
 
-[node name="bone_pile_12" parent="WildZombies" instance=ExtResource("r23")]
+[node name="bone_pile_11" parent="WildZombies" instance=ExtResource("r23")]
 transform = Transform3D(-0.944376, 0, -0.328867, 0, 1, 0, 0.328867, 0, -0.944376, -154.01, 0, -126.35)
 
 [node name="tree_large_126" parent="WildZombies" instance=ExtResource("r31")]
@@ -3559,23 +3552,23 @@ transform = Transform3D(-0.680721, 0, -0.732543, 0, 1, 0, 0.732543, 0, -0.680721
 [node name="tree_large_127" parent="WildZombies" instance=ExtResource("r31")]
 transform = Transform3D(0.804894, 0, -0.593419, 0, 1, 0, 0.593419, 0, 0.804894, -145.11, 0, -128.01)
 
-[node name="tall_grass_47" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_44" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(-0.679441, 0, -0.73373, 0, 1, 0, 0.73373, 0, -0.679441, 112.18, 0, -41.83)
 
 [node name="tree_dead_64" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(0.0714974, 0, 0.997441, 0, 1, 0, -0.997441, 0, 0.0714974, 116.76, 0, -144.75)
 
-[node name="bone_pile_13" parent="WildZombies" instance=ExtResource("r23")]
+[node name="tall_grass_45" parent="WildZombies" instance=ExtResource("r64")]
+transform = Transform3D(0.361625, 0, -0.932324, 0, 1, 0, 0.932324, 0, 0.361625, -134.39, 0, -134.66)
+
+[node name="bone_pile_12" parent="WildZombies" instance=ExtResource("r23")]
 transform = Transform3D(0.831954, 0, 0.554844, 0, 1, 0, -0.554844, 0, 0.831954, 147.65, 0, -128.97)
 
 [node name="tree_large_128" parent="WildZombies" instance=ExtResource("r31")]
 transform = Transform3D(0.885394, 0, -0.464842, 0, 1, 0, 0.464842, 0, 0.885394, -42.56, 0, -150.31)
 
-[node name="tall_grass_48" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_46" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(0.860742, 0, 0.509041, 0, 1, 0, -0.509041, 0, 0.860742, -42.88, 0, -95.23)
-
-[node name="stump_31" parent="WildZombies" instance=ExtResource("r45")]
-transform = Transform3D(-0.996779, 0, -0.0801989, 0, 1, 0, 0.0801989, 0, -0.996779, 33.32, 0, -110.42)
 
 [node name="tree_dead_65" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(0.789084, 0, 0.614285, 0, 1, 0, -0.614285, 0, 0.789084, 1.44, 0, -118.38)
@@ -3583,7 +3576,7 @@ transform = Transform3D(0.789084, 0, 0.614285, 0, 1, 0, -0.614285, 0, 0.789084, 
 [node name="tree_dead_66" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(0.983885, 0, -0.178802, 0, 1, 0, 0.178802, 0, 0.983885, -9.87, 0, -85.16)
 
-[node name="bone_pile_14" parent="WildZombies" instance=ExtResource("r23")]
+[node name="bone_pile_13" parent="WildZombies" instance=ExtResource("r23")]
 transform = Transform3D(-0.85264, 0, 0.522499, 0, 1, 0, -0.522499, 0, -0.85264, 63.08, 0, -21.05)
 
 [node name="tree_dead_67" parent="WildZombies" instance=ExtResource("r24")]
@@ -3595,276 +3588,279 @@ transform = Transform3D(-0.998537, 0, -0.0540788, 0, 1, 0, 0.0540788, 0, -0.9985
 [node name="tree_dead_69" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(0.770513, 0, 0.637424, 0, 1, 0, -0.637424, 0, 0.770513, 152.65, 0, -125.76)
 
-[node name="bone_pile_15" parent="WildZombies" instance=ExtResource("r23")]
+[node name="bone_pile_14" parent="WildZombies" instance=ExtResource("r23")]
 transform = Transform3D(-0.622515, 0, 0.782608, 0, 1, 0, -0.782608, 0, -0.622515, -9.64, 0, -116.08)
 
-[node name="tombstone_small_a_10" parent="WildZombies" instance=ExtResource("r18")]
-transform = Transform3D(-0.685818, 0, -0.727773, 0, 1, 0, 0.727773, 0, -0.685818, 39.16, 0, -22.53)
-
-[node name="stump_32" parent="WildZombies" instance=ExtResource("r45")]
+[node name="stump_30" parent="WildZombies" instance=ExtResource("r45")]
 transform = Transform3D(-0.920505, 0, -0.390731, 0, 1, 0, 0.390731, 0, -0.920505, 53.78, 0, -154)
 
-[node name="tall_grass_49" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_47" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(-0.207912, 0, -0.978148, 0, 1, 0, 0.978148, 0, -0.207912, -48.79, 0, -118.53)
 
 [node name="tree_dead_70" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(-0.192522, 0, 0.981293, 0, 1, 0, -0.981293, 0, -0.192522, -20.81, 0, -138.74)
 
-[node name="tall_grass_50" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_48" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(0.969872, 0, -0.243615, 0, 1, 0, 0.243615, 0, 0.969872, -7.31, 0, -77.08)
 
 [node name="tree_large_129" parent="WildZombies" instance=ExtResource("r31")]
 transform = Transform3D(-0.350207, 0, -0.936672, 0, 1, 0, 0.936672, 0, -0.350207, 123.38, 0, -72.46)
 
-[node name="tall_grass_51" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_49" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(0.590606, 0, -0.80696, 0, 1, 0, 0.80696, 0, 0.590606, 112.08, 0, -48.63)
 
-[node name="tree_dead_71" parent="WildZombies" instance=ExtResource("r24")]
-transform = Transform3D(-0.813101, 0, -0.582123, 0, 1, 0, 0.582123, 0, -0.813101, -68.4, 0, -130.03)
-
-[node name="stump_33" parent="WildZombies" instance=ExtResource("r45")]
+[node name="stump_31" parent="WildZombies" instance=ExtResource("r45")]
 transform = Transform3D(-0.622515, 0, 0.782608, 0, 1, 0, -0.782608, 0, -0.622515, 139.99, 0, -36.95)
 
-[node name="tree_dead_72" parent="WildZombies" instance=ExtResource("r24")]
+[node name="tree_dead_71" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(-0.395546, 0, -0.918446, 0, 1, 0, 0.918446, 0, -0.395546, -76.49, 0, -26.1)
 
-[node name="tree_dead_73" parent="WildZombies" instance=ExtResource("r24")]
+[node name="tree_dead_72" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(0.980271, 0, -0.197657, 0, 1, 0, 0.197657, 0, 0.980271, -3.69, 0, -107.91)
 
-[node name="tree_dead_74" parent="WildZombies" instance=ExtResource("r24")]
+[node name="tree_dead_73" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(-0.758134, 0, -0.652098, 0, 1, 0, 0.652098, 0, -0.758134, -61.01, 0, -148.12)
 
 [node name="tombstone_small_a_11" parent="WildZombies" instance=ExtResource("r18")]
 transform = Transform3D(0.873772, 0, -0.486335, 0, 1, 0, 0.486335, 0, 0.873772, 17.02, 0, -120.05)
 
-[node name="tall_grass_52" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_50" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(0.836764, 0, -0.547563, 0, 1, 0, 0.547563, 0, 0.836764, 144.25, 0, -79.57)
 
-[node name="bone_pile_16" parent="WildZombies" instance=ExtResource("r23")]
+[node name="bone_pile_15" parent="WildZombies" instance=ExtResource("r23")]
 transform = Transform3D(-0.722967, 0, 0.690882, 0, 1, 0, -0.690882, 0, -0.722967, 154.96, 0, -52.6)
 
-[node name="bone_pile_17" parent="WildZombies" instance=ExtResource("r23")]
-transform = Transform3D(-0.544639, 0, -0.838671, 0, 1, 0, 0.838671, 0, -0.544639, 36.12, 0, -118.89)
-
-[node name="tall_grass_53" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_51" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(0.645458, 0, -0.763796, 0, 1, 0, 0.763796, 0, 0.645458, 85.19, 0, -48.39)
 
-[node name="tree_dead_75" parent="WildZombies" instance=ExtResource("r24")]
+[node name="tree_dead_74" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(-0.990983, 0, 0.133986, 0, 1, 0, -0.133986, 0, -0.990983, -112.06, 0, -152.31)
 
-[node name="tall_grass_54" parent="WildZombies" instance=ExtResource("r64")]
+[node name="bone_pile_16" parent="WildZombies" instance=ExtResource("r23")]
+transform = Transform3D(-0.133986, 0, -0.990983, 0, 1, 0, 0.990983, 0, -0.133986, 63.66, 0, -137.85)
+
+[node name="tall_grass_52" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(-0.446198, 0, -0.894934, 0, 1, 0, 0.894934, 0, -0.446198, 18.59, 0, -140.52)
 
 [node name="tree_large_130" parent="WildZombies" instance=ExtResource("r31")]
 transform = Transform3D(-0.312335, 0, -0.949972, 0, 1, 0, 0.949972, 0, -0.312335, 36.18, 0, -41.98)
 
-[node name="tree_dead_76" parent="WildZombies" instance=ExtResource("r24")]
+[node name="tree_dead_75" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(-0.830012, 0, -0.557745, 0, 1, 0, 0.557745, 0, -0.830012, -88.22, 0, -134.8)
 
-[node name="tree_dead_77" parent="WildZombies" instance=ExtResource("r24")]
+[node name="tree_dead_76" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(-0.827081, 0, -0.562083, 0, 1, 0, 0.562083, 0, -0.827081, 41.08, 0, -109.21)
 
-[node name="stump_34" parent="WildZombies" instance=ExtResource("r45")]
+[node name="stump_32" parent="WildZombies" instance=ExtResource("r45")]
 transform = Transform3D(0.464842, 0, -0.885394, 0, 1, 0, 0.885394, 0, 0.464842, -24.9, 0, -154.34)
 
-[node name="tall_grass_55" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_53" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(-0.195946, 0, 0.980615, 0, 1, 0, -0.980615, 0, -0.195946, 59.41, 0, -47.89)
 
-[node name="tree_dead_78" parent="WildZombies" instance=ExtResource("r24")]
+[node name="tree_dead_77" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(-0.753563, 0, 0.657375, 0, 1, 0, -0.657375, 0, -0.753563, -79.18, 0, -123.66)
 
-[node name="tree_dead_79" parent="WildZombies" instance=ExtResource("r24")]
+[node name="tree_dead_78" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(0.544639, 0, -0.838671, 0, 1, 0, 0.838671, 0, 0.544639, -119.03, 0, -130.21)
 
-[node name="stump_35" parent="WildZombies" instance=ExtResource("r45")]
+[node name="stump_33" parent="WildZombies" instance=ExtResource("r45")]
 transform = Transform3D(-0.960294, 0, -0.278991, 0, 1, 0, 0.278991, 0, -0.960294, -78.4, 0, -37.66)
 
-[node name="stump_36" parent="WildZombies" instance=ExtResource("r45")]
+[node name="stump_34" parent="WildZombies" instance=ExtResource("r45")]
 transform = Transform3D(-0.998342, 0, 0.057564, 0, 1, 0, -0.057564, 0, -0.998342, -63.5, 0, -139.95)
 
-[node name="stump_37" parent="WildZombies" instance=ExtResource("r45")]
+[node name="stump_35" parent="WildZombies" instance=ExtResource("r45")]
 transform = Transform3D(0.971549, 0, -0.236838, 0, 1, 0, 0.236838, 0, 0.971549, 154.26, 0, -73.79)
 
 [node name="tree_large_131" parent="WildZombies" instance=ExtResource("r31")]
 transform = Transform3D(0.995884, 0, -0.0906326, 0, 1, 0, 0.0906326, 0, 0.995884, 132.45, 0, -100.77)
 
-[node name="bone_pile_18" parent="WildZombies" instance=ExtResource("r23")]
+[node name="bone_pile_17" parent="WildZombies" instance=ExtResource("r23")]
 transform = Transform3D(-0.424199, 0, -0.905569, 0, 1, 0, 0.905569, 0, -0.424199, -79.44, 0, -47.06)
 
-[node name="tree_dead_80" parent="WildZombies" instance=ExtResource("r24")]
+[node name="tree_dead_79" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(-0.192522, 0, -0.981293, 0, 1, 0, 0.981293, 0, -0.192522, 138.4, 0, -141.69)
 
 [node name="tree_large_132" parent="WildZombies" instance=ExtResource("r31")]
 transform = Transform3D(-0.967268, 0, 0.253758, 0, 1, 0, -0.253758, 0, -0.967268, 11.16, 0, -34.99)
 
-[node name="tree_dead_81" parent="WildZombies" instance=ExtResource("r24")]
+[node name="tree_dead_80" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(0.60042, 0, -0.799685, 0, 1, 0, 0.799685, 0, 0.60042, 125.2, 0, -100.97)
 
-[node name="tree_dead_82" parent="WildZombies" instance=ExtResource("r24")]
+[node name="tree_dead_81" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(0.903335, 0, -0.428935, 0, 1, 0, 0.428935, 0, 0.903335, 8.29, 0, -102.22)
 
-[node name="tall_grass_56" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_54" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(0.934204, 0, -0.356738, 0, 1, 0, 0.356738, 0, 0.934204, -150.59, 0, -115.86)
 
-[node name="tall_grass_57" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_55" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(0.78152, 0, 0.62388, 0, 1, 0, -0.62388, 0, 0.78152, 104.63, 0, -50.88)
 
-[node name="tree_dead_83" parent="WildZombies" instance=ExtResource("r24")]
+[node name="tree_dead_82" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(-0.687088, 0, 0.726575, 0, 1, 0, -0.726575, 0, -0.687088, 34.42, 0, -153.34)
 
-[node name="tall_grass_58" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_56" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(0.739631, 0, 0.673013, 0, 1, 0, -0.673013, 0, 0.739631, 137.14, 0, -134.62)
 
 [node name="tombstone_small_a_12" parent="WildZombies" instance=ExtResource("r18")]
 transform = Transform3D(0.845262, 0, 0.534352, 0, 1, 0, -0.534352, 0, 0.845262, 43.94, 0, -21.82)
 
-[node name="stump_38" parent="WildZombies" instance=ExtResource("r45")]
+[node name="stump_36" parent="WildZombies" instance=ExtResource("r45")]
 transform = Transform3D(-0.325568, 0, -0.945519, 0, 1, 0, 0.945519, 0, -0.325568, 96.1, 0, -102.48)
 
-[node name="tall_grass_59" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_57" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(-0.0209424, 0, 0.999781, 0, 1, 0, -0.999781, 0, -0.0209424, -27.26, 0, -129.73)
 
-[node name="tree_dead_84" parent="WildZombies" instance=ExtResource("r24")]
+[node name="tree_dead_83" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(0.704634, 0, 0.709571, 0, 1, 0, -0.709571, 0, 0.704634, -76.6, 0, -118.58)
 
 [node name="tombstone_small_a_13" parent="WildZombies" instance=ExtResource("r18")]
 transform = Transform3D(0.401948, 0, 0.915663, 0, 1, 0, -0.915663, 0, 0.401948, 136.36, 0, -24.28)
 
-[node name="tree_dead_85" parent="WildZombies" instance=ExtResource("r24")]
+[node name="tree_dead_84" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(-0.942641, 0, 0.333807, 0, 1, 0, -0.333807, 0, -0.942641, 12.54, 0, -90.74)
 
-[node name="tree_dead_86" parent="WildZombies" instance=ExtResource("r24")]
+[node name="tree_dead_85" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(0.305695, 0, 0.952129, 0, 1, 0, -0.952129, 0, 0.305695, 135.65, 0, -88.23)
 
-[node name="tree_dead_87" parent="WildZombies" instance=ExtResource("r24")]
+[node name="tree_dead_86" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(0.777146, 0, -0.62932, 0, 1, 0, 0.62932, 0, 0.777146, -74.45, 0, -128.68)
 
-[node name="stump_39" parent="WildZombies" instance=ExtResource("r45")]
+[node name="stump_37" parent="WildZombies" instance=ExtResource("r45")]
 transform = Transform3D(0.541708, 0, -0.840567, 0, 1, 0, 0.840567, 0, 0.541708, 30.66, 0, -22.44)
 
-[node name="stump_40" parent="WildZombies" instance=ExtResource("r45")]
+[node name="stump_38" parent="WildZombies" instance=ExtResource("r45")]
 transform = Transform3D(0.804894, 0, -0.593419, 0, 1, 0, 0.593419, 0, 0.804894, 84.24, 0, -43.81)
 
-[node name="tree_dead_88" parent="WildZombies" instance=ExtResource("r24")]
+[node name="tree_dead_87" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(-0.955278, 0, 0.295708, 0, 1, 0, -0.295708, 0, -0.955278, 2.45, 0, -98.07)
 
 [node name="tombstone_small_a_14" parent="WildZombies" instance=ExtResource("r18")]
 transform = Transform3D(0.999194, 0, -0.0401318, 0, 1, 0, 0.0401318, 0, 0.999194, 83.47, 0, -154.84)
 
-[node name="tree_dead_89" parent="WildZombies" instance=ExtResource("r24")]
+[node name="stump_39" parent="WildZombies" instance=ExtResource("r45")]
+transform = Transform3D(-0.449319, 0, 0.893371, 0, 1, 0, -0.893371, 0, -0.449319, -64.3, 0, -130.1)
+
+[node name="tree_dead_88" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(-0.690882, 0, 0.722967, 0, 1, 0, -0.722967, 0, -0.690882, -110.99, 0, -133.47)
 
 [node name="tombstone_small_a_15" parent="WildZombies" instance=ExtResource("r18")]
 transform = Transform3D(-0.99961, 0, -0.0279216, 0, 1, 0, 0.0279216, 0, -0.99961, 17.47, 0, -94.6)
 
-[node name="bone_pile_19" parent="WildZombies" instance=ExtResource("r23")]
+[node name="bone_pile_18" parent="WildZombies" instance=ExtResource("r23")]
 transform = Transform3D(-0.92388, 0, -0.382683, 0, 1, 0, 0.382683, 0, -0.92388, 150.31, 0, -152.55)
 
-[node name="tall_grass_60" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_58" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(-0.739631, 0, 0.673013, 0, 1, 0, -0.673013, 0, -0.739631, 85.87, 0, -37.71)
 
-[node name="tree_dead_90" parent="WildZombies" instance=ExtResource("r24")]
+[node name="tree_dead_89" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(0.615661, 0, -0.788011, 0, 1, 0, 0.788011, 0, 0.615661, 0.34, 0, -71.53)
 
-[node name="tree_dead_91" parent="WildZombies" instance=ExtResource("r24")]
+[node name="tree_dead_90" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(0.358368, 0, -0.93358, 0, 1, 0, 0.93358, 0, 0.358368, 139.25, 0, -16.66)
 
-[node name="tall_grass_61" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_59" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(-0.750111, 0, -0.661312, 0, 1, 0, 0.661312, 0, -0.750111, -5.61, 0, -135.36)
 
-[node name="tree_dead_92" parent="WildZombies" instance=ExtResource("r24")]
-transform = Transform3D(0.975917, 0, 0.218143, 0, 1, 0, -0.218143, 0, 0.975917, 28.74, 0, -110.55)
-
-[node name="tall_grass_62" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_60" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(-0.932324, 0, -0.361625, 0, 1, 0, 0.361625, 0, -0.932324, 25.71, 0, -102.6)
 
-[node name="bone_pile_20" parent="WildZombies" instance=ExtResource("r23")]
+[node name="bone_pile_19" parent="WildZombies" instance=ExtResource("r23")]
 transform = Transform3D(-0.449319, 0, 0.893371, 0, 1, 0, -0.893371, 0, -0.449319, 36.56, 0, -107.75)
 
 [node name="tombstone_small_a_16" parent="WildZombies" instance=ExtResource("r18")]
 transform = Transform3D(0.732543, 0, -0.680721, 0, 1, 0, 0.680721, 0, 0.732543, 134.3, 0, -20.9)
 
-[node name="stump_41" parent="WildZombies" instance=ExtResource("r45")]
+[node name="stump_40" parent="WildZombies" instance=ExtResource("r45")]
 transform = Transform3D(0.297375, 0, -0.954761, 0, 1, 0, 0.954761, 0, 0.297375, 14.6, 0, -115.09)
 
-[node name="tall_grass_63" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_61" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(-0.534352, 0, 0.845262, 0, 1, 0, -0.845262, 0, -0.534352, -106.01, 0, -132.25)
 
-[node name="stump_42" parent="WildZombies" instance=ExtResource("r45")]
+[node name="stump_41" parent="WildZombies" instance=ExtResource("r45")]
 transform = Transform3D(0.889416, 0, 0.457098, 0, 1, 0, -0.457098, 0, 0.889416, -129.99, 0, -45.4)
 
 [node name="tombstone_small_a_17" parent="WildZombies" instance=ExtResource("r18")]
 transform = Transform3D(0.681998, 0, -0.731354, 0, 1, 0, 0.731354, 0, 0.681998, -102.51, 0, -133.66)
 
-[node name="tree_dead_93" parent="WildZombies" instance=ExtResource("r24")]
+[node name="tree_dead_91" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(0.96363, 0, -0.267238, 0, 1, 0, 0.267238, 0, 0.96363, -48.86, 0, -20.7)
 
 [node name="tree_large_133" parent="WildZombies" instance=ExtResource("r31")]
 transform = Transform3D(-0.957319, 0, -0.289032, 0, 1, 0, 0.289032, 0, -0.957319, 99.76, 0, -75.05)
 
-[node name="tree_dead_94" parent="WildZombies" instance=ExtResource("r24")]
+[node name="tree_dead_92" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(-0.975535, 0, 0.219846, 0, 1, 0, -0.219846, 0, -0.975535, 67.09, 0, -28.29)
 
-[node name="tall_grass_64" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_62" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(0.228351, 0, -0.973579, 0, 1, 0, 0.973579, 0, 0.228351, 125.25, 0, -22.05)
 
-[node name="tall_grass_65" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_63" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(0.965473, 0, -0.260505, 0, 1, 0, 0.260505, 0, 0.965473, -5.99, 0, -94.45)
 
-[node name="stump_43" parent="WildZombies" instance=ExtResource("r45")]
+[node name="stump_42" parent="WildZombies" instance=ExtResource("r45")]
 transform = Transform3D(-0.00698126, 0, 0.999976, 0, 1, 0, -0.999976, 0, -0.00698126, -136.77, 0, -113.16)
 
 [node name="tombstone_small_a_18" parent="WildZombies" instance=ExtResource("r18")]
 transform = Transform3D(0.371368, 0, -0.928486, 0, 1, 0, 0.928486, 0, 0.371368, -62.41, 0, -34.36)
 
-[node name="tree_dead_95" parent="WildZombies" instance=ExtResource("r24")]
-transform = Transform3D(0.813101, 0, 0.582123, 0, 1, 0, -0.582123, 0, 0.813101, 27.26, 0, -124.14)
-
-[node name="tree_dead_96" parent="WildZombies" instance=ExtResource("r24")]
+[node name="tree_dead_93" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(0.999903, 0, -0.0139622, 0, 1, 0, 0.0139622, 0, 0.999903, 79.7, 0, -107.75)
 
-[node name="tree_dead_97" parent="WildZombies" instance=ExtResource("r24")]
+[node name="tree_dead_94" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(-0.994522, 0, 0.104528, 0, 1, 0, -0.104528, 0, -0.994522, 141.94, 0, -119.89)
 
-[node name="tall_grass_66" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_64" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(-0.267238, 0, -0.96363, 0, 1, 0, 0.96363, 0, -0.267238, -42.2, 0, -31.79)
 
-[node name="tree_dead_98" parent="WildZombies" instance=ExtResource("r24")]
+[node name="tree_dead_95" parent="WildZombies" instance=ExtResource("r24")]
 transform = Transform3D(0.894934, 0, -0.446198, 0, 1, 0, 0.446198, 0, 0.894934, -106.61, 0, -125.95)
 
-[node name="bone_pile_21" parent="WildZombies" instance=ExtResource("r23")]
+[node name="bone_pile_20" parent="WildZombies" instance=ExtResource("r23")]
 transform = Transform3D(0.999816, 0, 0.0191974, 0, 1, 0, -0.0191974, 0, 0.999816, -52.77, 0, -26.71)
 
 [node name="tombstone_small_a_19" parent="WildZombies" instance=ExtResource("r18")]
 transform = Transform3D(-0.772734, 0, 0.634731, 0, 1, 0, -0.634731, 0, -0.772734, -154.31, 0, -63.21)
 
-[node name="tall_grass_67" parent="WildZombies" instance=ExtResource("r64")]
+[node name="tall_grass_65" parent="WildZombies" instance=ExtResource("r64")]
 transform = Transform3D(-0.823136, 0, 0.567844, 0, 1, 0, -0.567844, 0, -0.823136, -127.84, 0, -122.67)
 
-[node name="bone_pile_22" parent="WildZombies" instance=ExtResource("r23")]
+[node name="bone_pile_21" parent="WildZombies" instance=ExtResource("r23")]
 transform = Transform3D(-0.994338, 0, -0.106264, 0, 1, 0, 0.106264, 0, -0.994338, 112.43, 0, -83.13)
+
+[node name="tree_dead_96" parent="WildZombies" instance=ExtResource("r24")]
+transform = Transform3D(0.825113, 0, 0.564967, 0, 1, 0, -0.564967, 0, 0.825113, -139.94, 0, -133.67)
+
+[node name="bone_pile_22" parent="WildZombies" instance=ExtResource("r23")]
+transform = Transform3D(0.988494, 0, 0.151261, 0, 1, 0, -0.151261, 0, 0.988494, -18.02, 0, -102.59)
+
+[node name="tree_dead_97" parent="WildZombies" instance=ExtResource("r24")]
+transform = Transform3D(0.0436194, 0, -0.999048, 0, 1, 0, 0.999048, 0, 0.0436194, 2.16, 0, -35.57)
+
+[node name="tree_dead_98" parent="WildZombies" instance=ExtResource("r24")]
+transform = Transform3D(-0.221548, 0, 0.975149, 0, 1, 0, -0.975149, 0, -0.221548, 110.67, 0, -53.12)
+
+[node name="bone_pile_23" parent="WildZombies" instance=ExtResource("r23")]
+transform = Transform3D(0.496974, 0, 0.867765, 0, 1, 0, -0.867765, 0, 0.496974, -54.73, 0, -142.96)
+
+[node name="stump_43" parent="WildZombies" instance=ExtResource("r45")]
+transform = Transform3D(0.977416, 0, 0.211325, 0, 1, 0, -0.211325, 0, 0.977416, 7.9, 0, -84.98)
+
+[node name="tree_dead_99" parent="WildZombies" instance=ExtResource("r24")]
+transform = Transform3D(0.534352, 0, 0.845262, 0, 1, 0, -0.845262, 0, 0.534352, 88.49, 0, -41.19)
+
+[node name="tree_large_134" parent="WildZombies" instance=ExtResource("r31")]
+transform = Transform3D(-0.135716, 0, 0.990748, 0, 1, 0, -0.990748, 0, -0.135716, -58.5, 0, -109.4)
 
 [node name="WildMiddle" type="Node3D" parent="."]
 
-[node name="tree_small_91" parent="WildMiddle" instance=ExtResource("r32")]
-transform = Transform3D(0.988494, 0, 0.151261, 0, 1, 0, -0.151261, 0, 0.988494, -18.02, 0, -4.74)
-
-[node name="bush_a_45" parent="WildMiddle" instance=ExtResource("r39")]
-transform = Transform3D(0.428935, 0, -0.903335, 0, 1, 0, 0.903335, 0, 0.428935, 61.41, 0, 12.21)
-
-[node name="tree_small_92" parent="WildMiddle" instance=ExtResource("r32")]
-transform = Transform3D(0.496974, 0, 0.867765, 0, 1, 0, -0.867765, 0, 0.496974, -54.73, 0, -16.28)
-
-[node name="tall_grass_68" parent="WildMiddle" instance=ExtResource("r64")]
-transform = Transform3D(0.534352, 0, 0.845262, 0, 1, 0, -0.845262, 0, 0.534352, 88.49, 0, 12.8)
-
-[node name="tall_grass_69" parent="WildMiddle" instance=ExtResource("r64")]
+[node name="tall_grass_66" parent="WildMiddle" instance=ExtResource("r64")]
 transform = Transform3D(0.436802, 0, -0.899558, 0, 1, 0, 0.899558, 0, 0.436802, -47.95, 0, -14.55)
 
-[node name="tall_grass_70" parent="WildMiddle" instance=ExtResource("r64")]
+[node name="tall_grass_67" parent="WildMiddle" instance=ExtResource("r64")]
 transform = Transform3D(-0.109734, 0, 0.993961, 0, 1, 0, -0.993961, 0, -0.109734, 86.61, 0, -19.87)
 
-[node name="bush_a_46" parent="WildMiddle" instance=ExtResource("r39")]
+[node name="bush_a_43" parent="WildMiddle" instance=ExtResource("r39")]
 transform = Transform3D(-0.98796, 0, -0.15471, 0, 1, 0, 0.15471, 0, -0.98796, 55.07, 0, -17.9)
 
 [node name="rock_large_12" parent="WildMiddle" instance=ExtResource("r43")]
@@ -3873,32 +3869,38 @@ transform = Transform3D(0.597625, 0, 0.801776, 0, 1, 0, -0.801776, 0, 0.597625, 
 [node name="stump_44" parent="WildMiddle" instance=ExtResource("r45")]
 transform = Transform3D(0.371368, 0, -0.928486, 0, 1, 0, 0.928486, 0, 0.371368, 50.83, 0, -13.3)
 
-[node name="tall_grass_71" parent="WildMiddle" instance=ExtResource("r64")]
+[node name="tall_grass_68" parent="WildMiddle" instance=ExtResource("r64")]
+transform = Transform3D(0.959805, 0, -0.280667, 0, 1, 0, 0.280667, 0, 0.959805, -16.44, 0, -3.96)
+
+[node name="tall_grass_69" parent="WildMiddle" instance=ExtResource("r64")]
 transform = Transform3D(0.724172, 0, 0.68962, 0, 1, 0, -0.68962, 0, 0.724172, 132.97, 0, -7.09)
 
-[node name="tree_small_93" parent="WildMiddle" instance=ExtResource("r32")]
+[node name="tree_small_90" parent="WildMiddle" instance=ExtResource("r32")]
 transform = Transform3D(0.320613, 0, 0.94721, 0, 1, 0, -0.94721, 0, 0.320613, -32.75, 0, 15.44)
 
-[node name="tree_small_94" parent="WildMiddle" instance=ExtResource("r32")]
+[node name="tree_small_91" parent="WildMiddle" instance=ExtResource("r32")]
 transform = Transform3D(0.553392, 0, 0.832921, 0, 1, 0, -0.832921, 0, 0.553392, 116.35, 0, -17.87)
 
 [node name="rock_large_13" parent="WildMiddle" instance=ExtResource("r43")]
 transform = Transform3D(-0.94721, 0, -0.320613, 0, 1, 0, 0.320613, 0, -0.94721, 55.32, 0, -4.49)
 
-[node name="tall_grass_72" parent="WildMiddle" instance=ExtResource("r64")]
+[node name="tall_grass_70" parent="WildMiddle" instance=ExtResource("r64")]
 transform = Transform3D(0.872069, 0, 0.489382, 0, 1, 0, -0.489382, 0, 0.872069, 135.41, 0, 16.76)
 
-[node name="tall_grass_73" parent="WildMiddle" instance=ExtResource("r64")]
+[node name="tall_grass_71" parent="WildMiddle" instance=ExtResource("r64")]
 transform = Transform3D(-0.577858, 0, 0.816138, 0, 1, 0, -0.816138, 0, -0.577858, -68.42, 0, -7.13)
 
-[node name="bush_a_47" parent="WildMiddle" instance=ExtResource("r39")]
+[node name="bush_a_44" parent="WildMiddle" instance=ExtResource("r39")]
 transform = Transform3D(0.884581, 0, -0.466387, 0, 1, 0, 0.466387, 0, 0.884581, -18.87, 0, 14.15)
 
-[node name="tree_small_95" parent="WildMiddle" instance=ExtResource("r32")]
+[node name="tree_small_92" parent="WildMiddle" instance=ExtResource("r32")]
 transform = Transform3D(-0.956814, 0, -0.290702, 0, 1, 0, 0.290702, 0, -0.956814, -35.93, 0, 18.95)
 
-[node name="bush_a_48" parent="WildMiddle" instance=ExtResource("r39")]
+[node name="bush_a_45" parent="WildMiddle" instance=ExtResource("r39")]
 transform = Transform3D(0.778243, 0, -0.627963, 0, 1, 0, 0.627963, 0, 0.778243, -62.61, 0, -13.69)
+
+[node name="bush_a_46" parent="WildMiddle" instance=ExtResource("r39")]
+transform = Transform3D(-0.942057, 0, -0.335452, 0, 1, 0, 0.335452, 0, -0.942057, -56.69, 0, -15.41)
 
 [node name="rock_large_14" parent="WildMiddle" instance=ExtResource("r43")]
 transform = Transform3D(-0.78043, 0, -0.625243, 0, 1, 0, 0.625243, 0, -0.78043, -50.14, 0, -5.44)
@@ -3906,40 +3908,40 @@ transform = Transform3D(-0.78043, 0, -0.625243, 0, 1, 0, 0.625243, 0, -0.78043, 
 [node name="stump_45" parent="WildMiddle" instance=ExtResource("r45")]
 transform = Transform3D(0.550481, 0, 0.834848, 0, 1, 0, -0.834848, 0, 0.550481, -61.66, 0, -4.35)
 
-[node name="bush_a_49" parent="WildMiddle" instance=ExtResource("r39")]
+[node name="bush_a_47" parent="WildMiddle" instance=ExtResource("r39")]
 transform = Transform3D(0.986286, 0, -0.165048, 0, 1, 0, 0.165048, 0, 0.986286, -50.61, 0, 18.22)
 
-[node name="tall_grass_74" parent="WildMiddle" instance=ExtResource("r64")]
+[node name="tall_grass_72" parent="WildMiddle" instance=ExtResource("r64")]
 transform = Transform3D(-0.114937, 0, 0.993373, 0, 1, 0, -0.993373, 0, -0.114937, -67.43, 0, -2.94)
 
 [node name="rock_large_15" parent="WildMiddle" instance=ExtResource("r43")]
 transform = Transform3D(0.963163, 0, -0.26892, 0, 1, 0, 0.26892, 0, 0.963163, -14.05, 0, 17.45)
 
-[node name="tree_small_96" parent="WildMiddle" instance=ExtResource("r32")]
+[node name="tree_small_93" parent="WildMiddle" instance=ExtResource("r32")]
 transform = Transform3D(-0.30237, 0, -0.953191, 0, 1, 0, 0.953191, 0, -0.30237, 42.04, 0, -12.78)
 
-[node name="bush_a_50" parent="WildMiddle" instance=ExtResource("r39")]
+[node name="bush_a_48" parent="WildMiddle" instance=ExtResource("r39")]
 transform = Transform3D(0.610145, 0, 0.79229, 0, 1, 0, -0.79229, 0, 0.610145, 155.19, 0, 16.39)
 
-[node name="bush_a_51" parent="WildMiddle" instance=ExtResource("r39")]
+[node name="bush_a_49" parent="WildMiddle" instance=ExtResource("r39")]
 transform = Transform3D(0.952129, 0, -0.305695, 0, 1, 0, 0.305695, 0, 0.952129, 131.95, 0, -14.07)
 
-[node name="bush_a_52" parent="WildMiddle" instance=ExtResource("r39")]
+[node name="bush_a_50" parent="WildMiddle" instance=ExtResource("r39")]
 transform = Transform3D(-0.880477, 0, -0.474088, 0, 1, 0, 0.474088, 0, -0.880477, 141.37, 0, 12.27)
 
-[node name="tree_small_97" parent="WildMiddle" instance=ExtResource("r32")]
+[node name="tree_small_94" parent="WildMiddle" instance=ExtResource("r32")]
 transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 147.48, 0, -17.47)
 
-[node name="tree_small_98" parent="WildMiddle" instance=ExtResource("r32")]
+[node name="tree_small_95" parent="WildMiddle" instance=ExtResource("r32")]
 transform = Transform3D(-0.822144, 0, 0.56928, 0, 1, 0, -0.56928, 0, -0.822144, 45.81, 0, 17.17)
 
-[node name="tree_small_99" parent="WildMiddle" instance=ExtResource("r32")]
+[node name="tree_small_96" parent="WildMiddle" instance=ExtResource("r32")]
 transform = Transform3D(0.549023, 0, 0.835807, 0, 1, 0, -0.835807, 0, 0.549023, -24.92, 0, -5.49)
 
 [node name="stump_46" parent="WildMiddle" instance=ExtResource("r45")]
 transform = Transform3D(0.0627905, 0, 0.998027, 0, 1, 0, -0.998027, 0, 0.0627905, 94.7, 0, 12.64)
 
-[node name="tree_small_100" parent="WildMiddle" instance=ExtResource("r32")]
+[node name="tree_small_97" parent="WildMiddle" instance=ExtResource("r32")]
 transform = Transform3D(0.709571, 0, -0.704634, 0, 1, 0, 0.704634, 0, 0.709571, 85.93, 0, -3.57)
 
 [node name="stump_47" parent="WildMiddle" instance=ExtResource("r45")]
@@ -3948,8 +3950,11 @@ transform = Transform3D(-0.400349, 0, 0.916363, 0, 1, 0, -0.916363, 0, -0.400349
 [node name="stump_48" parent="WildMiddle" instance=ExtResource("r45")]
 transform = Transform3D(-0.999962, 0, 0.00872654, 0, 1, 0, -0.00872654, 0, -0.999962, -41.22, 0, -8.43)
 
-[node name="tree_small_101" parent="WildMiddle" instance=ExtResource("r32")]
+[node name="tree_small_98" parent="WildMiddle" instance=ExtResource("r32")]
 transform = Transform3D(0.903335, 0, -0.428935, 0, 1, 0, 0.428935, 0, 0.903335, -68.85, 0, 17.42)
+
+[node name="bush_a_51" parent="WildMiddle" instance=ExtResource("r39")]
+transform = Transform3D(0.703395, 0, -0.710799, 0, 1, 0, 0.710799, 0, 0.703395, -17.44, 0, -10.14)
 
 [node name="Border" type="Node3D" parent="."]
 
@@ -4435,778 +4440,778 @@ transform = Transform3D(6.12323e-17, 0, -1, 0, 1, 0, 1, 0, 6.12323e-17, 159, 0, 
 
 [node name="Horizon" type="Node3D" parent="."]
 
-[node name="tree_dead_99" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_100" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.849893, 0, 0.526956, 0, 1, 0, -0.526956, 0, 0.849893, -167.46, 0, -168.18)
 
-[node name="tree_dead_100" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_101" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.967268, 0, 0.253758, 0, 1, 0, -0.253758, 0, -0.967268, -158.89, 0, -164.69)
 
-[node name="tree_dead_101" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_102" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.965016, 0, -0.262189, 0, 1, 0, 0.262189, 0, 0.965016, -150.84, 0, -167.18)
 
-[node name="tree_dead_102" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_103" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.556296, 0, 0.830984, 0, 1, 0, -0.830984, 0, -0.556296, -137.96, 0, -169.36)
 
-[node name="tree_dead_103" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_104" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.902585, 0, -0.430511, 0, 1, 0, 0.430511, 0, 0.902585, -127.33, 0, -166.9)
 
-[node name="tree_dead_104" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_105" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.697165, 0, 0.716911, 0, 1, 0, -0.716911, 0, 0.697165, -126.14, 0, -165.44)
 
-[node name="tree_dead_105" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_106" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.849893, 0, -0.526956, 0, 1, 0, 0.526956, 0, -0.849893, -111.7, 0, -164.52)
 
-[node name="tree_large_134" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_135" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.877146, 0, 0.480223, 0, 1, 0, -0.480223, 0, 0.877146, -100.6, 0, -164.75)
 
-[node name="tree_dead_106" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_107" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -93.37, 0, -168.2)
 
-[node name="tree_dead_107" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_108" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.768284, 0, 0.64011, 0, 1, 0, -0.64011, 0, 0.768284, -84.7, 0, -168.47)
 
-[node name="tree_dead_108" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_109" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.943223, 0, 0.332161, 0, 1, 0, -0.332161, 0, 0.943223, -77.15, 0, -166.77)
 
-[node name="tree_large_135" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_136" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.996637, 0, 0.0819385, 0, 1, 0, -0.0819385, 0, -0.996637, -69.85, 0, -165.8)
 
-[node name="tree_dead_109" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_110" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.946649, 0, -0.322266, 0, 1, 0, 0.322266, 0, -0.946649, -59.69, 0, -164.56)
 
-[node name="tree_dead_110" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_111" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.368125, 0, -0.929776, 0, 1, 0, 0.929776, 0, -0.368125, -51.68, 0, -167.15)
 
-[node name="tree_dead_111" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_112" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.974761, 0, 0.22325, 0, 1, 0, -0.22325, 0, 0.974761, -39.85, 0, -168.63)
 
-[node name="tree_dead_112" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_113" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.753563, 0, 0.657375, 0, 1, 0, -0.657375, 0, -0.753563, -31, 0, -166.54)
 
-[node name="tree_dead_113" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_114" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.56928, 0, 0.822144, 0, 1, 0, -0.822144, 0, -0.56928, -22.42, 0, -168.76)
 
-[node name="tree_dead_114" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_115" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.865151, 0, -0.501511, 0, 1, 0, 0.501511, 0, -0.865151, -11.96, 0, -167.31)
 
-[node name="tree_large_136" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_137" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.977783, 0, 0.209619, 0, 1, 0, -0.209619, 0, -0.977783, -4.47, 0, -169.46)
 
-[node name="tree_dead_115" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_116" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.913545, 0, -0.406737, 0, 1, 0, 0.406737, 0, 0.913545, 2.3, 0, -168.42)
 
-[node name="tree_dead_116" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_117" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.152986, 0, -0.988228, 0, 1, 0, 0.988228, 0, -0.152986, 15.62, 0, -165.1)
 
-[node name="tree_dead_117" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_118" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.543174, 0, -0.83962, 0, 1, 0, 0.83962, 0, 0.543174, 21.41, 0, -168.19)
 
-[node name="tree_dead_118" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_119" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.463296, 0, -0.886204, 0, 1, 0, 0.886204, 0, 0.463296, 31.24, 0, -167.68)
 
-[node name="tree_large_137" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_138" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.908508, 0, 0.417867, 0, 1, 0, -0.417867, 0, -0.908508, 40.16, 0, -168.41)
 
-[node name="tree_dead_119" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_120" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.740805, 0, 0.671721, 0, 1, 0, -0.671721, 0, -0.740805, 48.24, 0, -169.23)
 
-[node name="tree_large_138" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_139" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.182236, 0, 0.983255, 0, 1, 0, -0.983255, 0, -0.182236, 56.24, 0, -166.49)
 
-[node name="tree_dead_120" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_121" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.997185, 0, -0.0749787, 0, 1, 0, 0.0749787, 0, 0.997185, 67.47, 0, -164.55)
 
-[node name="tree_dead_121" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_122" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.978867, 0, -0.204496, 0, 1, 0, 0.204496, 0, 0.978867, 75.86, 0, -167.15)
 
-[node name="tree_dead_122" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_123" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.353475, 0, -0.935444, 0, 1, 0, 0.935444, 0, 0.353475, 81.48, 0, -168.54)
 
-[node name="tree_dead_123" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_124" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.377841, 0, 0.925871, 0, 1, 0, -0.925871, 0, -0.377841, 92.49, 0, -166.94)
 
-[node name="tree_dead_124" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_125" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.0383878, 0, 0.999263, 0, 1, 0, -0.999263, 0, 0.0383878, 107.66, 0, -166.56)
 
-[node name="tree_dead_125" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_126" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.941471, 0, -0.337095, 0, 1, 0, 0.337095, 0, 0.941471, 115.71, 0, -168.03)
 
-[node name="tree_large_139" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_140" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.992115, 0, -0.125333, 0, 1, 0, 0.125333, 0, 0.992115, 121.08, 0, -166.3)
 
-[node name="tree_dead_126" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_127" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.700909, 0, 0.71325, 0, 1, 0, -0.71325, 0, -0.700909, 130.49, 0, -167.82)
 
-[node name="tree_dead_127" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_128" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.504528, 0, -0.863396, 0, 1, 0, 0.863396, 0, 0.504528, 139.56, 0, -164.94)
 
-[node name="tree_dead_128" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_129" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.464842, 0, 0.885394, 0, 1, 0, -0.885394, 0, 0.464842, 148.21, 0, -166.4)
 
-[node name="tree_dead_129" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_130" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.0505929, 0, -0.998719, 0, 1, 0, 0.998719, 0, 0.0505929, 159.96, 0, -165.26)
 
-[node name="tree_large_140" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_141" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.873772, 0, 0.486335, 0, 1, 0, -0.486335, 0, 0.873772, 167.11, 0, -164.4)
 
-[node name="tree_dead_130" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_131" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.971549, 0, 0.236838, 0, 1, 0, -0.236838, 0, 0.971549, 164.74, 0, -153.08)
 
-[node name="tree_dead_131" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_132" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.994522, 0, 0.104528, 0, 1, 0, -0.104528, 0, -0.994522, 166.5, 0, -149.01)
 
-[node name="tree_dead_132" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_133" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.518027, 0, 0.855364, 0, 1, 0, -0.855364, 0, 0.518027, 167.93, 0, -135.32)
 
-[node name="tree_dead_133" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_134" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.292372, 0, 0.956305, 0, 1, 0, -0.956305, 0, 0.292372, 169.02, 0, -134.83)
 
-[node name="tree_dead_134" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_135" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.0836778, 0, -0.996493, 0, 1, 0, 0.996493, 0, -0.0836778, 166.73, 0, -121.96)
 
-[node name="tree_dead_135" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_136" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.658689, 0, 0.752415, 0, 1, 0, -0.752415, 0, 0.658689, 167.71, 0, -113.88)
 
-[node name="tree_dead_136" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_137" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.880477, 0, 0.474088, 0, 1, 0, -0.474088, 0, 0.880477, 164.87, 0, -104.28)
 
-[node name="tree_large_141" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_142" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.00872654, 0, -0.999962, 0, 1, 0, 0.999962, 0, 0.00872654, 167.9, 0, -95.84)
 
-[node name="tree_dead_137" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_138" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.999925, 0, -0.012217, 0, 1, 0, 0.012217, 0, 0.999925, 165.14, 0, -82.57)
 
-[node name="tree_dead_138" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_139" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.255446, 0, 0.966823, 0, 1, 0, -0.966823, 0, -0.255446, 165.68, 0, -74.91)
 
-[node name="tree_large_142" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_143" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.240228, 0, -0.970716, 0, 1, 0, 0.970716, 0, -0.240228, 167.4, 0, -68.07)
 
-[node name="tree_dead_139" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_140" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.703395, 0, 0.710799, 0, 1, 0, -0.710799, 0, 0.703395, 168.6, 0, -58.02)
 
-[node name="tree_large_143" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_144" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.843391, 0, -0.5373, 0, 1, 0, 0.5373, 0, 0.843391, 166.38, 0, -51.43)
 
-[node name="tree_dead_140" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_141" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.572146, 0, 0.820152, 0, 1, 0, -0.820152, 0, -0.572146, 169.33, 0, -39.7)
 
-[node name="tree_dead_141" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_142" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.97237, 0, -0.233445, 0, 1, 0, 0.233445, 0, -0.97237, 168.22, 0, -29.55)
 
-[node name="tree_large_144" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_145" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.0540788, 0, -0.998537, 0, 1, 0, 0.998537, 0, -0.0540788, 169.4, 0, -23.39)
 
-[node name="tree_large_145" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_146" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.731354, 0, -0.681998, 0, 1, 0, 0.681998, 0, -0.731354, 164.72, 0, -10.48)
 
-[node name="tree_dead_142" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_143" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.931691, 0, 0.363251, 0, 1, 0, -0.363251, 0, 0.931691, 168.63, 0, -5.28)
 
-[node name="tree_large_146" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_147" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.972776, 0, 0.231748, 0, 1, 0, -0.231748, 0, 0.972776, 165.18, 0, 7.87)
 
-[node name="tree_dead_143" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_144" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.748956, 0, -0.66262, 0, 1, 0, 0.66262, 0, -0.748956, 167.16, 0, 10.23)
 
-[node name="tree_large_147" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_148" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.392337, 0, -0.919821, 0, 1, 0, 0.919821, 0, 0.392337, 166.68, 0, 25.6)
 
-[node name="tree_large_148" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_149" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.71934, 0, -0.694658, 0, 1, 0, 0.694658, 0, -0.71934, 168.81, 0, 29.19)
 
-[node name="tree_small_102" parent="Horizon" instance=ExtResource("r32")]
+[node name="tree_small_99" parent="Horizon" instance=ExtResource("r32")]
 transform = Transform3D(-0.736097, 0, 0.676876, 0, 1, 0, -0.676876, 0, -0.736097, 167.05, 0, 42.62)
 
-[node name="tree_large_149" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_150" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.168489, 0, 0.985703, 0, 1, 0, -0.985703, 0, -0.168489, 165.65, 0, 52.55)
 
-[node name="tree_small_103" parent="Horizon" instance=ExtResource("r32")]
+[node name="tree_small_100" parent="Horizon" instance=ExtResource("r32")]
 transform = Transform3D(0.687088, 0, -0.726575, 0, 1, 0, 0.726575, 0, 0.687088, 167.57, 0, 55.79)
 
-[node name="tree_large_150" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_151" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.325568, 0, -0.945519, 0, 1, 0, 0.945519, 0, -0.325568, 168.64, 0, 65.22)
 
-[node name="tree_large_151" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_152" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.961262, 0, -0.275637, 0, 1, 0, 0.275637, 0, 0.961262, 167.84, 0, 72.91)
 
-[node name="tree_large_152" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_153" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.644124, 0, 0.764921, 0, 1, 0, -0.764921, 0, -0.644124, 168.99, 0, 82.63)
 
-[node name="tree_large_153" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_154" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.284015, 0, -0.95882, 0, 1, 0, 0.95882, 0, -0.284015, 166.27, 0, 91.73)
 
-[node name="tree_small_104" parent="Horizon" instance=ExtResource("r32")]
+[node name="tree_small_101" parent="Horizon" instance=ExtResource("r32")]
 transform = Transform3D(0.725374, 0, 0.688355, 0, 1, 0, -0.688355, 0, 0.725374, 166.86, 0, 105.75)
 
-[node name="tree_large_154" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_155" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.988756, 0, -0.149535, 0, 1, 0, 0.149535, 0, 0.988756, 168.71, 0, 108.29)
 
-[node name="tree_large_155" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_156" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.776046, 0, -0.630676, 0, 1, 0, 0.630676, 0, 0.776046, 166.24, 0, 121.96)
 
-[node name="tree_large_156" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_157" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.658689, 0, -0.752415, 0, 1, 0, 0.752415, 0, -0.658689, 166.48, 0, 130.35)
 
-[node name="tree_large_157" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_158" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.954761, 0, 0.297375, 0, 1, 0, -0.297375, 0, -0.954761, 169.09, 0, 139.45)
 
-[node name="tree_large_158" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_159" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.328867, 0, 0.944376, 0, 1, 0, -0.944376, 0, 0.328867, 167.94, 0, 147.76)
 
-[node name="tree_large_159" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_160" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.93358, 0, -0.358368, 0, 1, 0, 0.358368, 0, -0.93358, 167.92, 0, 154.77)
 
-[node name="tree_small_105" parent="Horizon" instance=ExtResource("r32")]
+[node name="tree_small_102" parent="Horizon" instance=ExtResource("r32")]
 transform = Transform3D(-0.949425, 0, -0.313992, 0, 1, 0, 0.313992, 0, -0.949425, 169.21, 0, 164.5)
 
-[node name="tree_large_160" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_161" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.981627, 0, -0.190809, 0, 1, 0, 0.190809, 0, -0.981627, 159.03, 0, 166.14)
 
-[node name="tree_large_161" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_162" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.838671, 0, -0.544639, 0, 1, 0, 0.544639, 0, 0.838671, 151.1, 0, 169.29)
 
-[node name="tree_large_162" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_163" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.931691, 0, 0.363251, 0, 1, 0, -0.363251, 0, 0.931691, 139.46, 0, 169.06)
 
-[node name="tree_large_163" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_164" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, -0.866025, 131.48, 0, 167.5)
 
-[node name="tree_small_106" parent="Horizon" instance=ExtResource("r32")]
+[node name="tree_small_103" parent="Horizon" instance=ExtResource("r32")]
 transform = Transform3D(-0.881303, 0, 0.472551, 0, 1, 0, -0.472551, 0, -0.881303, 118.76, 0, 166.05)
 
-[node name="tree_large_164" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_165" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.990748, 0, 0.135716, 0, 1, 0, -0.135716, 0, 0.990748, 111, 0, 168.35)
 
-[node name="tree_large_165" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_166" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.986856, 0, -0.161604, 0, 1, 0, 0.161604, 0, -0.986856, 107.24, 0, 168.81)
 
-[node name="tree_large_166" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_167" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.325568, 0, -0.945519, 0, 1, 0, 0.945519, 0, -0.325568, 91.49, 0, 165.8)
 
-[node name="tree_large_167" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_168" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.995227, 0, 0.0975829, 0, 1, 0, -0.0975829, 0, 0.995227, 84.77, 0, 168.25)
 
-[node name="tree_large_168" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_169" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.919135, 0, -0.393942, 0, 1, 0, 0.393942, 0, 0.919135, 72.41, 0, 165.17)
 
-[node name="tree_small_107" parent="Horizon" instance=ExtResource("r32")]
+[node name="tree_small_104" parent="Horizon" instance=ExtResource("r32")]
 transform = Transform3D(-0.62932, 0, 0.777146, 0, 1, 0, -0.777146, 0, -0.62932, 70.12, 0, 164.53)
 
-[node name="tree_large_169" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_170" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.825113, 0, 0.564967, 0, 1, 0, -0.564967, 0, 0.825113, 60.03, 0, 165.07)
 
-[node name="tree_small_108" parent="Horizon" instance=ExtResource("r32")]
+[node name="tree_small_105" parent="Horizon" instance=ExtResource("r32")]
 transform = Transform3D(0.436802, 0, -0.899558, 0, 1, 0, 0.899558, 0, 0.436802, 52.2, 0, 164.93)
 
-[node name="tree_small_109" parent="Horizon" instance=ExtResource("r32")]
+[node name="tree_small_106" parent="Horizon" instance=ExtResource("r32")]
 transform = Transform3D(-0.741976, 0, 0.670427, 0, 1, 0, -0.670427, 0, -0.741976, 43.61, 0, 165.27)
 
-[node name="tree_large_170" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_171" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.912834, 0, -0.40833, 0, 1, 0, 0.40833, 0, 0.912834, 28.06, 0, 165.86)
 
-[node name="tree_large_171" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_172" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.683274, 0, 0.730162, 0, 1, 0, -0.730162, 0, 0.683274, 20.49, 0, 165.49)
 
-[node name="tree_large_172" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_173" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.413104, 0, -0.910684, 0, 1, 0, 0.910684, 0, 0.413104, 9.27, 0, 166.77)
 
-[node name="tree_small_110" parent="Horizon" instance=ExtResource("r32")]
+[node name="tree_small_107" parent="Horizon" instance=ExtResource("r32")]
 transform = Transform3D(0.106264, 0, 0.994338, 0, 1, 0, -0.994338, 0, 0.106264, 3.68, 0, 165.58)
 
-[node name="tree_small_111" parent="Horizon" instance=ExtResource("r32")]
+[node name="tree_small_108" parent="Horizon" instance=ExtResource("r32")]
 transform = Transform3D(-0.896486, 0, -0.443071, 0, 1, 0, 0.443071, 0, -0.896486, -0.79, 0, 166.38)
 
-[node name="tree_large_173" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_174" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.125333, 0, 0.992115, 0, 1, 0, -0.992115, 0, 0.125333, -13.61, 0, 167.8)
 
-[node name="tree_small_112" parent="Horizon" instance=ExtResource("r32")]
+[node name="tree_small_109" parent="Horizon" instance=ExtResource("r32")]
 transform = Transform3D(-0.474088, 0, 0.880477, 0, 1, 0, -0.880477, 0, -0.474088, -23.76, 0, 169.38)
 
-[node name="tree_large_174" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_175" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.218143, 0, -0.975917, 0, 1, 0, 0.975917, 0, -0.218143, -31.52, 0, 169.33)
 
-[node name="tree_large_175" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_176" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.755853, 0, 0.654741, 0, 1, 0, -0.654741, 0, 0.755853, -40.28, 0, 167.14)
 
-[node name="tree_large_176" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_177" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.755853, 0, 0.654741, 0, 1, 0, -0.654741, 0, 0.755853, -48.77, 0, 164.87)
 
-[node name="tree_large_177" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_178" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.970716, 0, -0.240228, 0, 1, 0, 0.240228, 0, -0.970716, -62.6, 0, 166.02)
 
-[node name="tree_large_178" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_179" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.586372, 0, -0.810042, 0, 1, 0, 0.810042, 0, 0.586372, -67.53, 0, 165.27)
 
-[node name="tree_small_113" parent="Horizon" instance=ExtResource("r32")]
+[node name="tree_small_110" parent="Horizon" instance=ExtResource("r32")]
 transform = Transform3D(0.0732382, 0, 0.997314, 0, 1, 0, -0.997314, 0, 0.0732382, -80.92, 0, 166.81)
 
-[node name="tree_large_179" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_180" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.907777, 0, 0.419452, 0, 1, 0, -0.419452, 0, -0.907777, -85.47, 0, 164.71)
 
-[node name="tree_large_180" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_181" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.95424, 0, 0.299041, 0, 1, 0, -0.299041, 0, -0.95424, -91.59, 0, 166.6)
 
-[node name="tree_large_181" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_182" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.195946, 0, 0.980615, 0, 1, 0, -0.980615, 0, -0.195946, -101.35, 0, 166.52)
 
-[node name="tree_large_182" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_183" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.863396, 0, -0.504528, 0, 1, 0, 0.504528, 0, 0.863396, -109.44, 0, 165.37)
 
-[node name="tree_large_183" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_184" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.603208, 0, -0.797584, 0, 1, 0, 0.797584, 0, -0.603208, -120.91, 0, 165.34)
 
-[node name="tree_large_184" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_185" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.34202, 0, 0.939693, 0, 1, 0, -0.939693, 0, -0.34202, -130.24, 0, 165.95)
 
-[node name="tree_large_185" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_186" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.971961, 0, 0.235142, 0, 1, 0, -0.235142, 0, -0.971961, -136.72, 0, 165.43)
 
-[node name="tree_large_186" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_187" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.278991, 0, -0.960294, 0, 1, 0, 0.960294, 0, 0.278991, -149.28, 0, 167.13)
 
-[node name="tree_large_187" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_188" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.38107, 0, -0.924546, 0, 1, 0, 0.924546, 0, 0.38107, -156.5, 0, 166.52)
 
-[node name="tree_small_114" parent="Horizon" instance=ExtResource("r32")]
+[node name="tree_small_111" parent="Horizon" instance=ExtResource("r32")]
 transform = Transform3D(0.996345, 0, -0.0854169, 0, 1, 0, 0.0854169, 0, 0.996345, -168.99, 0, 166.69)
 
-[node name="tree_large_188" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_189" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.988756, 0, -0.149535, 0, 1, 0, 0.149535, 0, 0.988756, -166.49, 0, 160.03)
 
-[node name="tree_small_115" parent="Horizon" instance=ExtResource("r32")]
+[node name="tree_small_112" parent="Horizon" instance=ExtResource("r32")]
 transform = Transform3D(-0.236838, 0, 0.971549, 0, 1, 0, -0.971549, 0, -0.236838, -165.14, 0, 150.26)
 
-[node name="tree_large_189" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_190" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.338738, 0, 0.940881, 0, 1, 0, -0.940881, 0, -0.338738, -167.24, 0, 139.54)
 
-[node name="tree_large_190" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_191" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.300706, 0, -0.953717, 0, 1, 0, 0.953717, 0, -0.300706, -165.92, 0, 130.79)
 
-[node name="tree_large_191" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_192" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.475624, 0, -0.879649, 0, 1, 0, 0.879649, 0, 0.475624, -165.97, 0, 124.05)
 
-[node name="tree_large_192" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_193" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.644124, 0, 0.764921, 0, 1, 0, -0.764921, 0, 0.644124, -166.37, 0, 113.27)
 
-[node name="tree_small_116" parent="Horizon" instance=ExtResource("r32")]
+[node name="tree_small_113" parent="Horizon" instance=ExtResource("r32")]
 transform = Transform3D(0.260505, 0, 0.965473, 0, 1, 0, -0.965473, 0, 0.260505, -166.58, 0, 102.04)
 
-[node name="tree_large_193" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_194" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.0331552, 0, -0.99945, 0, 1, 0, 0.99945, 0, -0.0331552, -169.35, 0, 93.64)
 
-[node name="tree_large_194" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_195" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.238533, 0, 0.971134, 0, 1, 0, -0.971134, 0, -0.238533, -168.62, 0, 89.85)
 
-[node name="tree_large_195" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_196" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.938493, 0, 0.345298, 0, 1, 0, -0.345298, 0, 0.938493, -166.04, 0, 76.61)
 
-[node name="tree_large_196" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_197" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.22325, 0, -0.974761, 0, 1, 0, 0.974761, 0, 0.22325, -164.64, 0, 72.39)
 
-[node name="tree_large_197" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_198" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.996493, 0, -0.0836778, 0, 1, 0, 0.0836778, 0, -0.996493, -166.11, 0, 59.12)
 
-[node name="tree_large_198" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_199" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.997564, 0, 0.0697565, 0, 1, 0, -0.0697565, 0, -0.997564, -166.42, 0, 48.64)
 
-[node name="tree_large_199" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_200" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.999657, 0, -0.0261769, 0, 1, 0, 0.0261769, 0, -0.999657, -167.33, 0, 40.07)
 
-[node name="tree_small_117" parent="Horizon" instance=ExtResource("r32")]
+[node name="tree_small_114" parent="Horizon" instance=ExtResource("r32")]
 transform = Transform3D(0.158158, 0, -0.987414, 0, 1, 0, 0.987414, 0, 0.158158, -165.93, 0, 31.13)
 
-[node name="tree_small_118" parent="Horizon" instance=ExtResource("r32")]
+[node name="tree_small_115" parent="Horizon" instance=ExtResource("r32")]
 transform = Transform3D(-0.649448, 0, -0.760406, 0, 1, 0, 0.760406, 0, -0.649448, -169.48, 0, 24.03)
 
-[node name="tree_dead_144" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_145" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.543174, 0, -0.83962, 0, 1, 0, 0.83962, 0, 0.543174, -168.04, 0, 12.67)
 
-[node name="tree_dead_145" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_146" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.910684, 0, 0.413104, 0, 1, 0, -0.413104, 0, 0.910684, -167.12, 0, 5.05)
 
-[node name="tree_dead_146" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_147" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.194234, 0, 0.980955, 0, 1, 0, -0.980955, 0, 0.194234, -167.45, 0, -6.26)
 
-[node name="tree_dead_147" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_148" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.866897, 0, 0.498488, 0, 1, 0, -0.498488, 0, -0.866897, -169.28, 0, -13.6)
 
-[node name="tree_dead_148" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_149" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.901077, 0, 0.433659, 0, 1, 0, -0.433659, 0, 0.901077, -167.51, 0, -18.66)
 
-[node name="tree_dead_149" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_150" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.206204, 0, 0.978509, 0, 1, 0, -0.978509, 0, 0.206204, -165.33, 0, -28.15)
 
-[node name="tree_dead_150" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_151" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.897258, 0, 0.441506, 0, 1, 0, -0.441506, 0, -0.897258, -165.56, 0, -38.83)
 
-[node name="tree_dead_151" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_152" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.449319, 0, 0.893371, 0, 1, 0, -0.893371, 0, 0.449319, -166.42, 0, -50.44)
 
-[node name="tree_dead_152" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_153" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.66523, 0, 0.746638, 0, 1, 0, -0.746638, 0, -0.66523, -169.41, 0, -58.91)
 
-[node name="tree_large_200" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_201" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.822144, 0, -0.56928, 0, 1, 0, 0.56928, 0, 0.822144, -168.83, 0, -67.15)
 
-[node name="tree_dead_153" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_154" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.784776, 0, 0.619779, 0, 1, 0, -0.619779, 0, 0.784776, -167.04, 0, -79.06)
 
-[node name="tree_dead_154" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_155" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.963163, 0, -0.26892, 0, 1, 0, 0.26892, 0, -0.963163, -166.58, 0, -89.51)
 
-[node name="tree_dead_155" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_156" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.988494, 0, -0.151261, 0, 1, 0, 0.151261, 0, -0.988494, -168.91, 0, -94.75)
 
-[node name="tree_dead_156" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_157" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.845262, 0, -0.534352, 0, 1, 0, 0.534352, 0, -0.845262, -168.05, 0, -106.88)
 
-[node name="tree_dead_157" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_158" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.610145, 0, -0.79229, 0, 1, 0, 0.79229, 0, 0.610145, -165.62, 0, -111.33)
 
-[node name="tree_large_201" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_202" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.803857, 0, -0.594823, 0, 1, 0, 0.594823, 0, -0.803857, -166.69, 0, -120.34)
 
-[node name="tree_dead_158" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_159" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.611527, 0, -0.791224, 0, 1, 0, 0.791224, 0, -0.611527, -169.47, 0, -133.14)
 
-[node name="tree_large_202" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_203" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.965473, 0, 0.260505, 0, 1, 0, -0.260505, 0, 0.965473, -164.82, 0, -139.97)
 
-[node name="tree_dead_159" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_160" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.0819385, 0, 0.996637, 0, 1, 0, -0.996637, 0, 0.0819385, -166.52, 0, -146.63)
 
-[node name="tree_large_203" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_204" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.835807, 0, -0.549023, 0, 1, 0, 0.549023, 0, -0.835807, -168.36, 0, -157.7)
 
-[node name="tree_dead_160" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_161" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.851727, 0, 0.523986, 0, 1, 0, -0.523986, 0, 0.851727, -178.09, 0, -176.15)
 
-[node name="tree_dead_161" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_162" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.767165, 0, -0.64145, 0, 1, 0, 0.64145, 0, -0.767165, -166.51, 0, -180.56)
 
-[node name="tree_dead_162" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_163" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.985109, 0, -0.171929, 0, 1, 0, 0.171929, 0, 0.985109, -152.39, 0, -179.03)
 
-[node name="tree_dead_163" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_164" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.236838, 0, -0.971549, 0, 1, 0, 0.971549, 0, -0.236838, -140.5, 0, -177.07)
 
-[node name="tree_dead_164" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_165" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.0436194, 0, 0.999048, 0, 1, 0, -0.999048, 0, 0.0436194, -123.21, 0, -179.52)
 
-[node name="tree_dead_165" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_166" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.642788, 0, -0.766044, 0, 1, 0, 0.766044, 0, 0.642788, -110.5, 0, -178.91)
 
-[node name="tree_dead_166" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_167" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.414693, 0, 0.909961, 0, 1, 0, -0.909961, 0, -0.414693, -103.45, 0, -178.3)
 
-[node name="tree_large_204" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_205" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.532876, 0, 0.846193, 0, 1, 0, -0.846193, 0, -0.532876, -86.28, 0, -177.77)
 
-[node name="tree_dead_167" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_168" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.756995, 0, 0.653421, 0, 1, 0, -0.653421, 0, 0.756995, -76.94, 0, -177.11)
 
-[node name="tree_dead_168" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_169" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.747798, 0, -0.663926, 0, 1, 0, 0.663926, 0, 0.747798, -58.13, 0, -179.54)
 
-[node name="tree_dead_169" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_170" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.909236, 0, -0.416281, 0, 1, 0, 0.416281, 0, -0.909236, -49.07, 0, -180.94)
 
-[node name="tree_dead_170" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_171" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.830012, 0, 0.557745, 0, 1, 0, -0.557745, 0, 0.830012, -36.54, 0, -179.7)
 
-[node name="tree_dead_171" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_172" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.730162, 0, 0.683274, 0, 1, 0, -0.683274, 0, 0.730162, -26.25, 0, -178.01)
 
-[node name="tree_dead_172" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_173" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.525472, 0, 0.850811, 0, 1, 0, -0.850811, 0, 0.525472, -11.64, 0, -181.37)
 
-[node name="tree_dead_173" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_174" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.929133, 0, -0.369747, 0, 1, 0, 0.369747, 0, -0.929133, 0.52, 0, -177.92)
 
-[node name="tree_dead_174" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_175" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.952661, 0, -0.304033, 0, 1, 0, 0.304033, 0, -0.952661, 18.79, 0, -178.54)
 
-[node name="tree_dead_175" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_176" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.871214, 0, -0.490904, 0, 1, 0, 0.490904, 0, -0.871214, 28.27, 0, -176.95)
 
-[node name="tree_dead_176" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_177" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.057564, 0, -0.998342, 0, 1, 0, 0.998342, 0, -0.057564, 47.69, 0, -180.97)
 
-[node name="tree_large_205" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_206" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.939094, 0, 0.34366, 0, 1, 0, -0.34366, 0, 0.939094, 51.76, 0, -177.57)
 
-[node name="tree_dead_177" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_178" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.999925, 0, 0.012217, 0, 1, 0, -0.012217, 0, -0.999925, 62.66, 0, -176.62)
 
-[node name="tree_large_206" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_207" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.967709, 0, -0.252069, 0, 1, 0, 0.252069, 0, -0.967709, 80.13, 0, -181.24)
 
-[node name="tree_dead_178" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_179" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.564967, 0, 0.825113, 0, 1, 0, -0.825113, 0, -0.564967, 93.92, 0, -176.72)
 
-[node name="tree_large_207" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_208" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.914254, 0, 0.405142, 0, 1, 0, -0.405142, 0, -0.914254, 112.44, 0, -180.33)
 
-[node name="tree_dead_179" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_180" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.221548, 0, -0.975149, 0, 1, 0, 0.975149, 0, 0.221548, 116.61, 0, -179.73)
 
-[node name="tree_large_208" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_209" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.901833, 0, 0.432086, 0, 1, 0, -0.432086, 0, -0.901833, 135.24, 0, -179.6)
 
-[node name="tree_dead_180" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_181" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.962218, 0, 0.27228, 0, 1, 0, -0.27228, 0, 0.962218, 150.81, 0, -177.26)
 
-[node name="tree_large_209" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_210" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.695913, 0, -0.718126, 0, 1, 0, 0.718126, 0, 0.695913, 158.39, 0, -179.48)
 
-[node name="tree_large_210" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_211" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.0993197, 0, 0.995056, 0, 1, 0, -0.995056, 0, 0.0993197, 168.1, 0, -177.36)
 
-[node name="tree_dead_181" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_182" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.140901, 0, 0.990024, 0, 1, 0, -0.990024, 0, -0.140901, 181.06, 0, -176.52)
 
-[node name="tree_dead_182" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_183" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.610145, 0, -0.79229, 0, 1, 0, 0.79229, 0, 0.610145, 180.37, 0, -157.7)
 
-[node name="tree_dead_183" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_184" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.2706, 0, -0.962692, 0, 1, 0, 0.962692, 0, 0.2706, 177.09, 0, -144.94)
 
-[node name="tree_dead_184" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_185" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.00523596, 0, -0.999986, 0, 1, 0, 0.999986, 0, -0.00523596, 180.32, 0, -133.85)
 
-[node name="tree_dead_185" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_186" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.0906326, 0, -0.995884, 0, 1, 0, 0.995884, 0, 0.0906326, 178.25, 0, -116.24)
 
-[node name="tree_large_211" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_212" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.687088, 0, 0.726575, 0, 1, 0, -0.726575, 0, -0.687088, 181.39, 0, -107.85)
 
-[node name="tree_large_212" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_213" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.99945, 0, 0.0331552, 0, 1, 0, -0.0331552, 0, -0.99945, 178.56, 0, -100.13)
 
-[node name="tree_large_213" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_214" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.0680153, 0, 0.997684, 0, 1, 0, -0.997684, 0, -0.0680153, 179.52, 0, -83.63)
 
-[node name="tree_large_214" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_215" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.364877, 0, 0.931056, 0, 1, 0, -0.931056, 0, 0.364877, 178.96, 0, -66.71)
 
-[node name="tree_dead_186" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_187" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.486335, 0, 0.873772, 0, 1, 0, -0.873772, 0, 0.486335, 176.66, 0, -58.42)
 
-[node name="tree_dead_187" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_188" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.190809, 0, 0.981627, 0, 1, 0, -0.981627, 0, 0.190809, 179.37, 0, -39.09)
 
-[node name="tree_dead_188" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_189" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.736097, 0, -0.676876, 0, 1, 0, 0.676876, 0, -0.736097, 178.5, 0, -25.36)
 
-[node name="tree_dead_189" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_190" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.406737, 0, 0.913545, 0, 1, 0, -0.913545, 0, -0.406737, 177.05, 0, -19.56)
 
-[node name="tree_large_215" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_216" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.985996, 0, -0.166769, 0, 1, 0, 0.166769, 0, 0.985996, 180.31, 0, -4.88)
 
-[node name="tree_dead_190" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_191" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.012217, 0, -0.999925, 0, 1, 0, 0.999925, 0, -0.012217, 178.49, 0, 8.81)
 
-[node name="tree_large_216" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_217" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.710799, 0, 0.703395, 0, 1, 0, -0.703395, 0, -0.710799, 179.9, 0, 21.76)
 
-[node name="tree_large_217" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_218" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.997185, 0, -0.0749787, 0, 1, 0, 0.0749787, 0, 0.997185, 181.35, 0, 36.43)
 
-[node name="tree_large_218" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_219" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.161604, 0, 0.986856, 0, 1, 0, -0.986856, 0, 0.161604, 176.6, 0, 48.8)
 
-[node name="tree_large_219" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_220" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.0157073, 0, -0.999877, 0, 1, 0, 0.999877, 0, 0.0157073, 181.46, 0, 60.98)
 
-[node name="tree_large_220" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_221" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.192522, 0, 0.981293, 0, 1, 0, -0.981293, 0, 0.192522, 176.69, 0, 72.26)
 
-[node name="tree_large_221" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_222" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.695913, 0, 0.718126, 0, 1, 0, -0.718126, 0, -0.695913, 178.21, 0, 89.73)
 
-[node name="tree_large_222" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_223" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.999781, 0, -0.0209424, 0, 1, 0, 0.0209424, 0, -0.999781, 179.75, 0, 99.21)
 
-[node name="tree_small_119" parent="Horizon" instance=ExtResource("r32")]
+[node name="tree_small_116" parent="Horizon" instance=ExtResource("r32")]
 transform = Transform3D(-0.642788, 0, 0.766044, 0, 1, 0, -0.766044, 0, -0.642788, 180.6, 0, 112.08)
 
-[node name="tree_large_223" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_224" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.315649, 0, 0.948876, 0, 1, 0, -0.948876, 0, 0.315649, 176.82, 0, 127.69)
 
-[node name="tree_large_224" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_225" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.0157073, 0, 0.999877, 0, 1, 0, -0.999877, 0, 0.0157073, 178.43, 0, 138.89)
 
-[node name="tree_large_225" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_226" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.688355, 0, -0.725374, 0, 1, 0, 0.725374, 0, 0.688355, 179.3, 0, 148.38)
 
-[node name="tree_large_226" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_227" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.436802, 0, -0.899558, 0, 1, 0, 0.899558, 0, -0.436802, 178.71, 0, 168.35)
 
-[node name="tree_large_227" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_228" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.848972, 0, -0.528438, 0, 1, 0, 0.528438, 0, 0.848972, 179.26, 0, 178.68)
 
-[node name="tree_small_120" parent="Horizon" instance=ExtResource("r32")]
+[node name="tree_small_117" parent="Horizon" instance=ExtResource("r32")]
 transform = Transform3D(0.998135, 0, -0.0610485, 0, 1, 0, 0.0610485, 0, 0.998135, 167.83, 0, 178.66)
 
-[node name="tree_large_228" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_229" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.0941083, 0, -0.995562, 0, 1, 0, 0.995562, 0, 0.0941083, 152.65, 0, 176.8)
 
-[node name="tree_large_229" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_230" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.586372, 0, -0.810042, 0, 1, 0, 0.810042, 0, 0.586372, 138.76, 0, 178.83)
 
-[node name="tree_large_230" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_231" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.240228, 0, 0.970716, 0, 1, 0, -0.970716, 0, 0.240228, 130.57, 0, 179.31)
 
-[node name="tree_large_231" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_232" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.422618, 0, -0.906308, 0, 1, 0, 0.906308, 0, -0.422618, 114.55, 0, 179.28)
 
-[node name="tree_large_232" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_233" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.474088, 0, 0.880477, 0, 1, 0, -0.880477, 0, -0.474088, 103.11, 0, 180.67)
 
-[node name="tree_large_233" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_234" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.92388, 0, -0.382683, 0, 1, 0, 0.382683, 0, 0.92388, 88.36, 0, 180.69)
 
-[node name="tree_small_121" parent="Horizon" instance=ExtResource("r32")]
+[node name="tree_small_118" parent="Horizon" instance=ExtResource("r32")]
 transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 77, 0, 179.26)
 
-[node name="tree_large_234" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_235" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.528438, 0, -0.848972, 0, 1, 0, 0.848972, 0, -0.528438, 63.38, 0, 178.58)
 
-[node name="tree_large_235" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_236" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.21303, 0, -0.977046, 0, 1, 0, 0.977046, 0, 0.21303, 42.92, 0, 179.98)
 
-[node name="tree_large_236" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_237" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.275637, 0, 0.961262, 0, 1, 0, -0.961262, 0, -0.275637, 38.96, 0, 180.12)
 
-[node name="tree_small_122" parent="Horizon" instance=ExtResource("r32")]
+[node name="tree_small_119" parent="Horizon" instance=ExtResource("r32")]
 transform = Transform3D(0.927184, 0, 0.374607, 0, 1, 0, -0.374607, 0, 0.927184, 24.02, 0, 179.59)
 
-[node name="tree_large_237" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_238" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.849893, 0, 0.526956, 0, 1, 0, -0.526956, 0, 0.849893, 8.34, 0, 179.24)
 
-[node name="tree_small_123" parent="Horizon" instance=ExtResource("r32")]
+[node name="tree_small_120" parent="Horizon" instance=ExtResource("r32")]
 transform = Transform3D(0.92321, 0, -0.384295, 0, 1, 0, 0.384295, 0, 0.92321, -0.34, 0, 177)
 
-[node name="tree_large_238" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_239" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.811064, 0, 0.584958, 0, 1, 0, -0.584958, 0, 0.811064, -15.51, 0, 180.31)
 
-[node name="tree_large_239" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_240" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.057564, 0, 0.998342, 0, 1, 0, -0.998342, 0, -0.057564, -26.01, 0, 180.04)
 
-[node name="tree_large_240" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_241" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.661312, 0, 0.750111, 0, 1, 0, -0.750111, 0, -0.661312, -47.36, 0, 178.22)
 
-[node name="tree_small_124" parent="Horizon" instance=ExtResource("r32")]
+[node name="tree_small_121" parent="Horizon" instance=ExtResource("r32")]
 transform = Transform3D(-0.395546, 0, -0.918446, 0, 1, 0, 0.918446, 0, -0.395546, -52.54, 0, 180.05)
 
-[node name="tree_large_241" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_242" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.299041, 0, 0.95424, 0, 1, 0, -0.95424, 0, 0.299041, -64.75, 0, 179.38)
 
-[node name="tree_small_125" parent="Horizon" instance=ExtResource("r32")]
+[node name="tree_small_122" parent="Horizon" instance=ExtResource("r32")]
 transform = Transform3D(0.937889, 0, 0.346936, 0, 1, 0, -0.346936, 0, 0.937889, -82.35, 0, 179.19)
 
-[node name="tree_large_242" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_243" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.156434, 0, 0.987688, 0, 1, 0, -0.987688, 0, 0.156434, -99.41, 0, 179.89)
 
-[node name="tree_large_243" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_244" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.287361, 0, 0.957822, 0, 1, 0, -0.957822, 0, 0.287361, -108.51, 0, 176.6)
 
-[node name="tree_large_244" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_245" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.96363, 0, -0.267238, 0, 1, 0, 0.267238, 0, 0.96363, -117.98, 0, 179.59)
 
-[node name="tree_large_245" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_246" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.0871557, 0, 0.996195, 0, 1, 0, -0.996195, 0, 0.0871557, -136.41, 0, 179.63)
 
-[node name="tree_small_126" parent="Horizon" instance=ExtResource("r32")]
+[node name="tree_small_123" parent="Horizon" instance=ExtResource("r32")]
 transform = Transform3D(-0.439939, 0, 0.898028, 0, 1, 0, -0.898028, 0, -0.439939, -148.66, 0, 177.01)
 
-[node name="tree_small_127" parent="Horizon" instance=ExtResource("r32")]
+[node name="tree_small_124" parent="Horizon" instance=ExtResource("r32")]
 transform = Transform3D(-0.999194, 0, -0.0401318, 0, 1, 0, 0.0401318, 0, -0.999194, -157.75, 0, 176.89)
 
-[node name="tree_large_246" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_247" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.421036, 0, -0.907044, 0, 1, 0, 0.907044, 0, -0.421036, -176.72, 0, 180.29)
 
-[node name="tree_large_247" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_248" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.856267, 0, 0.516533, 0, 1, 0, -0.516533, 0, -0.856267, -178.17, 0, 176.91)
 
-[node name="tree_large_248" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_249" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.554844, 0, -0.831954, 0, 1, 0, 0.831954, 0, -0.554844, -177.91, 0, 155.02)
 
-[node name="tree_large_249" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_250" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.905569, 0, -0.424199, 0, 1, 0, 0.424199, 0, 0.905569, -180.29, 0, 141.71)
 
-[node name="tree_large_250" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_251" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.304033, 0, -0.952661, 0, 1, 0, 0.952661, 0, 0.304033, -181.23, 0, 133.22)
 
-[node name="tree_small_128" parent="Horizon" instance=ExtResource("r32")]
+[node name="tree_small_125" parent="Horizon" instance=ExtResource("r32")]
 transform = Transform3D(0.695913, 0, -0.718126, 0, 1, 0, 0.718126, 0, 0.695913, -177.48, 0, 116.62)
 
-[node name="tree_small_129" parent="Horizon" instance=ExtResource("r32")]
+[node name="tree_small_126" parent="Horizon" instance=ExtResource("r32")]
 transform = Transform3D(-0.965016, 0, -0.262189, 0, 1, 0, 0.262189, 0, -0.965016, -177.25, 0, 110.03)
 
-[node name="tree_large_251" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_252" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.979925, 0, 0.199368, 0, 1, 0, -0.199368, 0, 0.979925, -178.21, 0, 94.38)
 
-[node name="tree_large_252" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_253" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.312335, 0, 0.949972, 0, 1, 0, -0.949972, 0, -0.312335, -177.99, 0, 80.72)
 
-[node name="tree_large_253" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_254" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.111469, 0, 0.993768, 0, 1, 0, -0.993768, 0, 0.111469, -177.51, 0, 68.78)
 
-[node name="tree_large_254" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_255" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.857167, 0, 0.515038, 0, 1, 0, -0.515038, 0, -0.857167, -178.62, 0, 53.91)
 
-[node name="tree_large_255" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_256" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(0.988228, 0, 0.152986, 0, 1, 0, -0.152986, 0, 0.988228, -177.62, 0, 42.89)
 
-[node name="tree_large_256" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_257" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.395546, 0, 0.918446, 0, 1, 0, -0.918446, 0, -0.395546, -181.25, 0, 29.22)
 
-[node name="tree_large_257" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_258" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.887011, 0, -0.461749, 0, 1, 0, 0.461749, 0, -0.887011, -178.46, 0, 15.49)
 
-[node name="tree_dead_191" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_192" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.884581, 0, -0.466387, 0, 1, 0, 0.466387, 0, -0.884581, -178.97, 0, 2.04)
 
-[node name="tree_dead_192" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_193" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.81815, 0, -0.575005, 0, 1, 0, 0.575005, 0, -0.81815, -181.03, 0, -5.8)
 
-[node name="tree_large_258" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_259" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.880477, 0, 0.474088, 0, 1, 0, -0.474088, 0, -0.880477, -176.94, 0, -20.78)
 
-[node name="tree_dead_193" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_194" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.315649, 0, 0.948876, 0, 1, 0, -0.948876, 0, 0.315649, -177.97, 0, -41.46)
 
-[node name="tree_large_259" parent="Horizon" instance=ExtResource("r31")]
+[node name="tree_large_260" parent="Horizon" instance=ExtResource("r31")]
 transform = Transform3D(-0.976296, 0, -0.21644, 0, 1, 0, 0.21644, 0, -0.976296, -180.48, 0, -52.02)
 
-[node name="tree_dead_194" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_195" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.929776, 0, -0.368125, 0, 1, 0, 0.368125, 0, 0.929776, -178.46, 0, -62.96)
 
-[node name="tree_dead_195" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_196" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.943223, 0, -0.332161, 0, 1, 0, 0.332161, 0, 0.943223, -181.46, 0, -76.27)
 
-[node name="tree_dead_196" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_197" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.674302, 0, -0.738455, 0, 1, 0, 0.738455, 0, -0.674302, -179.17, 0, -92.69)
 
-[node name="tree_dead_197" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_198" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.472551, 0, 0.881303, 0, 1, 0, -0.881303, 0, -0.472551, -179.33, 0, -105.39)
 
-[node name="tree_dead_198" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_199" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.359997, 0, 0.932954, 0, 1, 0, -0.932954, 0, -0.359997, -177.04, 0, -111.65)
 
-[node name="tree_dead_199" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_200" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.842452, 0, 0.538771, 0, 1, 0, -0.538771, 0, 0.842452, -181.12, 0, -125.81)
 
-[node name="tree_dead_200" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_201" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.111469, 0, 0.993768, 0, 1, 0, -0.993768, 0, -0.111469, -178.87, 0, -137.7)
 
-[node name="tree_dead_201" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_202" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(0.935444, 0, 0.353475, 0, 1, 0, -0.353475, 0, 0.935444, -178.63, 0, -148.18)
 
-[node name="tree_dead_202" parent="Horizon" instance=ExtResource("r24")]
+[node name="tree_dead_203" parent="Horizon" instance=ExtResource("r24")]
 transform = Transform3D(-0.596225, 0, -0.802817, 0, 1, 0, 0.802817, 0, -0.596225, -177.03, 0, -162.99)
 
 [node name="Points" type="Node3D" parent="."]
@@ -5274,6 +5279,9 @@ state = 0
 
 [node name="Model" parent="Points/resource_point_tertiary_neutre_2" instance=ExtResource("r74")]
 
+[node name="PlayerState" type="Node" parent="."]
+script = ExtResource("sys_player")
+
 [node name="UnitSimulation" type="Node" parent="."]
 script = ExtResource("sys_sim")
 
@@ -5281,18 +5289,20 @@ script = ExtResource("sys_sim")
 script = ExtResource("sys_orders")
 simulation = NodePath("../UnitSimulation")
 
-[node name="SelectionController" type="Node" parent="." node_paths=PackedStringArray("simulation", "camera_rig", "selection_box")]
+[node name="SelectionController" type="Node" parent="." node_paths=PackedStringArray("simulation", "camera_rig", "selection_box", "buildings")]
 script = ExtResource("sys_selection")
 simulation = NodePath("../UnitSimulation")
 camera_rig = NodePath("../RTSCamera")
 selection_box = NodePath("../HUD/SelectionBox")
+buildings = NodePath("../BuildingSystem")
 team = -1
 
-[node name="CommandController" type="Node" parent="." node_paths=PackedStringArray("selection", "order_system", "camera_rig")]
+[node name="CommandController" type="Node" parent="." node_paths=PackedStringArray("selection", "order_system", "camera_rig", "buildings")]
 script = ExtResource("sys_commands")
 selection = NodePath("../SelectionController")
 order_system = NodePath("../OrderSystem")
 camera_rig = NodePath("../RTSCamera")
+buildings = NodePath("../BuildingSystem")
 
 [node name="UnitRenderer" type="Node3D" parent="." node_paths=PackedStringArray("simulation", "selection")]
 script = ExtResource("sys_renderer")
@@ -5316,6 +5326,30 @@ simulation = NodePath("../UnitSimulation")
 script = ExtResource("sys_economy")
 factions = Array[ExtResource("sys_faction_data")]([ExtResource("sys_plants"), ExtResource("sys_zombies")])
 
+[node name="BuildingSystem" type="Node" parent="." node_paths=PackedStringArray("simulation", "production", "order_system")]
+script = ExtResource("sys_buildings")
+simulation = NodePath("../UnitSimulation")
+production = NodePath("../ProductionSystem")
+order_system = NodePath("../OrderSystem")
+rosters = Array[ExtResource("sys_roster_script")]([ExtResource("sys_plants_roster"), ExtResource("sys_zombies_roster")])
+
+[node name="HQ_Plants" type="Marker3D" parent="BuildingSystem"]
+transform = Transform3D(-1, 0, 1.22465e-16, 0, 1, 0, -1.22465e-16, 0, -1, -4, 0, 132)
+script = ExtResource("sys_building_spawn")
+data = ExtResource("sys_hq_plants")
+team = 0
+
+[node name="HQ_Zombies" type="Marker3D" parent="BuildingSystem"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -0, 0, 1, 30, 0, -132)
+script = ExtResource("sys_building_spawn")
+data = ExtResource("sys_hq_zombies")
+team = 1
+
+[node name="BuildingRenderer" type="Node3D" parent="." node_paths=PackedStringArray("buildings", "selection")]
+script = ExtResource("sys_building_renderer")
+buildings = NodePath("../BuildingSystem")
+selection = NodePath("../SelectionController")
+
 [node name="HUD" type="CanvasLayer" parent="."]
 
 [node name="SelectionBox" type="Control" parent="HUD"]
@@ -5328,7 +5362,24 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("sys_box")
 
-[node name="DevMenu" type="Control" parent="HUD" node_paths=PackedStringArray("simulation", "camera_rig")]
+[node name="RtsHud" type="Control" parent="HUD" node_paths=PackedStringArray("economy", "player", "selection", "buildings", "simulation", "order_system", "camera_rig")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("sys_hud")
+economy = NodePath("../../Economy")
+player = NodePath("../../PlayerState")
+selection = NodePath("../../SelectionController")
+buildings = NodePath("../../BuildingSystem")
+simulation = NodePath("../../UnitSimulation")
+order_system = NodePath("../../OrderSystem")
+camera_rig = NodePath("../../RTSCamera")
+
+[node name="DevMenu" type="Control" parent="HUD" node_paths=PackedStringArray("simulation", "camera_rig", "player", "buildings")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -5339,28 +5390,8 @@ mouse_filter = 2
 script = ExtResource("sys_dev_menu")
 simulation = NodePath("../../UnitSimulation")
 camera_rig = NodePath("../../RTSCamera")
+player = NodePath("../../PlayerState")
+buildings = NodePath("../../BuildingSystem")
+start_visible = false
 plant_squads = Array[ExtResource("sys_squad_data")]([ExtResource("sq_peashooter"), ExtResource("sq_sunflower"), ExtResource("sq_kernel_corn"), ExtResource("sq_cactus"), ExtResource("sq_rose"), ExtResource("sq_chomper"), ExtResource("sq_citron"), ExtResource("sq_torchwood")])
 zombie_squads = Array[ExtResource("sys_squad_data")]([ExtResource("sq_browncoat"), ExtResource("sq_foot_soldier"), ExtResource("sq_engineer"), ExtResource("sq_scientist"), ExtResource("sq_imp"), ExtResource("sq_deadbeard"), ExtResource("sq_all_star"), ExtResource("sq_super_brainz"), ExtResource("sq_action_hero_80s"), ExtResource("sq_z_mech")])
-
-[node name="ResourceBar" type="Control" parent="HUD" node_paths=PackedStringArray("economy")]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-script = ExtResource("sys_resource_bar")
-economy = NodePath("../../Economy")
-teams = Array[int]([0, 1])
-
-[node name="UnitInfoPanel" type="Control" parent="HUD" node_paths=PackedStringArray("selection")]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-script = ExtResource("sys_info")
-selection = NodePath("../../SelectionController")

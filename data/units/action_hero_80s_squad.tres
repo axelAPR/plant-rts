@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("1_script")
+local_portrait_path = "res://assets/gw2/ui/portraits/action_hero_80s.png"
 display_name = "Escouade de Héros d'action des années 80"
 unit_data = ExtResource("2_unit")
 unit_count = 4

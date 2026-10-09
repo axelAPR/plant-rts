@@ -8,10 +8,17 @@ extends Control
 ## - « Tout supprimer » : retire toutes les escouades.
 ## Chaque escouade prend l'emplacement libre le plus proche : pas d'apparition
 ## par-dessus des escouades existantes. Apparitions gratuites (hors production).
+## F1 (dev_toggle_menu) : afficher / masquer le menu. F2 (dev_switch_team) : changer
+## le camp du joueur (PlayerState) et centrer la caméra sur son QG.
 ## Absent des exports de production (builds non debug).
 
 @export var simulation: UnitSimulation
 @export var camera_rig: RTSCamera
+## Facultatifs : changement de camp du joueur (F2) et centrage sur son QG.
+@export var player: PlayerState
+@export var buildings: BuildingSystem
+## Menu visible au lancement (masqué par défaut quand un HUD occupe l'écran).
+@export var start_visible: bool = true
 
 @export_group("Troupes")
 @export var plant_squads: Array[SquadData] = []
@@ -46,6 +53,19 @@ func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_build_ui()
+	visible = start_visible
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed(&"dev_toggle_menu"):
+		visible = not visible
+		get_viewport().set_input_as_handled()
+	elif event.is_action_pressed(&"dev_switch_team") and player != null:
+		player.team = 1 - player.team
+		var hq := buildings.get_headquarters(player.team) if buildings != null else null
+		if hq != null:
+			camera_rig.focus_on(hq.position)
+		get_viewport().set_input_as_handled()
 
 
 ## Fait apparaître une escouade de chaque troupe autour du point visé par la caméra.

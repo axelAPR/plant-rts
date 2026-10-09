@@ -1,15 +1,24 @@
 class_name SelectionController
 extends Node
-## Sélection du joueur, par escouade :
-## - clic sur une unité → son escouade entière ; clic dans le vide → désélection ;
+## Sélection du joueur, par escouade ou par bâtiment (jamais les deux à la fois) :
+## - clic sur une unité → son escouade entière ;
+## - sinon, clic sur un bâtiment → ce bâtiment (rayon de la caméra contre les volumes
+##   de clic de BuildingRenderer, couche `building_pick_mask`) ;
+## - clic dans le vide → désélection ;
 ## - glisser → toutes les escouades dont au moins une unité est dans le cadre.
-## Le test se fait en espace écran (pas de collisionneurs sur les unités).
+## Les unités sont testées en espace écran (pas de collisionneurs sur les unités).
 
 signal selection_changed(squads: Array[Squad])
+## Bâtiment sélectionné (null : aucun).
+signal selected_building_changed(building: Building)
 
 @export var simulation: UnitSimulation
 @export var camera_rig: RTSCamera
 @export var selection_box: SelectionBox
+## Facultatif : bâtiments sélectionnables.
+@export var buildings: BuildingSystem
+## Couches physiques des volumes de clic des bâtiments.
+@export_flags_3d_physics var building_pick_mask: int = 2
 ## Camp contrôlé par ce joueur : seules ses escouades sont sélectionnables.
 ## -1 = tous les camps (scènes de test et débogage).
 @export var team: int = 0
@@ -23,6 +32,9 @@ signal selection_changed(squads: Array[Squad])
 @export var pick_radius_scale: float = 1.3
 
 var selected_squads: Array[Squad] = []
+var selected_building: Building = null
+
+const _NONE: Array[Squad] = []
 
 var _press_position: Vector2
 var _is_pressing: bool = false
@@ -31,6 +43,8 @@ var _is_dragging: bool = false
 
 func _ready() -> void:
 	simulation.squad_destroyed.connect(_on_squad_destroyed)
+	if buildings != null:
+		buildings.building_destroyed.connect(_on_building_destroyed)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -59,10 +73,50 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func set_selection(squads: Array[Squad]) -> void:
+	if not squads.is_empty():
+		_set_building(null)
 	if squads == selected_squads:
 		return
 	selected_squads = squads
 	selection_changed.emit(selected_squads)
+
+
+## Sélectionne un bâtiment (désélectionne les escouades) ; null : rien.
+func set_building_selection(building: Building) -> void:
+	if building != null:
+		set_selection(_NONE.duplicate())
+	_set_building(building)
+
+
+## Désélectionne tout.
+func clear_selection() -> void:
+	set_selection(_NONE.duplicate())
+	_set_building(null)
+
+
+func _set_building(building: Building) -> void:
+	if building == selected_building:
+		return
+	selected_building = building
+	selected_building_changed.emit(selected_building)
+
+
+## Bâtiment vivant sous le point écran (rayon de la caméra), ou null.
+## `only_team` < 0 : tous les camps.
+func pick_building(screen_position: Vector2, only_team: int = -1) -> Building:
+	if buildings == null:
+		return null
+	var camera := camera_rig.get_camera()
+	var from := camera.project_ray_origin(screen_position)
+	var to := from + camera.project_ray_normal(screen_position) * 2000.0
+	var query := PhysicsRayQueryParameters3D.create(from, to, building_pick_mask)
+	var hit := camera.get_world_3d().direct_space_state.intersect_ray(query)
+	if hit.is_empty() or not (hit.collider as Object).has_meta(BuildingRenderer.BUILDING_ID_META):
+		return null
+	var building := buildings.get_building((hit.collider as Object).get_meta(BuildingRenderer.BUILDING_ID_META))
+	if building == null or not building.is_alive() or (only_team >= 0 and building.team != only_team):
+		return null
+	return building
 
 
 func is_selected(squad: Squad) -> bool:
@@ -92,10 +146,15 @@ func pick_unit(screen_position: Vector2, only_team: int = -1) -> Unit:
 
 func _select_at(screen_position: Vector2) -> void:
 	var unit := pick_unit(screen_position, team)
-	var squads: Array[Squad] = []
 	if unit != null:
-		squads.append(simulation.get_squad(unit.squad_id))
-	set_selection(squads)
+		var squads: Array[Squad] = [simulation.get_squad(unit.squad_id)]
+		set_selection(squads)
+		return
+	var building := pick_building(screen_position, team)
+	if building != null:
+		set_building_selection(building)
+	else:
+		clear_selection()
 
 
 func _select_in_rect(rect: Rect2) -> void:
@@ -109,7 +168,16 @@ func _select_in_rect(rect: Rect2) -> void:
 			if not camera.is_position_behind(world) and rect.has_point(camera.unproject_position(world)):
 				squads.append(squad)
 				break
-	set_selection(squads)
+	if squads.is_empty():
+		clear_selection()
+	else:
+		set_selection(squads)
+
+
+## Un bâtiment détruit quitte la sélection.
+func _on_building_destroyed(building: Building) -> void:
+	if building == selected_building:
+		_set_building(null)
 
 
 ## Une escouade détruite quitte la sélection.

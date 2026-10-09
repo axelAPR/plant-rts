@@ -1,11 +1,15 @@
 class_name CommandController
 extends Node
-## Ordres du joueur, au clic droit, pour les escouades sélectionnées :
-## sur une unité ennemie → attaque de son escouade ; sur le terrain → déplacement.
+## Ordres du joueur, au clic droit :
+## - escouades sélectionnées : sur une unité ennemie → attaque de son escouade ; sur
+##   le terrain → déplacement ;
+## - bâtiment sélectionné (du camp de la sélection) : point de ralliement.
 
 @export var selection: SelectionController
 @export var order_system: OrderSystem
 @export var camera_rig: RTSCamera
+## Facultatif : bâtiments (point de ralliement).
+@export var buildings: BuildingSystem
 ## Couches physiques considérées comme terrain pour viser un point au sol.
 @export_flags_3d_physics var ground_mask: int = 1
 @export var ray_length: float = 1000.0
@@ -14,9 +18,16 @@ extends Node
 func _unhandled_input(event: InputEvent) -> void:
 	if not (event is InputEventMouseButton and event.is_action_pressed("command")):
 		return
+	var screen_position := (event as InputEventMouseButton).position
+	var building := selection.selected_building
+	if building != null and buildings != null and (selection.team < 0 or building.team == selection.team):
+		var ground := _raycast_ground(screen_position)
+		if not ground.is_empty():
+			buildings.set_rally_point(building, ground.position)
+			get_viewport().set_input_as_handled()
+		return
 	if selection.selected_squads.is_empty():
 		return
-	var screen_position := (event as InputEventMouseButton).position
 	var enemy := _pick_enemy(screen_position)
 	if enemy != null:
 		order_system.issue_attack(selection.selected_squads, order_system.simulation.get_squad(enemy.squad_id))

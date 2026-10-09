@@ -12,6 +12,8 @@
 /blender/addon GW2/
 /blender/gw2/
 /assets/gw2/
+# Captures du HUD : montrent les portraits et cadres extraits de GW2.
+/tests/hud_test/captures/
 
 # Cache Python des scripts Blender
 __pycache__/

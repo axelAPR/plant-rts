@@ -22,10 +22,13 @@ Systèmes prévus (dossiers créés, encore vides) :
 - [ ] Capture des points (`gameplay/capture`) : points de jeu modélisés, revenu prévu
       via `TeamEconomy.add_income_per_minute()`.
 - [ ] Brouillard de guerre (`world/fog_of_war`) : `blocks_vision` du catalogue non lu.
-- [ ] Construction et bâtiments (`gameplay/construction`, `data/buildings`).
+- [ ] Construction par les unités constructrices (Maïs, Ingénieur) : placement,
+      paiement et chantier existent dans BuildingSystem (testés) mais aucune unité ne
+      construit encore ; pas de bâtiment constructible défini.
+- [ ] Combat contre les bâtiments : les QG ont des points de vie et peuvent être
+      détruits (BuildingSystem.apply_damage), mais CombatSystem ne les cible pas.
 - [ ] IA (`gameplay/ai`).
 - [ ] Pause tactique (la caméra y est déjà prête).
-- [ ] Interface de production (aujourd'hui : `ProductionSystem` sans interface, menu DEV).
 
 Contenu et équilibrage :
 - [ ] Imp : remplacer le modèle provisoire (`assets/zombies/imp_placeholder.tscn`).
@@ -54,4 +57,10 @@ Détails et règles dans les sections correspondantes de `CLAUDE.md`.
 - [x] Routes courbes de la Banlieue (RoadNetwork / RoadPath / RoadJunction dans
       `world/environment/`) : 24 routes, 11 carrefours arrondis, 10 raquettes —
       `road_runner` (raccords, rayon ≥ 30 m, décor hors route), captures.
+- [x] QG des deux factions (Arbre de Vie, Tombeau monumental) : sélection au clic,
+      production de l'unité constructrice (file, coût, population, sortie libre,
+      ralliement), points de vie — `building_runner`, `hud_runner`.
+- [x] Premier HUD RTS (`ui/hud/`) : ressources et population, mini-carte, sélection,
+      commandes, file de production ; habillage GW2 local facultatif — `hud_runner`,
+      captures `hud_capture` (locales).
 - [x] Modèles des 18 troupes (+ versions GW2 locales des plantes).

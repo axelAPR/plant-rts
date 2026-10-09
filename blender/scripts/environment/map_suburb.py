@@ -750,11 +750,24 @@ SYSTEMS_EXT = [
     ("Script", "res://gameplay/economy/economy.gd", "sys_economy"),
     ("Script", "res://ui/selection_box.gd", "sys_box"),
     ("Script", "res://ui/dev_menu.gd", "sys_dev_menu"),
-    ("Script", "res://ui/resource_bar.gd", "sys_resource_bar"),
-    ("Script", "res://ui/unit_info_panel.gd", "sys_info"),
+    ("Script", "res://ui/hud/rts_hud.gd", "sys_hud"),
+    ("Script", "res://player/player_state.gd", "sys_player"),
+    ("Script", "res://gameplay/construction/building_system.gd", "sys_buildings"),
+    ("Script", "res://gameplay/construction/building_renderer.gd", "sys_building_renderer"),
+    ("Script", "res://gameplay/construction/building_spawn.gd", "sys_building_spawn"),
+    ("Script", "res://data/factions/faction_roster.gd", "sys_roster_script"),
     ("Resource", "res://data/factions/plants.tres", "sys_plants"),
     ("Resource", "res://data/factions/zombies.tres", "sys_zombies"),
+    ("Resource", "res://data/factions/plants_roster.tres", "sys_plants_roster"),
+    ("Resource", "res://data/factions/zombies_roster.tres", "sys_zombies_roster"),
+    ("Resource", "res://data/buildings/tree_of_life.tres", "sys_hq_plants"),
+    ("Resource", "res://data/buildings/zombie_tomb.tres", "sys_hq_zombies"),
 ]
+# QG posés en début de partie : (ressource, camp, position, rotation en degrés ;
+# l'entrée, +Z du modèle, est tournée vers le champ de bataille).
+HEADQUARTERS = [("sys_hq_plants", 0, (-4.0, 132.0), 180.0), ("sys_hq_zombies", 1, (30.0, -132.0), 0.0)]
+HQ_HALF = 7.5          # demi-emprise réservée (bâtiment de 14 × 14 m)
+HQ_EXIT = 22.0         # zone de sortie et de ralliement gardée libre devant l'entrée
 PLANT_SQUADS = ("peashooter", "sunflower", "kernel_corn", "cactus", "rose", "chomper", "citron", "torchwood")
 ZOMBIE_SQUADS = ("browncoat", "foot_soldier", "engineer", "scientist", "imp", "deadbeard", "all_star",
                  "super_brainz", "action_hero_80s", "z_mech")
@@ -763,27 +776,49 @@ FULL_RECT = 'layout_mode = 3\nanchors_preset = 15\nanchor_right = 1.0\nanchor_bo
             'grow_horizontal = 2\ngrow_vertical = 2\nmouse_filter = 2'
 
 
+def reserve_headquarters(L):
+    """Emprise des QG et zone de sortie devant leur entrée."""
+    for _, _, (x, z), yaw in HEADQUARTERS:
+        L.reserve((x - HQ_HALF, x + HQ_HALF, z - HQ_HALF, z + HQ_HALF))
+        fz = math.cos(math.radians(yaw))
+        z0, z1 = sorted((z + fz * HQ_HALF, z + fz * HQ_EXIT))
+        L.reserve((x - 6.0, x + 6.0, z0, z1))
+
+
 def systems_nodes():
     squads = lambda ids: ", ".join('ExtResource("sq_%s")' % i for i in ids)  # noqa: E731
-    return """[node name="UnitSimulation" type="Node" parent="."]
+    spawns = "".join("""
+[node name="%s" type="Marker3D" parent="BuildingSystem"]
+transform = %s
+script = ExtResource("sys_building_spawn")
+data = ExtResource("%s")
+team = %d
+""" % ("HQ_Plants" if team == 0 else "HQ_Zombies", xform(x, z, yaw), rid, team)
+                     for rid, team, (x, z), yaw in HEADQUARTERS)
+    return """[node name="PlayerState" type="Node" parent="."]
+script = ExtResource("sys_player")
+
+[node name="UnitSimulation" type="Node" parent="."]
 script = ExtResource("sys_sim")
 
 [node name="OrderSystem" type="Node" parent="." node_paths=PackedStringArray("simulation")]
 script = ExtResource("sys_orders")
 simulation = NodePath("../UnitSimulation")
 
-[node name="SelectionController" type="Node" parent="." node_paths=PackedStringArray("simulation", "camera_rig", "selection_box")]
+[node name="SelectionController" type="Node" parent="." node_paths=PackedStringArray("simulation", "camera_rig", "selection_box", "buildings")]
 script = ExtResource("sys_selection")
 simulation = NodePath("../UnitSimulation")
 camera_rig = NodePath("../RTSCamera")
 selection_box = NodePath("../HUD/SelectionBox")
+buildings = NodePath("../BuildingSystem")
 team = -1
 
-[node name="CommandController" type="Node" parent="." node_paths=PackedStringArray("selection", "order_system", "camera_rig")]
+[node name="CommandController" type="Node" parent="." node_paths=PackedStringArray("selection", "order_system", "camera_rig", "buildings")]
 script = ExtResource("sys_commands")
 selection = NodePath("../SelectionController")
 order_system = NodePath("../OrderSystem")
 camera_rig = NodePath("../RTSCamera")
+buildings = NodePath("../BuildingSystem")
 
 [node name="UnitRenderer" type="Node3D" parent="." node_paths=PackedStringArray("simulation", "selection")]
 script = ExtResource("sys_renderer")
@@ -807,31 +842,46 @@ simulation = NodePath("../UnitSimulation")
 script = ExtResource("sys_economy")
 factions = Array[ExtResource("sys_faction_data")]([ExtResource("sys_plants"), ExtResource("sys_zombies")])
 
+[node name="BuildingSystem" type="Node" parent="." node_paths=PackedStringArray("simulation", "production", "order_system")]
+script = ExtResource("sys_buildings")
+simulation = NodePath("../UnitSimulation")
+production = NodePath("../ProductionSystem")
+order_system = NodePath("../OrderSystem")
+rosters = Array[ExtResource("sys_roster_script")]([ExtResource("sys_plants_roster"), ExtResource("sys_zombies_roster")])
+%(spawns)s
+[node name="BuildingRenderer" type="Node3D" parent="." node_paths=PackedStringArray("buildings", "selection")]
+script = ExtResource("sys_building_renderer")
+buildings = NodePath("../BuildingSystem")
+selection = NodePath("../SelectionController")
+
 [node name="HUD" type="CanvasLayer" parent="."]
 
 [node name="SelectionBox" type="Control" parent="HUD"]
 %(rect)s
 script = ExtResource("sys_box")
 
-[node name="DevMenu" type="Control" parent="HUD" node_paths=PackedStringArray("simulation", "camera_rig")]
+[node name="RtsHud" type="Control" parent="HUD" node_paths=PackedStringArray("economy", "player", "selection", "buildings", "simulation", "order_system", "camera_rig")]
+%(rect)s
+script = ExtResource("sys_hud")
+economy = NodePath("../../Economy")
+player = NodePath("../../PlayerState")
+selection = NodePath("../../SelectionController")
+buildings = NodePath("../../BuildingSystem")
+simulation = NodePath("../../UnitSimulation")
+order_system = NodePath("../../OrderSystem")
+camera_rig = NodePath("../../RTSCamera")
+
+[node name="DevMenu" type="Control" parent="HUD" node_paths=PackedStringArray("simulation", "camera_rig", "player", "buildings")]
 %(rect)s
 script = ExtResource("sys_dev_menu")
 simulation = NodePath("../../UnitSimulation")
 camera_rig = NodePath("../../RTSCamera")
+player = NodePath("../../PlayerState")
+buildings = NodePath("../../BuildingSystem")
+start_visible = false
 plant_squads = Array[ExtResource("sys_squad_data")]([%(plants)s])
 zombie_squads = Array[ExtResource("sys_squad_data")]([%(zombies)s])
-
-[node name="ResourceBar" type="Control" parent="HUD" node_paths=PackedStringArray("economy")]
-%(rect)s
-script = ExtResource("sys_resource_bar")
-economy = NodePath("../../Economy")
-teams = Array[int]([0, 1])
-
-[node name="UnitInfoPanel" type="Control" parent="HUD" node_paths=PackedStringArray("selection")]
-%(rect)s
-script = ExtResource("sys_info")
-selection = NodePath("../../SelectionController")
-""" % {"rect": FULL_RECT, "plants": squads(PLANT_SQUADS), "zombies": squads(ZOMBIE_SQUADS)}
+""" % {"rect": FULL_RECT, "plants": squads(PLANT_SQUADS), "zombies": squads(ZOMBIE_SQUADS), "spawns": spawns}
 
 
 def road_resources(roads):
@@ -965,6 +1015,7 @@ def build():
     reserve_roads(L, roads)
     for _, x, z, _ in POINTS:
         L.reserve((x - POINT_CLEARANCE, x + POINT_CLEARANCE, z - POINT_CLEARANCE, z + POINT_CLEARANCE))
+    reserve_headquarters(L)
     landmarks(L)
     hand_rejected = list(L.rejected)
     for group, theme, road, side in HOUSE_ROWS:
