@@ -8,7 +8,12 @@ cochée qu'après vérification (test automatisé ou contrôle en jeu).
 - (rien)
 
 ## Problèmes connus
-- (aucun)
+- [ ] Carte « Banlieue » : le décor ne bloque pas encore les unités (pas de navigation) ;
+      elles traversent maisons, clôtures et bordure.
+- [ ] Le ciel n'est pas visible avec la caméra de jeu (inclinaison minimale de 40° :
+      le haut de l'image reste sous l'horizon) ; il éclaire la scène (lumière ambiante).
+- [ ] Sol corrompu (base zombie) : violet proche de la couleur des anneaux zombies,
+      lisibilité à vérifier en jeu avec des escouades.
 
 ## À faire
 Systèmes prévus (dossiers créés, encore vides) :
@@ -42,4 +47,7 @@ Détails et règles dans les sections correspondantes de `CLAUDE.md`.
 - [x] Combat, projectiles, précision, mêlée, ordre d'attaque — `combat_runner`.
 - [x] Kit de décor : 91 modèles, catalogue, vitrine, diorama — `catalog_runner`,
       captures `capture_runner`.
+- [x] Première carte complète « Banlieue » (`world/maps/suburb/`, 160 × 160 m) : sol
+      texturé à mélange, ciel cartoon, systèmes de jeu — captures `capture_runner
+      -- --only=suburb`.
 - [x] Modèles des 18 troupes (+ versions GW2 locales des plantes).
