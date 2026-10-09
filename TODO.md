@@ -32,6 +32,9 @@ Contenu et équilibrage :
 - [ ] Zombie classique : valeurs de combat (hors roster pour l'instant).
 - [ ] Vitesses de déplacement par troupe (toutes à 3,5 m/s, à équilibrer).
 - [ ] Plafond de population (100, valeur provisoire).
+- [ ] Emprises (`footprint_radius`) des zombies GW2 : valeurs actuelles gardées pour
+      l'instant, mais les armes dépassent l'anneau (mesuré : All-Star 1,73 / 1,00 m,
+      Z-Mech 1,96 / 1,60, Ingénieur 1,29 / 1,10, Super Brainz 0,97 / 0,70) ; à revoir.
 - [ ] LOD des unités éloignées (règle des modèles 3D, non fait).
 
 ## Fait (vérifié)
