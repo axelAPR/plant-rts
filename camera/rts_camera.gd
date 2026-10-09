@@ -29,7 +29,7 @@ extends Node3D
 ## Fraction de la distance actuelle ajoutée/retirée à chaque cran de molette.
 @export_range(0.01, 0.5) var zoom_step: float = 0.12
 ## Inclinaison (degrés sous l'horizontale) au zoom minimum.
-@export_range(10.0, 89.0) var pitch_near_degrees: float = 40.0
+@export_range(10.0, 89.0) var pitch_near_degrees: float = 20.0
 ## Inclinaison (degrés sous l'horizontale) au zoom maximum.
 @export_range(10.0, 89.0) var pitch_far_degrees: float = 65.0
 

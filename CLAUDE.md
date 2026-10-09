@@ -43,7 +43,8 @@ Pas d'informations temporaires ici : l'avancement des tâches est suivi dans `TO
 
 ## Caméra RTS (implémentée : `camera/rts_camera.gd`)
 - Caméra orbitale : un nœud pivot au sol + une Camera3D enfant (yaw, pitch, distance).
-- L'inclinaison dépend du zoom (plus rasante de près, plus plongeante de loin).
+- L'inclinaison dépend du zoom : 20° de près (le ciel apparaît en haut de l'image,
+  champ vertical de 50°) à 65° de loin.
 - Déplacement au clavier et aux bords de l'écran, relatif à l'orientation, plus
   rapide quand on est loin ; limité aux bornes de la carte.
 - Fonctionne en temps réel, indépendamment de `Engine.time_scale`, et reste active
@@ -184,6 +185,19 @@ dimensionné à partir d'elles. 1 unité = 1 m.
   générées par `environment/scenes_gen.py` (dans un `.tscn`, Transform3D s'écrit ligne
   par ligne). Captures : `tests/environment_test/capture_runner.gd` (fenêtré) →
   `tests/environment_test/captures/`.
+
+## Cartes
+- « Banlieue » (`world/maps/suburb/`, scène principale du projet) : 1 contre 1,
+  320 × 320 m, sans symétrie (plantes au sud, zombies au nord) ; quartiers,
+  9 points de jeu (2 de capture, ressources principale par camp, 3 secondaires,
+  2 tertiaires). Générée par `blender/scripts/environment/map_suburb.py` (Blender
+  pour numpy, graine fixe) : routes sur grille de 8 m (tuile choisie d'après les
+  voisines, pas de virage), pièces posées sans chevauchement d'emprise, carte de
+  mélange des sols ; systèmes de jeu repris de la carte de test.
+- Sol des cartes : shader `assets/shaders/terrain_splat.gdshader` (herbe de base +
+  4 couches RVBA : herbe sèche, chemin, herbe morte, sol corrompu), textures du pack
+  dans `assets/textures/ground/` (VRAM, mipmaps), désaturées dans le shader.
+- Ciel : `assets/shaders/stylized_sky.gdshader`, cartoon et statique.
 
 ## Escouades (implémenté : prototype)
 - Sélection et ordres par escouade, jamais par unité isolée.
