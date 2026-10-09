@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Godot_v4.7.2-stable_win64_console.exe --headless:*)",
+      "Bash(Godot_v4.7.2-stable_win64_console.exe --version)",
+      "Bash(blender -b:*)",
+      "Bash(blender --version)",
+      "Bash(python blender/scripts/environment/catalog.py)",
+      "Bash(python blender/scripts/environment/scenes_gen.py)",
+      "Bash(python blender/scripts/environment/textures_gen.py)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git ls-files:*)",
+      "Bash(git branch)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ],
+    "ask": [
+      "Bash(git push:*)"
+    ]
+  }
+}
