@@ -10,6 +10,7 @@ script = ExtResource("1_script")
 id = &"all_star"
 display_name = "All-Star"
 visual_scene = ExtResource("2_model")
+local_visual_path = "res://assets/gw2/zombies/all_star.glb"
 radius = 0.4
 footprint_radius = 1.0
 faction = ExtResource("3_faction")

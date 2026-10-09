@@ -10,6 +10,7 @@ script = ExtResource("1_script")
 id = &"foot_soldier"
 display_name = "Soldat"
 visual_scene = ExtResource("2_model")
+local_visual_path = "res://assets/gw2/zombies/foot_soldier.glb"
 radius = 0.4
 footprint_radius = 1.1
 faction = ExtResource("3_faction")

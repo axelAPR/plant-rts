@@ -9,6 +9,7 @@ script = ExtResource("1_script")
 id = &"super_brainz"
 display_name = "Super Brainz"
 visual_scene = ExtResource("2_model")
+local_visual_path = "res://assets/gw2/zombies/super_brainz.glb"
 radius = 0.45
 footprint_radius = 0.7
 faction = ExtResource("3_faction")

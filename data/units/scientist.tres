@@ -10,6 +10,7 @@ script = ExtResource("1_script")
 id = &"scientist"
 display_name = "Scientifique"
 visual_scene = ExtResource("2_model")
+local_visual_path = "res://assets/gw2/zombies/scientist.glb"
 footprint_radius = 0.9
 faction = ExtResource("3_faction")
 member_hp = 90.0

@@ -10,6 +10,7 @@ script = ExtResource("1_script")
 id = &"imp"
 display_name = "Imp"
 visual_scene = ExtResource("2_model")
+local_visual_path = "res://assets/gw2/zombies/imp.glb"
 radius = 0.25
 footprint_radius = 0.45
 faction = ExtResource("3_faction")

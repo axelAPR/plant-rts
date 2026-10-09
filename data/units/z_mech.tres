@@ -10,6 +10,7 @@ script = ExtResource("1_script")
 id = &"z_mech"
 display_name = "Z-Mech"
 visual_scene = ExtResource("2_model")
+local_visual_path = "res://assets/gw2/zombies/z_mech.glb"
 radius = 0.8
 footprint_radius = 1.6
 faction = ExtResource("3_faction")
