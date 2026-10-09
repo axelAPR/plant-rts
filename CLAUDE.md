@@ -6,6 +6,9 @@ Pas d'informations temporaires ici.
 
 ## Technique
 - Moteur : Godot 4.7, rendu Forward+, langage GDScript.
+- Exécutable : Godot 4.7.2, dans le PATH (`Godot_v4.7.2-stable_win64_console.exe`,
+  dossier `C:\Users\axelr\Tools\Godot_v4.7.2-stable_win64.exe\`) ; tests en
+  `--headless --path . --script res://tests/<test>.gd`. Blender 5.2 dans le PATH.
 - Physique : Jolt Physics.
 - Pilote de rendu Windows : D3D12.
 - Fichiers en UTF-8, fins de ligne LF (voir `.editorconfig`, `.gitattributes`).
