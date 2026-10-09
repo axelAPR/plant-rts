@@ -3,9 +3,10 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://caidk3i86c4dn"
-path="res://.godot/imported/tombstone_small_a_pack_pierre_tombale.png-7af89eea060982146e3aedc69c32dc32.ctex"
+path.s3tc="res://.godot/imported/tombstone_small_a_pack_pierre_tombale.png-7af89eea060982146e3aedc69c32dc32.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={
 "md5": "c23a6dd672cf729c4ffcabfa9619c4c1"
@@ -14,11 +15,11 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/environment/props/tombstone_small_a_pack_pierre_tombale.png"
-dest_files=["res://.godot/imported/tombstone_small_a_pack_pierre_tombale.png-7af89eea060982146e3aedc69c32dc32.ctex"]
+dest_files=["res://.godot/imported/tombstone_small_a_pack_pierre_tombale.png-7af89eea060982146e3aedc69c32dc32.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -40,4 +41,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0
