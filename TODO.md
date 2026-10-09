@@ -8,9 +8,7 @@ cochée qu'après vérification (test automatisé ou contrôle en jeu).
 - (rien)
 
 ## Problèmes connus
-- [ ] Buissons `bush_a` et `bush_b` : flottent au-dessus du sol (bas à 0,14 m et
-      0,21 m) ; signalé par `tests/environment_test/catalog_runner.gd`.
-      Source : `blender/scripts/environment/vegetation.py` (`_bush`).
+- (aucun)
 
 ## À faire
 Systèmes prévus (dossiers créés, encore vides) :
@@ -42,6 +40,6 @@ Détails et règles dans les sections correspondantes de `CLAUDE.md`.
 - [x] Économie et barre de ressources — `economy_runner`.
 - [x] Production et population (sans interface) — `production_runner`.
 - [x] Combat, projectiles, précision, mêlée, ordre d'attaque — `combat_runner`.
-- [x] Kit de décor : 91 modèles, catalogue, vitrine, diorama — `catalog_runner`
-      (sauf problème connu ci-dessus), captures `capture_runner`.
+- [x] Kit de décor : 91 modèles, catalogue, vitrine, diorama — `catalog_runner`,
+      captures `capture_runner`.
 - [x] Modèles des 18 troupes (+ versions GW2 locales des plantes).

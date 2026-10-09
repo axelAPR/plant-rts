@@ -127,18 +127,25 @@ def _bush(model, flowers=False, seed=0):
     FLOW = rig.m("Env_Flowers") if flowers else None
     bm = rig.part("Bush", (0, 0, 0))
     rnd = random.Random(seed)
+    masses = []
     for i in range(4):
         c = (rnd.uniform(-0.35, 0.35), rnd.uniform(-0.3, 0.3), 0.45 + rnd.uniform(0, 0.25))
         r = (rnd.uniform(0.45, 0.6), rnd.uniform(0.42, 0.55), rnd.uniform(0.4, 0.5))
         verts = blob(bm, c, r, LEAF, subdiv=2, noise=0.25, seed=seed + i, flatten_bottom=-0.6)
         _two_tone(verts, c, r, LEAF, DARK, band=-0.55)
+        masses.append((Vector(c), Vector(r)))
     if flowers:
-        for i in range(9):                    # touffes fleuries en surface
-            a = rnd.uniform(0, 2 * math.pi)
-            z = rnd.uniform(0.55, 1.0)
-            rr = 0.75 - (z - 0.5) * 0.6
-            blob(bm, (rr * math.cos(a), rr * math.sin(a) * 0.85, z), (0.24, 0.24, 0.13), FLOW, subdiv=2, noise=0.2,
-                 seed=seed + 20 + i)
+        for i in range(9):                    # touffes fleuries posées sur une masse
+            c, r = masses[i % len(masses)]
+            a, e = rnd.uniform(0, 2 * math.pi), rnd.uniform(0.55, 1.35)
+            d = Vector((math.cos(e) * math.cos(a), math.cos(e) * math.sin(a), math.sin(e)))
+            p = c + Vector((d.x * r.x, d.y * r.y, d.z * r.z)) * 0.8
+            p.x, p.y = max(-0.72, min(0.72, p.x)), max(-0.72, min(0.72, p.y))   # dans l'emprise
+            blob(bm, tuple(p), (0.24, 0.24, 0.13), FLOW, subdiv=2, noise=0.2, seed=seed + 20 + i)
+    # Pose au sol : les masses aplaties commencent au-dessus de 0 ; on abaisse le tout.
+    low = min(v.co.z for v in bm.verts)
+    for v in bm.verts:
+        v.co.z -= low
     finish(rig, smooth_angle=70.0)
     return _veg((2.0, 2.0))
 
