@@ -43,16 +43,42 @@ func check(team: int, data: SquadData) -> Result:
 ## Produit l'escouade si possible : retire les ressources, occupe la population, crée
 ## l'escouade. Renvoie l'escouade, ou null (rien n'a changé) ; voir check() pour la raison.
 func produce(team: int, data: SquadData, position: Vector3, facing: float) -> Squad:
-	if check(team, data) != Result.OK:
+	if reserve(team, data) != Result.OK:
 		return null
+	return spawn_reserved(team, data, position, facing)
+
+
+## Production différée (file d'un bâtiment), étape 1 : vérifie, paie et occupe la
+## population, sans créer l'escouade. Tout ou rien.
+func reserve(team: int, data: SquadData) -> Result:
+	var result := check(team, data)
+	if result != Result.OK:
+		return result
 	var team_economy := economy.get_team(team)
 	if not team_economy.spend(data.get_cost()):
-		return null
+		return Result.INVALID
 	team_economy.add_population(data.population_cost)
+	return Result.OK
+
+
+## Étape 2 : crée l'escouade déjà payée ; sa population sera libérée à sa destruction.
+func spawn_reserved(team: int, data: SquadData, position: Vector3, facing: float) -> Squad:
 	var squad := simulation.spawn_squad(data, team, position, facing)
 	_population_by_squad[squad.id] = Vector2i(team, data.population_cost)
 	squad_produced.emit(squad)
 	return squad
+
+
+## Annulation d'une production réservée et non créée : rend les ressources et la
+## population.
+func refund(team: int, data: SquadData) -> void:
+	var team_economy := economy.get_team(team)
+	if team_economy == null or data == null:
+		return
+	var cost := data.get_cost()
+	for kind in cost.size():
+		team_economy.add(kind, cost[kind])
+	team_economy.release_population(data.population_cost)
 
 
 static func result_text(result: Result) -> String:

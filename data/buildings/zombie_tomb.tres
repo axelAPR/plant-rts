@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://data/buildings/building_data.gd" id="1_script"]
+[ext_resource type="Resource" path="res://data/factions/zombies.tres" id="2_faction"]
+[ext_resource type="PackedScene" path="res://assets/buildings/zombie_tomb.tscn" id="3_scene"]
+[ext_resource type="Texture2D" path="res://assets/buildings/zombie_tomb_portrait.png" id="4_portrait"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"zombie_tomb"
+display_name = "Tombeau monumental"
+description = "Quartier général des Zombies. Produit l'unité constructrice."
+faction = ExtResource("2_faction")
+is_headquarters = true
+scene = ExtResource("3_scene")
+portrait = ExtResource("4_portrait")
+footprint_size = Vector2(14, 14)
+height = 14.5
+selection_radius = 9.0
+max_hp = 5000.0
+produces_builder = true
+queue_capacity = 5
+exit_offset = Vector3(0, 0, 9.5)
+rally_distance = 8.0

@@ -1,0 +1,49 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/buildings/zombie_tomb.glb" id="1_model"]
+
+[sub_resource type="ParticleProcessMaterial" id="wisp_process"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 0.2
+emission_ring_radius = 6.0
+emission_ring_inner_radius = 3.0
+direction = Vector3(0, 1, 0)
+spread = 25.0
+initial_velocity_min = 0.25
+initial_velocity_max = 0.6
+gravity = Vector3(0, 0.1, 0)
+scale_min = 0.5
+scale_max = 1.1
+turbulence_enabled = true
+turbulence_noise_strength = 0.5
+turbulence_noise_scale = 4.0
+
+[sub_resource type="StandardMaterial3D" id="wisp_material"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.72, 1, 0.3, 0.8)
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="wisp_mesh"]
+material = SubResource("wisp_material")
+size = Vector2(0.16, 0.16)
+
+[node name="ZombieTomb" type="Node3D"]
+
+[node name="Model" parent="." instance=ExtResource("1_model")]
+
+[node name="Wisps" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+amount = 40
+lifetime = 5.0
+preprocess = 5.0
+visibility_aabb = AABB(-8, -2, -8, 16, 12, 16)
+process_material = SubResource("wisp_process")
+draw_pass_1 = SubResource("wisp_mesh")
+
+[node name="DoorLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 3.4)
+light_color = Color(0.55, 1, 0.35, 1)
+light_energy = 1.4
+omni_range = 7.5

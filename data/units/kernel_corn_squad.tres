@@ -13,4 +13,5 @@ formation_spacing = 2.1
 population_cost = 8
 primary_resource_cost = 500
 secondary_resource_cost = 15
+build_time = 20.0
 tertiary_resource_cost = 0

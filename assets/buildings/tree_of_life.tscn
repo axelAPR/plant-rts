@@ -1,0 +1,47 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/buildings/tree_of_life.glb" id="1_model"]
+
+[sub_resource type="ParticleProcessMaterial" id="pollen_process"]
+emission_shape = 3
+emission_box_extents = Vector3(6, 3, 6)
+direction = Vector3(0, 1, 0)
+spread = 180.0
+initial_velocity_min = 0.1
+initial_velocity_max = 0.35
+gravity = Vector3(0, 0.12, 0)
+scale_min = 0.6
+scale_max = 1.2
+turbulence_enabled = true
+turbulence_noise_strength = 0.4
+turbulence_noise_scale = 6.0
+
+[sub_resource type="StandardMaterial3D" id="pollen_material"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(1, 0.9, 0.35, 0.85)
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="pollen_mesh"]
+material = SubResource("pollen_material")
+size = Vector2(0.14, 0.14)
+
+[node name="TreeOfLife" type="Node3D"]
+
+[node name="Model" parent="." instance=ExtResource("1_model")]
+
+[node name="Pollen" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.5, 0)
+amount = 48
+lifetime = 7.0
+preprocess = 7.0
+visibility_aabb = AABB(-8, -6, -8, 16, 14, 16)
+process_material = SubResource("pollen_process")
+draw_pass_1 = SubResource("pollen_mesh")
+
+[node name="DoorLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 3.6)
+light_color = Color(1, 0.86, 0.45, 1)
+light_energy = 1.6
+omni_range = 7.0
