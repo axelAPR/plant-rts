@@ -2,7 +2,7 @@
 
 Ce fichier contient les décisions validées du projet. Il est mis à jour à chaque
 décision définitive (gameplay, architecture, technique, contraintes).
-Pas d'informations temporaires ici.
+Pas d'informations temporaires ici : l'avancement des tâches est suivi dans `TODO.md`.
 
 ## Technique
 - Moteur : Godot 4.7, rendu Forward+, langage GDScript.
