@@ -48,4 +48,7 @@ Détails et règles dans les sections correspondantes de `CLAUDE.md`.
 - [x] Carte « Banlieue » (`world/maps/suburb/`, 320 × 320 m, sans symétrie, scène
       principale) : quartiers, 9 points de jeu, sol texturé à mélange, ciel cartoon
       visible de près — captures `capture_runner -- --only=suburb` (vue d'ensemble).
+- [x] Routes courbes de la Banlieue (RoadNetwork / RoadPath / RoadJunction dans
+      `world/environment/`) : 24 routes, 11 carrefours arrondis, 10 raquettes —
+      `road_runner` (raccords, rayon ≥ 30 m, décor hors route), captures.
 - [x] Modèles des 18 troupes (+ versions GW2 locales des plantes).

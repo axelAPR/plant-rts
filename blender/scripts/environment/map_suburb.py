@@ -24,7 +24,7 @@
 # sèche, G chemin, B herbe morte, A sol corrompu ; 2 px/m).
 # Coordonnées Godot : X vers l'est, Z vers le sud ; avant des modèles vers +Z.
 
-import os, random, struct, sys, zlib
+import math, os, random, struct, sys, zlib
 
 import numpy as np
 
@@ -56,97 +56,282 @@ POINTS = [
 ]
 POINT_CLEARANCE = 6.5  # demi-côté gardé libre autour d'un point (disque de 5 m)
 
-# ---------------------------------------------------------------- Routes (grille 8 m)
+# ---------------------------------------------------------------- Routes (courbes)
 
-# Polylignes de centres de cases (multiples de 8 + 4), parcourues case par case.
-ROADS = [
-    [(-148, 4), (148, 4)],          # boulevard est-ouest
-    [(-84, -100), (-84, 92)],       # route ouest
-    [(-4, -60), (-4, 60)],          # rue centrale
-    [(76, -92), (76, 92)],          # route est
-    [(-132, 60), (76, 60)],         # rue des plantes
-    [(-84, -60), (140, -60)],       # rue des zombies
-    [(-44, 60), (-44, 100)],        # impasse des plantes
-    [(36, -60), (36, -92)],         # impasse des zombies
+# Réseau routier : carrefours (bras alignés sur les axes, 9 m de bras) et raquettes
+# de retournement aux impasses. Chaque route va d'un nœud à un autre en passant par
+# des points de contrôle ; elle est droite sur APPROACH m à chaque extrémité (bras
+# du carrefour), puis courbe (tangentes de Catmull-Rom, courbe de Bézier cubique
+# comme Curve3D). Rendu par world/environment/road_*.gd (RoadNetwork).
+ARM = 9.0              # longueur de bras des carrefours et raquettes (RoadJunction)
+APPROACH = 10.0        # tronçon droit à chaque extrémité de route (≥ ARM)
+TURNAROUND_RADIUS = 7.0
+JUNCTIONS = {
+    "bW": (-84, 4), "bC": (-4, 4), "bE": (76, 4),
+    "pW": (-84, 60), "pCul": (-44, 57), "pC": (-4, 60), "pE": (76, 60),
+    "zW": (-88, -60), "zC": (-4, -60), "zCul": (36, -57), "zE": (76, -60),
+}
+TURNAROUNDS = {
+    "endBW": (-146, -2), "endBE": (146, -2), "endWN": (-84, -102), "endWS": (-84, 94),
+    "endEN": (76, -94), "endES": (80, 94), "endPW": (-132, 64), "endZE": (140, -64),
+    "endPCul": (-40, 100), "endZCul": (39, -92),
+}
+# (nom, [nœud, points de contrôle…, nœud], passage piéton au départ, à l'arrivée)
+ROAD_DEFS = [
+    ("boulevard_w", ["endBW", (-112, -4), "bW"], False, False),
+    ("boulevard_c", ["bW", (-44, 7), "bC"], True, True),
+    ("boulevard_e", ["bC", (40, 12), "bE"], True, False),
+    ("boulevard_far_e", ["bE", (112, 7), "endBE"], False, False),
+    ("west_n", ["endWN", "zW"], False, False),
+    ("west_mid", ["zW", (-88, -28), "bW"], False, False),
+    ("west_s", ["bW", (-92, 34), "pW"], False, False),
+    ("west_far_s", ["pW", "endWS"], False, False),
+    ("central_n", ["zC", (-12, -30), "bC"], False, True),
+    ("central_s", ["bC", (6, 32), "pC"], True, True),
+    ("east_n", ["endEN", "zE"], False, False),
+    ("east_mid", ["zE", (84, -30), "bE"], False, False),
+    ("east_s", ["bE", (70, 32), "pE"], False, False),
+    ("east_far_s", ["pE", "endES"], False, False),
+    ("plants_w", ["endPW", "pW"], False, False),
+    ("plants_cw", ["pW", "pCul"], False, False),
+    ("plants_c", ["pCul", "pC"], False, True),
+    ("plants_e", ["pC", (36, 66), "pE"], False, False),
+    ("zombies_w", ["zW", (-44, -66), "zC"], False, False),
+    ("zombies_c", ["zC", "zCul"], False, False),
+    ("zombies_e", ["zCul", "zE"], False, False),
+    ("zombies_far_e", ["zE", "endZE"], False, False),
+    ("cul_plants", ["pCul", "endPCul"], False, False),
+    ("cul_zombies", ["zCul", "endZCul"], False, False),
 ]
-CROSSWALKS = {(-36, 4), (-52, 4), (108, 4), (-12, 60), (-4, -52)}
 
 
-def road_cells():
-    cells = set()
-    for poly in ROADS:
-        for (ax, az), (bx, bz) in zip(poly, poly[1:]):
-            n = int(max(abs(bx - ax), abs(bz - az)) / 8)
-            for k in range(n + 1):
-                cells.add((ax + (bx - ax) * k // n, az + (bz - az) * k // n))
-    return cells
+def _v(a, b):
+    return (b[0] - a[0], b[1] - a[1])
 
 
-def road_tiles(cells):
-    """Tuile et rotation de chaque case d'après ses voisines (N = -Z)."""
-    tiles = []
-    for x, z in sorted(cells):
-        n, s, e, w = (x, z - 8) in cells, (x, z + 8) in cells, (x + 8, z) in cells, (x - 8, z) in cells
-        count = n + s + e + w
-        if count == 4:
-            tiles.append(("road_cross", x, z, 0))
-        elif count == 3:
-            yaw = 0 if not n else 180 if not s else 90 if not w else -90
-            tiles.append(("road_t", x, z, yaw))
-        elif count == 2 and e and w:
-            tiles.append(("road_crosswalk" if (x, z) in CROSSWALKS else "road_straight", x, z, 0))
-        elif count == 2 and n and s:
-            tiles.append(("road_crosswalk" if (x, z) in CROSSWALKS else "road_straight", x, z, 90))
-        elif count == 1:
-            yaw = 0 if w else 180 if e else -90 if n else 90
-            tiles.append(("road_end", x, z, yaw))
-        else:
-            raise ValueError("case de route sans tuile possible (virage ?) : %s" % ((x, z),))
-    return tiles
+def _norm(v):
+    n = (v[0] ** 2 + v[1] ** 2) ** 0.5
+    return (v[0] / n, v[1] / n)
+
+
+def _node(n):
+    if isinstance(n, str):
+        return JUNCTIONS.get(n) or TURNAROUNDS[n]
+    return n
+
+
+def _end_direction(node, toward):
+    """Direction du bras à un nœud : axe le plus proche pour un carrefour, direction
+    réelle pour une raquette."""
+    d = _norm(_v(_node(node), toward))
+    if node in JUNCTIONS:
+        return (float(round(d[0])), 0.0) if abs(d[0]) >= abs(d[1]) else (0.0, float(round(d[1])))
+    return d
+
+
+MIN_RADIUS = 31.0      # rayon de courbure minimal visé sur l'axe (règle : 30 m)
+
+
+def road_controls(nodes):
+    """Points de contrôle d'une route ; si la courbe est trop serrée, l'écart des
+    points intermédiaires à la corde est réduit jusqu'au rayon minimal."""
+    k = 1.0
+    while True:
+        controls = _road_controls(nodes, k)
+        if k <= 0.0 or Polyline(controls).min_radius() >= MIN_RADIUS:
+            return controls
+        k = max(0.0, k - 0.05)
+
+
+def _road_controls(nodes, k):
+    """Points de contrôle (position, poignée d'entrée, poignée de sortie) d'une route,
+    écart des points intermédiaires à la corde multiplié par `k`."""
+    start, end = nodes[0], nodes[-1]
+    inner = [_node(n) for n in nodes[1:-1]]
+    p0, p1 = _node(start), _node(end)
+    d0 = _end_direction(start, inner[0] if inner else p1)
+    d1 = _end_direction(end, inner[-1] if inner else p0)
+    a0 = (p0[0] + d0[0] * APPROACH, p0[1] + d0[1] * APPROACH)
+    a1 = (p1[0] + d1[0] * APPROACH, p1[1] + d1[1] * APPROACH)
+    chord = _v(a0, a1)
+    chord_len2 = chord[0] ** 2 + chord[1] ** 2
+    for i, q in enumerate(inner):
+        f = ((q[0] - a0[0]) * chord[0] + (q[1] - a0[1]) * chord[1]) / chord_len2
+        base = (a0[0] + chord[0] * f, a0[1] + chord[1] * f)
+        inner[i] = (base[0] + (q[0] - base[0]) * k, base[1] + (q[1] - base[1]) * k)
+    pts = [p0, a0] + inner + [a1, p1]
+    tangents = [d0, d0] + [None] * len(inner) + [(-d1[0], -d1[1]), (-d1[0], -d1[1])]
+    for k in range(2, len(pts) - 2):
+        tangents[k] = _norm(_v(pts[k - 1], pts[k + 1]))
+    out = []
+    for k, p in enumerate(pts):
+        t = tangents[k]
+        prev_len = ((p[0] - pts[k - 1][0]) ** 2 + (p[1] - pts[k - 1][1]) ** 2) ** 0.5 if k else 0.0
+        next_len = ((pts[k + 1][0] - p[0]) ** 2 + (pts[k + 1][1] - p[1]) ** 2) ** 0.5 if k < len(pts) - 1 else 0.0
+        out.append((p, (-t[0] * prev_len / 3, -t[1] * prev_len / 3), (t[0] * next_len / 3, t[1] * next_len / 3)))
+    return out
+
+
+class Polyline:
+    """Courbe échantillonnée (Bézier cubique entre points de contrôle, comme Curve3D) :
+    position et tangente à une abscisse curviligne."""
+
+    def __init__(self, controls, per_segment=48):
+        pts = []
+        for (p0, _, o0), (p1, i1, _) in zip(controls, controls[1:]):
+            c1 = (p0[0] + o0[0], p0[1] + o0[1])
+            c2 = (p1[0] + i1[0], p1[1] + i1[1])
+            for s in range(per_segment):
+                t = s / per_segment
+                u = 1 - t
+                pts.append((u ** 3 * p0[0] + 3 * u * u * t * c1[0] + 3 * u * t * t * c2[0] + t ** 3 * p1[0],
+                            u ** 3 * p0[1] + 3 * u * u * t * c1[1] + 3 * u * t * t * c2[1] + t ** 3 * p1[1]))
+        pts.append(controls[-1][0])
+        self.pts = pts
+        self.cum = [0.0]
+        for a, b in zip(pts, pts[1:]):
+            self.cum.append(self.cum[-1] + ((b[0] - a[0]) ** 2 + (b[1] - a[1]) ** 2) ** 0.5)
+        self.length = self.cum[-1]
+
+    def min_radius(self, spacing=5.0):
+        """Rayon de courbure minimal (cercle par trois points espacés de `spacing`),
+        hors des APPROACH premiers et derniers mètres (droits)."""
+        best = float("inf")
+        u = APPROACH - 1.0 + spacing
+        while u + spacing <= self.length - APPROACH + 1.0:
+            a, b, c = self.at(u - spacing)[0], self.at(u)[0], self.at(u + spacing)[0]
+            area = abs((b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0])) / 2
+            if area > 1e-6:
+                ab = math.dist(a, b); bc = math.dist(b, c); ca = math.dist(c, a)
+                best = min(best, ab * bc * ca / (4 * area))
+            u += 1.0
+        return best
+
+    def at(self, u):
+        import bisect
+        u = min(max(u, 0.0), self.length)
+        k = min(max(bisect.bisect_right(self.cum, u) - 1, 0), len(self.pts) - 2)
+        a, b = self.pts[k], self.pts[k + 1]
+        seg = max(self.cum[k + 1] - self.cum[k], 1e-9)
+        f = (u - self.cum[k]) / seg
+        return (a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f), _norm(_v(a, b))
+
+
+def road_network():
+    """{nom: (points de contrôle, Polyline, passage au départ, à l'arrivée)}."""
+    roads = {}
+    for name, nodes, cw0, cw1 in ROAD_DEFS:
+        controls = road_controls(nodes)
+        roads[name] = (controls, Polyline(controls), cw0, cw1)
+    return roads
+
+
+def reserve_roads(L, roads):
+    for _, poly, _, _ in roads.values():
+        u = 0.0
+        while u < poly.length:
+            (x, z), t = poly.at(u + 1.0)
+            L.reserve(box(x, z, 1.1, 4.3, t[0], t[1]))
+            u += 2.0
+    # Carrefours : les bras sont couverts par les routes ; reste le cœur, jusqu'aux
+    # trottoirs arrondis des angles (arc extérieur à ≈ 5,5 m du centre en diagonale).
+    for x, z in JUNCTIONS.values():
+        L.reserve((x - 5.8, x + 5.8, z - 5.8, z + 5.8))
+    for x, z in TURNAROUNDS.values():
+        r = TURNAROUND_RADIUS + 2
+        L.reserve((x - r, x + r, z - r, z + r))
 
 
 # ---------------------------------------------------------------- Emprises
 
-def footprint_rect(pid, x, z, yaw, margin=0.0):
+# Emprise = rectangle orienté (cx, cz, ux, uz, hu, hv) : centre, axe unitaire u et
+# demi-longueurs le long de u et de sa perpendiculaire v = (-uz, ux).
+
+def box(cx, cz, hu, hv, ux=1.0, uz=0.0):
+    return (cx, cz, ux, uz, hu, hv)
+
+
+def aabb_box(rect):
+    """Rectangle aligné (x0, x1, z0, z1) → rectangle orienté."""
+    x0, x1, z0, z1 = rect
+    return box((x0 + x1) / 2, (z0 + z1) / 2, (x1 - x0) / 2, (z1 - z0) / 2)
+
+
+def footprint_box(pid, x, z, yaw, margin=0.0):
+    """Emprise d'une pièce tournée de `yaw` degrés (axe X du modèle → (cos, -sin))."""
     fp = PIECES[pid][2]
     w, d = (2 * fp, 2 * fp) if isinstance(fp, float) else fp
-    q = round(yaw / 90.0) * 90
-    if abs(yaw - q) > 1:
-        w = d = max(w, d) * 1.15
-    elif q % 180:
-        w, d = d, w
-    return (x - w / 2 - margin, x + w / 2 + margin, z - d / 2 - margin, z + d / 2 + margin)
+    a = math.radians(yaw)
+    return box(x, z, w / 2 + margin, d / 2 + margin, math.cos(a), -math.sin(a))
+
+
+def box_bounds(b):
+    cx, cz, ux, uz, hu, hv = b
+    ex = abs(ux) * hu + abs(uz) * hv
+    ez = abs(uz) * hu + abs(ux) * hv
+    return (cx - ex, cx + ex, cz - ez, cz + ez)
+
+
+def boxes_overlap(a, b, tolerance=0.05):
+    """Test des axes séparateurs (contact toléré jusqu'à `tolerance` m)."""
+    dx, dz = b[0] - a[0], b[1] - a[1]
+    for ux, uz in ((a[2], a[3]), (-a[3], a[2]), (b[2], b[3]), (-b[3], b[2])):
+        ra = a[4] * abs(a[2] * ux + a[3] * uz) + a[5] * abs(-a[3] * ux + a[2] * uz)
+        rb = b[4] * abs(b[2] * ux + b[3] * uz) + b[5] * abs(-b[3] * ux + b[2] * uz)
+        if abs(dx * ux + dz * uz) >= ra + rb - tolerance:
+            return False
+    return True
 
 
 class Layout:
-    """Pièces posées et emprises occupées (rectangles alignés sur les axes)."""
+    """Pièces posées et emprises occupées (rectangles orientés, rangés dans une grille
+    de cases de CELL m pour accélérer les recherches)."""
+
+    CELL = 16.0
 
     def __init__(self):
         self.items = []
-        self.rects = []
+        self.cells = {}
         self.rejected = []
 
-    def free(self, rect):
-        x0, x1, z0, z1 = rect
+    def _keys(self, bounds):
+        x0, x1, z0, z1 = bounds
+        c = self.CELL
+        for i in range(int(math.floor(x0 / c)), int(math.floor(x1 / c)) + 1):
+            for j in range(int(math.floor(z0 / c)), int(math.floor(z1 / c)) + 1):
+                yield (i, j)
+
+    def free(self, b):
+        """`b` : rectangle orienté, ou aligné (x0, x1, z0, z1)."""
+        if len(b) == 4:
+            b = aabb_box(b)
+        x0, x1, z0, z1 = box_bounds(b)
         if x0 < -HALF + 2 or x1 > HALF - 2 or z0 < -HALF + 2 or z1 > HALF - 2:
             return False
-        for a0, a1, b0, b1 in self.rects:
-            if x0 < a1 - 0.05 and x1 > a0 + 0.05 and z0 < b1 - 0.05 and z1 > b0 + 0.05:
-                return False
+        seen = set()
+        for key in self._keys((x0, x1, z0, z1)):
+            for other in self.cells.get(key, ()):
+                if id(other) in seen:
+                    continue
+                seen.add(id(other))
+                if boxes_overlap(b, other):
+                    return False
         return True
 
-    def reserve(self, rect):
-        self.rects.append(rect)
+    def reserve(self, b):
+        if len(b) == 4:
+            b = aabb_box(b)
+        for key in self._keys(box_bounds(b)):
+            self.cells.setdefault(key, []).append(b)
 
     def put(self, group, pid, x, z, yaw=0.0, check=True, margin=0.0, report=True):
-        rect = footprint_rect(pid, x, z, yaw)
-        if check and not self.free(footprint_rect(pid, x, z, yaw, margin)):
+        if check and not self.free(footprint_box(pid, x, z, yaw, margin)):
             if report:
                 self.rejected.append("%s (%s) en (%.1f, %.1f)" % (pid, group, x, z))
             return False
         self.items.append((group, pid, round(x, 2), round(z, 2), round(yaw, 1)))
         if PIECES[pid][0] != "ground":
-            self.reserve(rect)
+            self.reserve(footprint_box(pid, x, z, yaw))
         return True
 
 
@@ -183,72 +368,71 @@ THEMES = {
 }
 
 
-def frame(axis, c0, side, u, v):
-    """Repère d'une rangée : u le long de la rue, v en s'éloignant de la rue (côté
-    `side` = ±1). Renvoie (x, z) monde."""
-    return (u, c0 + side * v) if axis == "x" else (c0 + side * v, u)
+def _yaw_facing(v):
+    """Rotation (degrés) qui tourne l'avant d'un modèle (+Z) vers le vecteur v (x, z)."""
+    return math.degrees(math.atan2(v[0], v[1]))
 
 
-def facing(axis, side):
-    """Rotation d'une façade tournée vers la rue."""
-    if axis == "x":
-        return 180 if side > 0 else 0
-    return -90 if side > 0 else 90
+def _yaw_along(v):
+    """Rotation (degrés) qui aligne l'axe X d'un modèle sur le vecteur v (x, z)."""
+    return math.degrees(math.atan2(-v[1], v[0]))
 
 
-def door_sign(axis, side):
-    """Sens, le long de u, de l'axe X du modèle une fois tourné vers la rue."""
-    return {180: -1, 0: 1, -90: 1, 90: -1}[facing(axis, side)]
-
-
-def house_row(L, rnd, group, theme, axis, c0, side, u_from, u_to, parked=0.3):
-    """Rangée de maisons le long d'une rue (axe `axis` = "x" pour une rue est-ouest
-    à z = c0, "z" pour une rue nord-sud à x = c0), côté `side` (±1)."""
+def house_row(L, rnd, group, theme, poly, side, parked=0.3):
+    """Rangée de maisons le long d'une route (Polyline), côté `side` : +1 = à gauche
+    du sens de parcours dans le repère (x, z) (tangente tournée de +90°), -1 = à
+    droite. Façades tournées vers la route ; u = abscisse le long de la route,
+    v = distance à l'axe de la route."""
     t = THEMES[theme]
-    yaw = facing(axis, side)
-    along = 0 if axis == "x" else 90          # pièce posée le long de la rue
-    across = 90 - along                        # allée perpendiculaire à la rue
-    u = u_from + rnd.uniform(0, 4)
-    while u < u_to:
+
+    def frame(u, v):
+        (x, z), tan = poly.at(u)
+        n = (-tan[1] * side, tan[0] * side)
+        return (x + n[0] * v, z + n[1] * v), tan, n
+
+    u = rnd.uniform(0, 4)
+    while u < poly.length:
         pid = rnd.choice(t["houses"])
-        w = PIECES[pid][2][0]
+        w, d = PIECES[pid][2]
         hu = u + w / 2
-        door = DOORS.get(pid)
-        dw = hu
-        if door is not None:
-            dw = hu + door_sign(axis, side) * door
-            snapped = round((dw - 2) / 4) * 4 + 2     # portail sur la grille des piquets
-            hu += snapped - dw
-            dw = snapped
-        lot = [frame(axis, c0, side, a, b) for a, b in ((hu - w / 2 - 1, 5), (hu + w / 2 + 1, 28))]
-        rect = (min(p[0] for p in lot), max(p[0] for p in lot), min(p[1] for p in lot), max(p[1] for p in lot))
-        if hu + w / 2 > u_to or not L.free(rect):
+        if hu + w / 2 > poly.length:
+            break
+        (hx, hz), tan, n = frame(hu, 14)
+        yaw = _yaw_facing((-n[0], -n[1]))
+        # Lot : de 5 m (trottoir) à 28 m de l'axe, largeur de la maison + 2 m ; à
+        # défaut, lot sans jardin de derrière (jusqu'à 19,5 m).
+        (lx, lz), _, _ = frame(hu, 16.5)
+        (sx, sz), _, _ = frame(hu, 12.25)
+        backyard = L.free(box(lx, lz, w / 2 + 1, 11.5, tan[0], tan[1]))
+        if not backyard and not L.free(box(sx, sz, w / 2 + 1, 7.25, tan[0], tan[1])):
             u += 4
             continue
-        hx, hz = frame(axis, c0, side, hu, 14)
-        L.put(group, pid, hx, hz, yaw)
-        if door is not None and rnd.random() < t["fence_chance"]:
-            for k in (-4, 0, 4):
-                fid = t["gate"] if k == 0 else rnd.choice(t["fence"])
-                fx, fz = frame(axis, c0, side, dw + k, 6)
-                L.put(group, fid, fx, fz, along, report=False)
+        L.put(group, pid, hx, hz, yaw, check=False)
+        door = DOORS.get(pid)
         if door is not None:
-            px, pz = frame(axis, c0, side, dw, 8.5)
-            L.put(group, "path_straight", px, pz, across, check=False)
-            mx, mz = frame(axis, c0, side, dw + 2, 3.6)
+            x_axis = (math.cos(math.radians(yaw)), -math.sin(math.radians(yaw)))
+            du = hu + door * (x_axis[0] * tan[0] + x_axis[1] * tan[1])
+            if rnd.random() < t["fence_chance"]:
+                for k in (-4, 0, 4):
+                    (fx, fz), ftan, _ = frame(du + k, 6)
+                    fid = t["gate"] if k == 0 else rnd.choice(t["fence"])
+                    L.put(group, fid, fx, fz, _yaw_along(ftan), report=False)
+            (px, pz), _, pn = frame(du, 8.5)
+            L.put(group, "path_straight", px, pz, _yaw_along(pn), check=False)
+            (mx, mz), _, _ = frame(du + 2, 3.6)
             L.put(group, "mailbox", mx, mz, yaw, check=False)
         for _ in range(rnd.randint(1, 2)):
-            fu = hu + rnd.choice((-1, 1)) * rnd.uniform(2.0, w / 2 - 0.5)
-            fx, fz = frame(axis, c0, side, fu, 8.8)
+            (fx, fz), _, _ = frame(hu + rnd.choice((-1, 1)) * rnd.uniform(2.0, w / 2 - 0.5), 8.8)
             L.put(group, rnd.choice(t["front"]), fx, fz, rnd.uniform(0, 360) if theme != "shops" else yaw,
                   report=False)
-        for _ in range(rnd.randint(2, 4)):
-            bu = hu + rnd.uniform(-w / 2, w / 2)
-            bx, bz = frame(axis, c0, side, bu, rnd.uniform(21, 26))
-            L.put(group, rnd.choice(t["back"]), bx, bz, rnd.choice((0, 90, 180, 270)), margin=0.5, report=False)
-        if rnd.random() < parked:
-            cx, cz = frame(axis, c0, side, hu + rnd.uniform(-3, 3), 1.8)
-            L.put(group, rnd.choice(t["street"]), cx, cz, along + rnd.choice((0, 180)), check=False)
+        for _ in range(rnd.randint(2, 4) if backyard else 0):
+            (bx, bz), _, _ = frame(hu + rnd.uniform(-w / 2, w / 2), rnd.uniform(21, 26))
+            L.put(group, rnd.choice(t["back"]), bx, bz, yaw + rnd.choice((0, 90, 180, 270)), margin=0.5,
+                  report=False)
+        # Voiture garée le long du trottoir, jamais près d'un carrefour (passages piétons).
+        if rnd.random() < parked and 14.0 < hu < poly.length - 14.0:
+            (cx, cz), ctan, _ = frame(hu + rnd.uniform(-3, 3), 1.8)
+            L.put(group, rnd.choice(t["street"]), cx, cz, _yaw_along(ctan) + rnd.choice((0, 180)), check=False)
         u = hu + w / 2 + rnd.uniform(3, 8)
 
 
@@ -293,7 +477,7 @@ def landmarks(L):
               + [("open_grave", 108, -131, 0), ("open_grave", 92, -132, 0), ("coffin", 111, -133, 30),
                  ("bone_pile", 104, -144, 0), ("tree_dead", 91, -145, 0), ("tree_dead", 125, -115, 90),
                  ("tree_dead", 125, -145, 200), ("pumpkin_patch", 72, -140, 0), ("pumpkin_patch", 40, -146, 30),
-                 ("barrel_group", 50, -112, 0), ("crate_stack", 54, -110, 20), ("car_wreck", 80, -104, 20),
+                 ("barrel_group", 50, -112, 0), ("crate_stack", 54, -110, 20), ("car_wreck", 64, -104, 20),
                  ("tombstone_large", 46, -128, 0), ("concrete_barrier", 70, -112, 0),
                  ("concrete_barrier", 58, -132, 90)])
     # Parc central (point de capture en (-44, 30)).
@@ -301,23 +485,23 @@ def landmarks(L):
         ("sandbag_straight", -48.5, 22, 0), ("sandbag_straight", -39.5, 22, 0), ("sandbag_straight", -44, 39, 0),
         ("stone_wall_broken", -54, 30, 90), ("stone_wall_straight", -34, 33, 90), ("stone_wall_end", -34, 36, 90),
         ("tree_large", -64, 16, 0), ("tree_large", -70, 30, 30), ("tree_large", -60, 46, 0),
-        ("tree_large", -24, 18, 60), ("tree_large", -18, 42, 0), ("tree_large", -30, 50, 0),
+        ("tree_large", -24, 18, 60), ("tree_large", -18, 42, 0), ("tree_large", -30, 46, 0),
         ("tree_small", -54, 50, 0), ("tree_small", -14, 26, 0), ("tree_small", -74, 46, 0),
         ("garden_bench", -47, 46, 0), ("garden_bench", -41, 46, 0), ("garden_bench", -60, 26, 90),
         ("street_lamp", -50, 44, 0), ("street_lamp", -38, 44, 0), ("street_lamp", -44, 14, 0),
         ("bird_bath", -30, 26, 0), ("picnic_table", -66, 38, 20), ("picnic_table", -22, 32, 70),
         ("trash_cans", -36, 48, 0), ("flower_patch_a", -56, 38, 0), ("flower_patch_c", -26, 40, 0),
-        ("flower_patch_b", -50, 12, 0), ("bush_b", -74, 20, 0), ("bush_a", -16, 50, 0),
-        ("hedge_straight", -70, 54, 0), ("hedge_straight", -66, 54, 0),
-        ("hedge_straight", -22, 54, 0), ("hedge_straight", -18, 54, 0), ("swing_set", -68, 12, 0)])
+        ("flower_patch_b", -50, 15, 0), ("bush_b", -74, 20, 0), ("bush_a", -16, 50, 0),
+        ("hedge_straight", -70, 50, 0), ("hedge_straight", -66, 50, 0),
+        ("hedge_straight", -26, 50, 0), ("hedge_straight", -22, 50, 0), ("swing_set", -68, 12, 0)])
     # Terrain vague au nord du boulevard : ligne de front.
     place_all(L, "Wasteland", [
         ("sandbag_straight", -60, -8, 0), ("sandbag_curve", -54, -10, 0), ("sandbag_straight", -26, -10, 15),
         ("stone_wall_broken", -40, -18, 0), ("stone_wall_broken", -70, -30, 90), ("car_wreck", -48, -30, 40),
-        ("car_wreck", -16, -36, 110), ("rock_large", -32, -40, 0), ("rock_large", -64, -46, 30),
+        ("car_wreck", -24, -36, 110), ("rock_large", -32, -40, 0), ("rock_large", -64, -46, 30),
         ("concrete_barrier", -20, -22, 90), ("concrete_barrier", -76, -14, 0), ("log", -56, -22, 20),
         ("stump", -36, -28, 0), ("tree_dead", -24, -48, 0), ("tree_dead", -74, -40, 60), ("hay_bale", -46, -44, 0),
-        ("traffic_cone", -12, -14, 0), ("traffic_cone", -12, -18, 0), ("barrel_group", -66, -20, 0)])
+        ("traffic_cone", -18, -14, 0), ("traffic_cone", -18, -18, 0), ("barrel_group", -66, -20, 0)])
     # Parking des commerces (point de capture en (112, 24)).
     place_all(L, "Parking", [
         ("car_sedan", 98, 16, 90), ("car_sedan", 102, 16, 90), ("pickup_truck", 124, 15, 90),
@@ -650,7 +834,41 @@ selection = NodePath("../../SelectionController")
 """ % {"rect": FULL_RECT, "plants": squads(PLANT_SQUADS), "zombies": squads(ZOMBIE_SQUADS)}
 
 
-def write_scene(sc, path, camera_at):
+def road_resources(roads):
+    """Courbes Curve3D des routes (points : poignée d'entrée, de sortie, position)."""
+    lines = []
+    for name, (controls, _, _, _) in roads.items():
+        vals = []
+        for (x, z), (ix, iz), (ox, oz) in controls:
+            vals += [ix, 0.0, iz, ox, 0.0, oz, x, 0.0, z]
+        lines += ['[sub_resource type="Curve3D" id="curve_%s"]' % name, 'bake_interval = 0.5',
+                  '_data = {', '"points": PackedVector3Array(%s),' % ", ".join("%.4g" % v for v in vals),
+                  '"tilts": PackedFloat32Array(%s)' % ", ".join("0" for _ in controls), '}',
+                  'point_count = %d' % len(controls), '']
+    return lines
+
+
+def road_nodes(roads):
+    """Nœud RoadNetwork : routes (RoadPath) puis carrefours et raquettes (RoadJunction)."""
+    lines = ['[node name="Roads" type="Node3D" parent="."]', 'script = ExtResource("road_network")', '']
+    for name, (_, _, cw0, cw1) in roads.items():
+        lines += ['[node name="%s" type="Path3D" parent="Roads"]' % name, 'curve = SubResource("curve_%s")' % name,
+                  'script = ExtResource("road_path")']
+        if cw0:
+            lines.append('crosswalk_start = true')
+        if cw1:
+            lines.append('crosswalk_end = true')
+        lines.append('')
+    for name, (x, z) in list(JUNCTIONS.items()) + list(TURNAROUNDS.items()):
+        lines += ['[node name="%s" type="Node3D" parent="Roads"]' % name, 'transform = %s' % xform(x, z),
+                  'script = ExtResource("road_junction")', 'arm_length = %g' % ARM]
+        if name in TURNAROUNDS:
+            lines.append('turnaround_radius = %g' % TURNAROUND_RADIUS)
+        lines.append('')
+    return lines
+
+
+def write_scene(sc, path, camera_at, roads):
     cam = sc.res("res://camera/rts_camera.tscn")
     lines = ['[gd_scene format=3]', '']
     for p, (kind, rid) in sc.ext.items():
@@ -659,6 +877,9 @@ def write_scene(sc, path, camera_at):
         lines.append('[ext_resource type="%s" path="%s" id="%s"]' % (kind, p, rid))
     for sid in PLANT_SQUADS + ZOMBIE_SQUADS:
         lines.append('[ext_resource type="Resource" path="res://data/units/%s_squad.tres" id="sq_%s"]' % (sid, sid))
+    lines += ['[ext_resource type="Script" path="res://world/environment/road_network.gd" id="road_network"]',
+              '[ext_resource type="Script" path="res://world/environment/road_path.gd" id="road_path"]',
+              '[ext_resource type="Script" path="res://world/environment/road_junction.gd" id="road_junction"]']
     lines += ['[ext_resource type="Shader" path="res://assets/shaders/stylized_sky.gdshader" id="sky_shader"]',
               '[ext_resource type="Shader" path="res://assets/shaders/terrain_splat.gdshader" id="ground_shader"]',
               '[ext_resource type="Texture2D" path="%ssuburb_splat.png" id="ground_splat"]' % RES_DIR]
@@ -691,6 +912,7 @@ def write_scene(sc, path, camera_at):
               '[sub_resource type="PlaneMesh" id="ground_mesh"]', 'material = SubResource("ground_material")',
               'size = Vector2(%g, %g)' % (TERRAIN, TERRAIN), '',
               '[sub_resource type="BoxShape3D" id="ground_shape"]', 'size = Vector3(%g, 1, %g)' % (TERRAIN, TERRAIN), '',
+              ] + road_resources(roads) + [
               '[node name="%s" type="Node3D"]' % sc.root, '',
               '[node name="WorldEnvironment" type="WorldEnvironment" parent="."]', 'environment = SubResource("environment")', '',
               '[node name="Sun" type="DirectionalLight3D" parent="."]',
@@ -704,6 +926,7 @@ def write_scene(sc, path, camera_at):
               '[node name="RTSCamera" parent="." instance=ExtResource("%s")]' % cam,
               'transform = %s' % xform(*camera_at),
               'bounds = Rect2(%g, %g, %g, %g)' % (-HALF, -HALF, 2 * HALF, 2 * HALF), '']
+    lines += road_nodes(roads)
     for node in sc.nodes:
         lines += [node, '']
     lines.append(systems_nodes())
@@ -711,31 +934,44 @@ def write_scene(sc, path, camera_at):
         f.write("\n".join(lines))
 
 
+def rng(name):
+    """Tirage propre à un quartier : modifier un quartier ne déplace pas les autres."""
+    return random.Random(SEED ^ zlib.crc32(name.encode("utf-8")))
+
+
+# Rangées de maisons : (groupe, thème, route, côté) — côté +1 à gauche du sens de
+# parcours (tangente tournée de +90° dans le plan XZ), -1 à droite.
+HOUSE_ROWS = [
+    ("LotsPlants", "plants", "plants_w", 1), ("LotsPlants", "plants", "plants_w", -1),
+    ("LotsPlants", "plants", "plants_cw", 1), ("LotsPlants", "plants", "plants_cw", -1),
+    ("LotsPlants", "plants", "plants_c", 1), ("LotsPlants", "plants", "plants_c", -1),
+    ("LotsPlants", "plants", "cul_plants", 1), ("LotsPlants", "plants", "cul_plants", -1),
+    ("LotsPlants", "plants", "plants_e", 1), ("LotsPlants", "plants", "east_s", -1),
+    ("LotsPlants", "plants", "west_s", 1),
+    ("LotsZombies", "zombies", "zombies_w", 1), ("LotsZombies", "zombies", "zombies_w", -1),
+    ("LotsZombies", "zombies", "zombies_c", 1), ("LotsZombies", "zombies", "zombies_c", -1),
+    ("LotsZombies", "zombies", "zombies_e", 1), ("LotsZombies", "zombies", "zombies_e", -1),
+    ("LotsZombies", "zombies", "zombies_far_e", -1),
+    ("LotsZombies", "zombies", "cul_zombies", 1), ("LotsZombies", "zombies", "cul_zombies", -1),
+    ("LotsZombies", "zombies", "west_n", 1),
+    ("Shops", "shops", "boulevard_e", 1), ("Shops", "shops", "boulevard_e", -1),
+    ("Shops", "shops", "boulevard_far_e", -1),
+]
+
+
 def build():
-    rnd = random.Random(SEED)
     L = Layout()
-    for pid, x, z, yaw in road_tiles(road_cells()):
-        L.put("Roads", pid, x, z, yaw, check=False)
-        L.reserve((x - 4, x + 4, z - 4, z + 4))
+    roads = road_network()
+    reserve_roads(L, roads)
     for _, x, z, _ in POINTS:
         L.reserve((x - POINT_CLEARANCE, x + POINT_CLEARANCE, z - POINT_CLEARANCE, z + POINT_CLEARANCE))
     landmarks(L)
     hand_rejected = list(L.rejected)
-    # Lotissements et commerces le long des rues (u = coordonnée le long de la rue).
-    for group, theme, axis, c0, side, u0, u1 in (
-            ("LotsPlants", "plants", "x", 60, 1, -128, -8), ("LotsPlants", "plants", "x", 60, -1, -128, -8),
-            ("LotsPlants", "plants", "z", -44, 1, 64, 104), ("LotsPlants", "plants", "z", -44, -1, 64, 104),
-            ("LotsPlants", "plants", "x", 60, 1, 0, 72), ("LotsPlants", "plants", "z", 76, 1, 30, 56),
-            ("LotsPlants", "plants", "z", -84, -1, 10, 56),
-            ("LotsZombies", "zombies", "x", -60, -1, -80, 140), ("LotsZombies", "zombies", "x", -60, 1, -80, 72),
-            ("LotsZombies", "zombies", "z", 36, 1, -96, -64), ("LotsZombies", "zombies", "z", 36, -1, -96, -64),
-            ("LotsZombies", "zombies", "z", -84, -1, -100, -64),
-            ("Shops", "shops", "x", 4, -1, 0, 72), ("Shops", "shops", "x", 4, 1, 0, 72),
-            ("Shops", "shops", "x", 4, -1, 84, 146)):
-        house_row(L, rnd, group, theme, axis, c0, side, u0, u1)
-    vegetation(L, rnd)
+    for group, theme, road, side in HOUSE_ROWS:
+        house_row(L, rng("%s/%d" % (road, side)), group, theme, roads[road][1], side)
+    vegetation(L, rng("vegetation"))
     border(L)
-    horizon_trees(L, rnd)
+    horizon_trees(L, rng("horizon"))
 
     sc = Scene("Suburb", (TERRAIN, TERRAIN))
     groups = {}
@@ -749,11 +985,12 @@ def build():
 
     os.makedirs(OUT_DIR, exist_ok=True)
     write_png(os.path.join(OUT_DIR, "suburb_splat.png"), splat_map())
-    write_scene(sc, os.path.join(OUT_DIR, "suburb.tscn"), (20, 104))
+    write_scene(sc, os.path.join(OUT_DIR, "suburb.tscn"), (20, 104), roads)
     counts = {}
     for group, *_ in L.items:
         counts[group] = counts.get(group, 0) + 1
-    print("Carte écrite : %d pièces, %d points" % (len(L.items), len(POINTS)))
+    print("Carte écrite : %d pièces, %d routes, %d carrefours et raquettes, %d points"
+          % (len(L.items), len(roads), len(JUNCTIONS) + len(TURNAROUNDS), len(POINTS)))
     print("  " + ", ".join("%s %d" % kv for kv in counts.items()))
     for r in hand_rejected:
         print("  REFUSÉ (placement manuel)", r)
