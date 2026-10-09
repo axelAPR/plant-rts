@@ -398,6 +398,18 @@ dimensionné à partir d'elles. 1 unité = 1 m.
   individuelles, mêlée, ordre d'attaque, bataille) ; capture avec
   `-- --screenshots=<dossier>`, fenêtré.
 
+## Bâtiments et HUD (implémenté : première version)
+- Bâtiments définis par données (BuildingData, data/buildings) ; simulation sans nœud
+  (Building, BuildingSystem, gameplay/construction), affichage BuildingRenderer.
+- QG : Arbre de Vie (plantes), Tombeau monumental (zombies), 14 × 14 m, ≤ 10 000
+  triangles (exception au budget du kit). Unité constructrice par faction dans
+  FactionRoster (Maïs, Ingénieur).
+- Production : file par bâtiment, coût et population réservés à la mise en file,
+  annulation remboursée, sortie sur emplacement libre, ralliement au clic droit.
+- HUD (ui/hud/) : ressources et population du joueur (PlayerState), mini-carte,
+  sélection, commandes (R, T, F, G), file de production. Habillage GW2 local
+  facultatif (assets/gw2/ui/, blender/scripts/gw2_ui.py).
+
 ## Gameplay — À CONFIRMER
 <!-- Déduit de l'arborescence, pas encore validé explicitement -->
 - RTS en 3D, orienté escouades (`squads`), avec couvert (`cover`), capture de
